@@ -11,5 +11,4 @@ class SupabaseConfigration {
     );
   }
 
-  static SupabaseClient supabase = Supabase.instance.client;
 }

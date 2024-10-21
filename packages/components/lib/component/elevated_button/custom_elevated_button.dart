@@ -12,9 +12,10 @@ class CustomElevatedButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
+          fixedSize: Size.fromHeight(53),
           backgroundColor: backgroundColor,
-          shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.circular(31))),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(31))),
       child: Center(child: child),
     );
   }

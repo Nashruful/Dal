@@ -1,3 +1,4 @@
+
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class CurrentAdsTap extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(  body: SingleChildScrollView(
           child: SizedBox(
-            child: const Column(
+            child: Column(
                     children: [
             Row(
                      
