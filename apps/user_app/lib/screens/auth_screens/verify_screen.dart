@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:user_app/screens/auth_screens/cubit/auth_cubit.dart';
 import 'package:pinput/pinput.dart';
+import 'package:user_app/screens/home_screen/home_screen.dart';
 
 class VerifyScreen extends StatelessWidget {
   final String? email;
@@ -25,7 +26,20 @@ class VerifyScreen extends StatelessWidget {
                       backgroundColor: Colors.transparent,
                       content: CircularProgressIndicator()));
             }
-            if (state is SuccessState) {}
+            if (state is SuccessState) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+            }
+            if (state is ErrorState) {
+              Navigator.pop(context);
+              showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (context) => AlertDialog(
+                      backgroundColor: Colors.transparent,
+                      content: SizedBox(
+                          height: 100, width: 100, child: Text(state.msg))));
+            }
           },
           child: Scaffold(
             backgroundColor: const Color(0xffF7F7F7),
@@ -196,8 +210,12 @@ class VerifyScreen extends StatelessWidget {
                           height: 10,
                         ),
                         Pinput(
+                          controller: cubit.otpController,
                           length: 6,
-                          onCompleted: (value) {},
+                          onCompleted: (value) {
+                            cubit.verifyOTP(
+                                otp: cubit.otpController.text, email: email!);
+                          },
                         ),
                         const SizedBox(
                           height: 45,

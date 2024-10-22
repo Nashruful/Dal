@@ -10,6 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
   components: ^0.0.1
+  device_preview: ^1.2.0
+  image_picker: ^1.1.2
+  flutter_bloc: ^8.1.6
 
 dev_dependencies:
   flutter_test:
@@ -17,10 +20,8 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
 flutter:
- assets:
-   
+  uses-material-design: true
+  assets:
     - assets/
-
+    - assets/svg/
     - assets/png/
-
-   

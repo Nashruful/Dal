@@ -1,8 +1,11 @@
+import 'package:components/component/custom_text_field/custom_text_form_field.dart';
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:user_app/screens/auth_screens/cubit/auth_cubit.dart';
+import 'package:user_app/screens/auth_screens/login_screen.dart';
+import 'package:user_app/screens/auth_screens/verify_screen.dart';
 
 class CreateAccountScreen extends StatelessWidget {
   const CreateAccountScreen({super.key});
@@ -15,17 +18,32 @@ class CreateAccountScreen extends StatelessWidget {
         final cubit = context.read<AuthCubit>();
         return BlocListener<AuthCubit, AuthStatee>(
           listener: (context, state) {
-            if (state is LoadingState){
+            if (state is LoadingState) {
               showDialog(
                   context: context,
                   barrierDismissible: false,
                   builder: (context) => const AlertDialog(
-                        backgroundColor: Colors.transparent,
-                        content: CircularProgressIndicator()
-                      ));
+                      backgroundColor: Colors.transparent,
+                      content: CircularProgressIndicator()));
             }
-            if (state is SuccessState){
+            if (state is SuccessState) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => VerifyScreen(
+                            email: cubit.emailController.text,
+                          )));
+            }
+            if (state is ErrorState) {
+              Navigator.pop(context);
 
+              showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (context) => AlertDialog(
+                      backgroundColor: Colors.transparent,
+                      content: SizedBox(
+                          height: 100, width: 100, child: Text(state.msg))));
             }
           },
           child: Scaffold(
@@ -191,7 +209,9 @@ class CreateAccountScreen extends StatelessWidget {
                         ),
                         CustomElevatedButton(
                             onPressed: () {
-                              if (cubit.formKey.currentState!.validate()) {}
+                              if (cubit.formKey.currentState!.validate()) {
+                                cubit.signUp();
+                              }
                             },
                             backgroundColor: const Color(0xffA51361),
                             child: const CustomText(
@@ -209,7 +229,12 @@ class CreateAccountScreen extends StatelessWidget {
                                 color: Color(0xff444444),
                                 fontSize: 14),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()));
+                                },
                                 child: const CustomText(
                                     text: "Login",
                                     color: Color(0xff8CBFAE),

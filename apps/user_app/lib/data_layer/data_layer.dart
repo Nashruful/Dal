@@ -12,7 +12,7 @@ class DataLayer {
     currentUserInfo = await supabase
         .from("users")
         .select()
-        .eq("user_id", supabase.auth.currentUser!.id)
+        .eq("id", supabase.auth.currentUser!.id)
         .single();
 
     box.write("currentUser", currentUserInfo);
