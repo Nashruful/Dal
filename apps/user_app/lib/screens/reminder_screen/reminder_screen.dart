@@ -1,4 +1,3 @@
-import 'package:components/component/custom_app_bar/custom_app_bar.dart';
 import 'package:components/component/custom_cintainers/custom_ads_container.dart';
 import 'package:components/component/custom_text/custom_text.dart';
 
@@ -6,15 +5,22 @@ import 'package:flutter/material.dart';
 
 class ReminderScreen extends StatelessWidget {
   const ReminderScreen({super.key});
-//
-/////
-//////////
-//////
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "My Reminder"),
-      body: const SingleChildScrollView(
+      appBar: AppBar(
+        backgroundColor: const Color(0xffA51361),
+        foregroundColor: const Color(0xffF7F7F7),
+        centerTitle: true,
+        title: const CustomText(
+          text: "My Reminder",
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Color(0xfff7f7f7),
+        ),
+      ),
+      body: SingleChildScrollView(
           child: SizedBox(
             child: Column(
                     children: [
