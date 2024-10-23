@@ -1,3 +1,4 @@
+import 'package:components/component/custom_cards/subscriptions_card.dart';
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
