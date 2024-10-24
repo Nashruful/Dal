@@ -2,6 +2,7 @@ import 'package:components/component/custom_bottom_nav_bar/custom_bottom_nav_bar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_app/screens/home_screen/home_screen.dart';
+import 'package:user_app/screens/home_screen/reminder_screen.dart';
 import 'bloc/nav_bar_bloc.dart';
 
 class BottomNavBarScreen extends StatelessWidget {
@@ -14,13 +15,14 @@ class BottomNavBarScreen extends StatelessWidget {
       child: Builder(builder: (context) {
         int index = 0;
         List navBarPages = const [
-          HomeScreen(),
-        
+        HomeScreen(),
+     
          
           Icon(
             Icons.notifications,
             size: 150,
           ),
+            ReminderScreen(),
           Icon(
             Icons.person,
             size: 150,

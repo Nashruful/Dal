@@ -9,7 +9,7 @@ class AddAdsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xffA51361),
         foregroundColor: const Color(0xffF7F7F7),
-        title: const Text('Add Ads'),
+        title: const Text('Add Ads counter ase for us '),
       ),
       body: const Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),

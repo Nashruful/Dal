@@ -1,5 +1,4 @@
-import 'package:business_app/add_ads_screen/add_ads_screen.dart';
-import 'package:business_app/my_ads_screen/my%20ads_screen.dart';
+import 'package:business_app/screens/my_ads_screen/My_ads.dart';
 import 'package:components/component/custom_bottom_nav_bar/custom_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
