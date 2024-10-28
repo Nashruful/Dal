@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 class ProfileInfoSection extends StatelessWidget {
   final String imgurl;
   final String firstName;
-  final String lasrName;
+  final String lastName;
   final String email;
   final Function() onPressed;
   const ProfileInfoSection(
       {super.key,
       required this.firstName,
-      required this.lasrName,
+      required this.lastName,
       required this.email,
       required this.onPressed,
       required this.imgurl});
@@ -21,8 +21,9 @@ class ProfileInfoSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 40,
+              //child: Image.network(imgurl),
             ),
             const SizedBox(
               width: 10,
@@ -33,7 +34,7 @@ class ProfileInfoSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '$firstName $lasrName',
+                    '$firstName $lastName',
                     style: Theme.of(context).textTheme.headlineSmall,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -63,8 +64,14 @@ class ProfileInfoSection extends StatelessWidget {
 class FilterSection extends StatelessWidget {
   final Function(String) selectFilter;
   final Map<String, bool> categories;
+  final String text;
+  final String subText;
   const FilterSection(
-      {super.key, required this.selectFilter, required this.categories});
+      {super.key,
+      required this.selectFilter,
+      required this.categories,
+      required this.text,
+      required this.subText});
 
   @override
   Widget build(BuildContext context) {
@@ -72,13 +79,13 @@ class FilterSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'My Filters',
+          text,
           style: Theme.of(context).textTheme.labelLarge,
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 8),
           child: Text(
-            'Press to add or remove filter',
+            subText,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -112,9 +119,15 @@ class AppearanceSection extends StatelessWidget {
     super.key,
     required this.onChanged,
     required this.isOn,
+    required this.text,
+    required this.darkText,
+    required this.lightText,
   });
   final Function(bool)? onChanged;
   final bool isOn;
+  final String text;
+  final String darkText;
+  final String lightText;
 
   @override
   Widget build(BuildContext context) {
@@ -122,13 +135,13 @@ class AppearanceSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Appearance',
+          text,
           style: Theme.of(context).textTheme.labelLarge,
         ),
         Row(
           children: [
             Text(
-              isOn ? 'Dark Theme' : 'Light Theme',
+              isOn ? darkText : lightText,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const Spacer(),
@@ -149,9 +162,15 @@ class AppearanceSection extends StatelessWidget {
 
 class LanguageSection extends StatelessWidget {
   const LanguageSection(
-      {super.key, required this.changeLang, required this.value});
+      {super.key,
+      required this.changeLang,
+      required this.value,
+      required this.text,
+      required this.label});
   final Function(int?) changeLang;
   final int value;
+  final String text;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +178,7 @@ class LanguageSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Language',
+          text,
           style: Theme.of(context).textTheme.labelLarge,
         ),
         Padding(
@@ -167,9 +186,9 @@ class LanguageSection extends StatelessWidget {
           child: CustomDrobDownButton(
             value: value,
             items: [
-              const DropdownMenuEntry(
+              DropdownMenuEntry(
                 value: 0,
-                label: "English",
+                label: label,
               ),
               const DropdownMenuEntry(value: 1, label: "العربية"),
             ].map((entry) {
@@ -193,12 +212,20 @@ class PlanSection extends StatelessWidget {
       required this.planDesc,
       required this.endDate,
       required this.remainDays,
-      required this.onPressed});
+      required this.onPressed,
+      required this.text,
+      required this.daytext,
+      required this.remainingDay,
+      required this.subscription});
   final String plan;
   final String planDesc;
   final String endDate;
   final int remainDays;
   final void Function()? onPressed;
+  final String text;
+  final String daytext;
+  final String remainingDay;
+  final String subscription;
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +233,7 @@ class PlanSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Subscriptions',
+          text,
           style: Theme.of(context).textTheme.labelLarge,
         ),
         Row(
@@ -249,13 +276,13 @@ class PlanSection extends StatelessWidget {
                       Column(
                         children: [
                           Text(
-                            '${remainDays.toString()} Days',
+                            '${remainDays.toString()} $daytext',
                             style: TextStyle(
                                 color: Theme.of(context).dividerColor,
                                 fontSize: 14),
                           ),
                           Text(
-                            'Remain',
+                            remainingDay,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
@@ -276,7 +303,7 @@ class PlanSection extends StatelessWidget {
           child: CustomElevatedButton(
             onPressed: onPressed,
             backgroundColor: Theme.of(context).primaryColor,
-            child: Text('New Subscription Plan',
+            child: Text(subscription,
                 style: TextStyle(fontSize: 14, color: AppColors().buttonLable)),
           ),
         )
@@ -287,7 +314,8 @@ class PlanSection extends StatelessWidget {
 
 class LogoutButton extends StatelessWidget {
   final void Function() onPressed;
-  const LogoutButton({super.key, required this.onPressed});
+  const LogoutButton({super.key, required this.onPressed, required this.text});
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -296,7 +324,7 @@ class LogoutButton extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: TextButton(
             onPressed: onPressed,
-            child: Text('Logout',
+            child: Text(text,
                 style: TextStyle(
                     fontSize: 14, color: Theme.of(context).dividerColor))),
       ),

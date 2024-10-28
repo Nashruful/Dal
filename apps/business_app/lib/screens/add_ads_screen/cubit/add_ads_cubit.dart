@@ -16,19 +16,20 @@ class AddAdsCubit extends Cubit<AddAdsState> {
   ImagePicker pick = ImagePicker();
   File? image;
   int locationValue = 0;
-  int? categoeryValue = 0;
+  int? categoryValue = 0;
   DateTime? startDate;
   DateTime? endDate;
 
   Future<void> pickAdsImage() async {
     final XFile? imageFile = await pick.pickImage(source: ImageSource.gallery);
     if (imageFile != null) {
+      image = File(imageFile.path);
       emit(AdsImageState(image: File(imageFile.path)));
     }
   }
 
   selectCategory(int value) {
-    categoeryValue = value;
+    categoryValue = value;
     emit(CategoryState(categoryValue: value));
   }
 
@@ -40,6 +41,11 @@ class AddAdsCubit extends Cubit<AddAdsState> {
   selectAdsRangeDate(DateTime start, DateTime end) {
     startDate = start;
     endDate = end;
-    emit(SelectDateState(startDate: startDate, endDate: endDate, image: image));
+    emit(SelectDateState(startDate: startDate, endDate: endDate));
+  }
+
+  String dateFormat(DateTime start, DateTime end){
+    String displayDate =  '${start.day.toString().padLeft(2, '0')}/${start.month.toString().padLeft(2, '0')}/${start.year} - ${end.day.toString().padLeft(2, '0')}/${end.month.toString().padLeft(2, '0')}/${end.year}';
+    return displayDate;    
   }
 }

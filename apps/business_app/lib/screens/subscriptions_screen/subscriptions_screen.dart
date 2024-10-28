@@ -1,5 +1,6 @@
 import 'package:components/component/custom_cards/subscriptions_card.dart';
 import 'package:components/components.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -29,14 +30,13 @@ class SubscriptionsScreen extends StatelessWidget {
                       height: 15,
                     ),
                     Text(
-                      'Draw In Passing Customers!',
+                      'title plan'.tr(),
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     SizedBox(
                       height: 15,
                     ),
-                    Text(
-                        'Make your business stand out! Attract passing customers with your best deals and invites by choosing one of the following subscription plans:',
+                    Text('sub title plan'.tr(),
                         style: Theme.of(context).textTheme.bodyMedium),
                     SizedBox(
                       height: 15,
@@ -45,33 +45,33 @@ class SubscriptionsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomSubscriptionsCard(
-                          duration: '1 Month',
+                          duration: 'subscription one month'.tr(),
                           price: 100,
-                          plan: 'Basic',
+                          plan: 'Basic'.tr(),
                           selected: true,
                           onTap: () {},
+                          currency: 'SAR'.tr(),
                         ),
                         CustomSubscriptionsCard(
-                          duration: '1 Month',
-                          price: 250,
-                          plan: 'Premium',
-                          selected: false,
-                          onTap: () {},
-                        ),
+                            duration: 'subscription two month'.tr(),
+                            price: 250,
+                            plan: 'Standard'.tr(),
+                            selected: false,
+                            onTap: () {},
+                            currency: 'SAR'.tr()),
                         CustomSubscriptionsCard(
-                          duration: '1 Month',
-                          price: 500,
-                          plan: 'Enterprise',
-                          selected: false,
-                          onTap: () {},
-                        )
+                            duration: 'subscription three month'.tr(),
+                            price: 500,
+                            plan: 'Enterprise'.tr(),
+                            selected: false,
+                            onTap: () {},
+                            currency: 'SAR'.tr())
                       ],
                     ),
                     SizedBox(
                       height: 15,
                     ),
-                    Text(
-                        'Post your ads for passing customers for a month at a single business location, with access to basic ad stats.',
+                    Text('Basic description'.tr(),
                         style: Theme.of(context).textTheme.bodyMedium),
                     SizedBox(
                       height: 15,
@@ -82,7 +82,7 @@ class SubscriptionsScreen extends StatelessWidget {
                               //
                             },
                             backgroundColor: AppColors().green,
-                            child: Text('Free Trial',
+                            child: Text('free Trial button'.tr(),
                                 style: Theme.of(context).textTheme.bodyMedium),
                           )
                         : SizedBox(),
@@ -92,7 +92,7 @@ class SubscriptionsScreen extends StatelessWidget {
                       },
                       backgroundColor: Theme.of(context).primaryColor,
                       child: Text(
-                        'Choose Plan',
+                        'choose Plan button'.tr(),
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),

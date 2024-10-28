@@ -7,7 +7,6 @@ class AppThemes {
     primaryColor: AppColors.pink,
     hintColor: AppColors.yellow,
     scaffoldBackgroundColor: AppColors.white1,
-    dividerColor: AppColors.pink,
     cardColor: AppColors.white2,
     canvasColor: AppColors.grey,
     indicatorColor: AppColors.black2,

@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/setup/setup.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 part 'auth_state.dart';
 
@@ -89,8 +89,6 @@ class AuthCubit extends Cubit<AuthStatee> {
       // await OneSignal.login(supabase.auth.currentUser!.id); ---- Later when connecting with OneSignal
 
       await getIt.get<DataLayer>().getUserInfo();
-
-      
 
       emit(SuccessState());
     } on AuthException catch (e) {

@@ -9,12 +9,11 @@ final class UpdateFilterEvent extends ProfileBlocEvent {
   UpdateFilterEvent({required this.category});
 }
 
-final class ChangeModeEvent extends ProfileBlocEvent {
-}
-
+final class ChangeModeEvent extends ProfileBlocEvent {}
 
 final class ChangeLangEvent extends ProfileBlocEvent {
-    final int value;
-
+  final int value;
   ChangeLangEvent({required this.value});
 }
+
+final class GetInfoEvent extends ProfileBlocEvent {}

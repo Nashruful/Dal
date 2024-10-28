@@ -4,6 +4,7 @@ class CustomDrobDownButton extends StatelessWidget {
   const CustomDrobDownButton(
       {super.key, this.value, required this.items, this.onChanged});
   final int? value;
+
   final List<DropdownMenuItem<int>> items;
   final Function(int?)? onChanged;
 
@@ -13,7 +14,7 @@ class CustomDrobDownButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Theme.of(context).canvasColor,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: DropdownButton<int>(

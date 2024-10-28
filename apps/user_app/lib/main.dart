@@ -2,9 +2,10 @@ import 'package:components/component/theme/theme.dart';
 import 'package:device_preview_plus/device_preview_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:user_app/screens/auth_screens/verify_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lifecycle/lifecycle.dart';
+import 'package:user_app/cubit/theme_cubit.dart';
 import 'package:user_app/screens/bottom_nav_bar_screen/bottom_nav_bar_screen.dart';
-import 'package:user_app/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:user_app/services/supabase/supabase_configration.dart';
 import 'package:user_app/setup/setup.dart';
 
@@ -15,7 +16,7 @@ void main() async {
   await setup();
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) => EasyLocalization(
           supportedLocales: const [Locale('en'), Locale('ar')],
           path: 'assets/translations',
@@ -25,20 +26,42 @@ void main() async {
   );
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
   @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> with LifecycleAware, LifecycleMixin {
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      theme: AppThemes.lightTheme,
-      darkTheme: AppThemes.darkTheme,
-      themeMode: ThemeMode.system,
-      home: OnboardingScreen(),
+    return BlocProvider(
+      create: (context) => ThemeCubit(),
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp(
+            navigatorObservers: [defaultLifecycleObserver],
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            theme: state.themeData,
+            darkTheme: AppThemes.darkTheme,
+            themeMode: ThemeMode.system,
+            home: LifecycleWrapper(
+                onLifecycleEvent: (LifecycleEvent event) {
+                  print("ffffff --- $event");
+                },
+                child: BottomNavBarScreen()),
+          );
+        },
+      ),
     );
+  }
+
+  @override
+  void onLifecycleEvent(LifecycleEvent event) {
+    print("here i am $event");
   }
 }

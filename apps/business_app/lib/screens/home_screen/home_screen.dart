@@ -1,4 +1,5 @@
 import 'package:components/components.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -31,7 +32,7 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                Text("Hello!",
+                Text("Hello!".tr(),
                     style: Theme.of(context).textTheme.headlineMedium)
               ],
             ),
@@ -61,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                             Positioned(
                               top: 0,
                               child: Text(
-                                'Never miss out',
+                                'title card'.tr(),
                                 style: TextStyle(
                                     color: Theme.of(context).indicatorColor,
                                     fontSize: 24),
@@ -72,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                               child: SizedBox(
                                 width: 130,
                                 child: Text(
-                                  'Catch the latest deals and offers happening near you!',
+                                  'sub title card'.tr(),
                                   style: TextStyle(
                                       color: Theme.of(context).indicatorColor),
                                 ),
@@ -90,18 +91,18 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(
               height: 50,
             ),
-            const Column(
+             Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CustomBusinessIconButton(
-                        image: 'assets/svg/add_ads.svg', title: 'Add Ads'),
+                        image: 'assets/svg/add_ads.svg', title: 'home card label one'.tr()),
                     CustomBusinessIconButton(
                         image: 'assets/svg/view_stats.svg',
-                        title: 'View Stats'),
+                        title: 'home card label two'.tr()),
                     CustomBusinessIconButton(
-                        image: 'assets/svg/add_ads.svg', title: 'Add Ads'),
+                        image: 'assets/svg/add_ads.svg', title: 'home card label three'.tr()),
                   ],
                 ),
                 SizedBox(
@@ -111,12 +112,12 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CustomBusinessIconButton(
-                        image: 'assets/svg/add_ads.svg', title: 'Add Ads'),
+                        image: 'assets/svg/add_ads.svg', title: 'home card label four'.tr()),
                     CustomBusinessIconButton(
                         image: 'assets/svg/view_stats.svg',
-                        title: 'View Stats'),
+                        title: 'home card label five'.tr()),
                     CustomBusinessIconButton(
-                        image: 'assets/svg/add_ads.svg', title: 'Add Ads'),
+                        image: 'assets/svg/add_ads.svg', title: 'home card label six'.tr()),
                   ],
                 ),
               ],

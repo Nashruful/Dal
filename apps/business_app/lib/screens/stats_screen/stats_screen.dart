@@ -1,5 +1,5 @@
 import 'package:components/component/custom_cards/stats_card.dart';
-import 'package:components/components.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -16,21 +16,21 @@ class StatsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   StatCards(
-                    lable: 'Total Ads',
+                    lable: 'Total Ads'.tr(),
                     numbers: 12,
                   ),
                   StatCards(
-                    lable: 'Total Views',
+                    lable: 'Total Views'.tr(),
                     numbers: 1234,
                   ),
                   StatCards(
-                    lable: 'Total Clicks',
+                    lable: 'Total Clicks'.tr(),
                     numbers: 234,
                   ),
                 ],

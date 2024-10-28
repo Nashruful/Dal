@@ -22,46 +22,41 @@ class OnboardingScreen extends StatelessWidget {
                 const SizedBox(
                   height: 40,
                 ),
-                Container(
-                    height: MediaQuery.of(context).size.height / 3,
-                    child:
-                        SvgPicture.asset("assets/svg/onboarding_guy_pic.svg")),
+                SvgPicture.asset("assets/svg/36-Teenager 1.svg"),
                 const SizedBox(
                   height: 40,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    children: [
-                      Text("Onboarding title",
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headlineLarge)
-                          .tr(),
-                      SizedBox(
-                        height: 9,
-                      ),
-                      Text("Onbording subtitle".tr(),
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyMedium),
-                    ],
-                  ),
+                Column(
+                  children: [
+                    Text("Onboarding title",
+                            style: Theme.of(context).textTheme.headlineLarge)
+                        .tr(),
+                    SizedBox(
+                      height: 9,
+                    ),
+                    Text("Onbording subtitle".tr(),
+                        style: Theme.of(context).textTheme.bodyMedium),
+                  ],
+                ),
+                const SizedBox(
+                  height: 40,
                 ),
                 Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: CustomElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()));
-                        },
-                        backgroundColor: const Color(0xffA51361),
-                        child: Text("Login",
-                                style: Theme.of(context).textTheme.labelSmall)
-                            .tr(),
-                      ),
+                    CustomElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()));
+                      },
+                      backgroundColor: const Color(0xffA51361),
+                      child: Text("Login",
+                              style: Theme.of(context).textTheme.titleMedium)
+                          .tr(),
+                    ),
+                    const SizedBox(
+                      height: 25,
                     ),
                     TextButton(
                         onPressed: () {
@@ -72,7 +67,7 @@ class OnboardingScreen extends StatelessWidget {
                                   builder: (context) =>
                                       const CreateAccountScreen()));
                         },
-                        child: Text("Create An Account".tr(),
+                        child: Text("Or create an account".tr(),
                             style: Theme.of(context).textTheme.bodyMedium))
                   ],
                 ),

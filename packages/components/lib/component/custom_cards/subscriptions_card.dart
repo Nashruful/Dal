@@ -1,4 +1,3 @@
-import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -7,6 +6,7 @@ class CustomSubscriptionsCard extends StatelessWidget {
   final String duration;
   final double price;
   final String plan;
+  final String currency;
   final GestureTapCallback onTap;
 
   const CustomSubscriptionsCard(
@@ -15,7 +15,7 @@ class CustomSubscriptionsCard extends StatelessWidget {
       required this.price,
       required this.plan,
       required this.selected,
-      required this.onTap});
+      required this.onTap, required this.currency});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class CustomSubscriptionsCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(duration, style: Theme.of(context).textTheme.bodyMedium),
-                Text('${price.toString()} SAR',
+                Text('${price.toString()} $currency',
                     style: Theme.of(context).textTheme.bodyMedium)
               ],
             ),

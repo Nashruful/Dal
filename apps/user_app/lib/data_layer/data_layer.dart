@@ -25,12 +25,19 @@ class DataLayer {
   //icrement
   recordImpressions(String adID) {
     impressions[adID] = (impressions[adID] ?? 0) + 1;
-
+    print(impressions);
   }
 
   recordClicks(String adID) {
-        clicks[adID] = (clicks[adID] ?? 0) + 1;
+    clicks[adID] = (clicks[adID] ?? 0) + 1;
   }
-  cleanImpressions() {}
-  cleanClicks() {}
+
+  //call it whenever records has been sent
+  cleanImpressions() {
+    impressions = {};
+  }
+
+  cleanClicks() {
+    clicks = {};
+  }
 }

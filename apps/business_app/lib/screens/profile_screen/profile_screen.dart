@@ -1,6 +1,7 @@
 import 'package:business_app/screens/profile_screen/bloc/profile_bloc_bloc.dart';
 import 'package:business_app/screens/subscriptions_screen/subscriptions_screen.dart';
 import 'package:components/components.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,7 +30,7 @@ class ProfileScreen extends StatelessWidget {
                         child: ProfileInfoSection(
                           imgurl: '',
                           firstName: 'First',
-                          lasrName: "Last",
+                          lastName: "Last",
                           email: 'example@example.com',
                           onPressed: () {
                             //   Navigator.push(context, MaterialPageRoute(builder: (context) => ,))
@@ -38,10 +39,9 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const Divider(height: 40),
                       PlanSection(
-                        plan: 'Basic Plan',
-                        planDesc:
-                            'Post your ads for passing customers for a month at a single business location, with access to basic ad stats.',
-                        endDate: 'Ends 12/12/2024',
+                        plan: 'Basic'.tr(),
+                        planDesc: 'Basic description'.tr(),
+                        endDate: "${'End ads'.tr()} 11/11/2030",
                         remainDays: 11,
                         onPressed: () {
                           Navigator.push(
@@ -49,6 +49,10 @@ class ProfileScreen extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => SubscriptionsScreen()));
                         },
+                        text: 'subscription one month'.tr(),
+                        daytext: 'Day'.tr(),
+                        remainingDay: 'Remain'.tr(),
+                        subscription: 'New Subscription button'.tr(),
                       ),
                       const Divider(height: 40),
                       BlocBuilder<ProfileBlocBloc, ProfileBlocState>(
@@ -58,6 +62,9 @@ class ProfileScreen extends StatelessWidget {
                               bloc.add(ChangeModeEvent());
                             },
                             isOn: bloc.DarkModeOn,
+                            text: 'Appearance'.tr(),
+                            darkText: 'Dark Mode'.tr(),
+                            lightText: 'Light Mode'.tr(),
                           );
                         },
                       ),
@@ -69,6 +76,8 @@ class ProfileScreen extends StatelessWidget {
                               bloc.add(ChangeLangEvent(value: value!));
                             },
                             value: bloc.langValue,
+                            text: 'Language'.tr(),
+                            label: 'English'.tr(),
                           );
                         },
                       ),
@@ -76,6 +85,7 @@ class ProfileScreen extends StatelessWidget {
                         onPressed: () {
                           //
                         },
+                        text: 'Log out'.tr(),
                       ),
                     ],
                   ),

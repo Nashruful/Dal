@@ -3,17 +3,23 @@ import 'package:flutter/material.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final PreferredSizeWidget? bottom;
-  CustomAppBar({required this.title, this.bottom});
+  final bool automaticallyImplyLeading;
+  const CustomAppBar(
+      {super.key,
+      required this.title,
+      this.bottom,
+      required this.automaticallyImplyLeading});
 //
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      iconTheme: IconThemeData(color: Colors.white),
+      automaticallyImplyLeading: automaticallyImplyLeading,
+      iconTheme: const IconThemeData(color: Colors.white),
       bottom: bottom,
-      backgroundColor: Color(0xFFA51361),
+      backgroundColor: const Color(0xFFA51361),
       title: Text(
         title,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
       ),
       centerTitle: true,
     );
@@ -22,4 +28,3 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(60);
 }
- 

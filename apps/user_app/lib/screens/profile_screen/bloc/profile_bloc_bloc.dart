@@ -1,12 +1,15 @@
 import 'package:bloc/bloc.dart';
-import 'package:components/component/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:user_app/data_layer/data_layer.dart';
+import 'package:user_app/setup/setup.dart';
 
 part 'profile_bloc_event.dart';
 part 'profile_bloc_state.dart';
 
 class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
+  final supabase = getIt.get<DataLayer>().supabase;
   //save it in storage
   Map<String, bool> categories = {
     'Cafe': true,
@@ -19,6 +22,9 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
   int langValue = 0;
 
   bool DarkModeOn = true;
+  String firstName = '';
+  String lastName = '';
+  String email = '';
 
   ThemeMode themeMode = ThemeMode.system;
 
@@ -44,5 +50,41 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
 
       emit(ChangedlangState());
     });
+
+    // get user info
+    on<GetInfoEvent>((event, emit) async {
+      emit(LoadingState());
+      try {
+        final info = await supabase
+            .from('users')
+            .select()
+            .eq('id', supabase.auth.currentUser!.id)
+            .single();
+        firstName = info['first_name'];
+        lastName = info['last_name'];
+        email = info['email'];
+        emit(GetInfoState(
+            firstName: firstName, lastName: lastName, email: email));
+      } on AuthException catch (e) {
+        emit(ErrorState(msg: e.message));
+        print(e.message);
+      } on PostgrestException catch (e) {
+        emit(ErrorState(msg: e.message));
+        print(e.message);
+      } catch (e) {
+        emit(ErrorState(msg: e.toString()));
+      }
+    });
+
+    // listen to users table
+    void getInfoRealTime() {
+      supabase
+          .from('users')
+          .stream(primaryKey: ['id']).listen((List<Map<String, dynamic>> data) {
+        add(GetInfoEvent());
+      });
+    }
+
+    getInfoRealTime();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:business_app/screens/auth_screens/login_screen.dart';
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,8 +22,7 @@ class OnboardingScreen extends StatelessWidget {
                 ),
                 Container(
                     height: MediaQuery.of(context).size.height / 3,
-                    child:
-                        SvgPicture.asset("assets/svg/onboarding_lady_pic.svg")),
+                    child: SvgPicture.asset("assets/svg/onboarding_lady.svg")),
                 const SizedBox(
                   height: 40,
                 ),
@@ -47,10 +47,11 @@ class OnboardingScreen extends StatelessWidget {
                   children: [
                     CustomElevatedButton(
                       onPressed: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => const LoginScreen()));
+                        
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()));
                       },
                       backgroundColor: const Color(0xffA51361),
                       child: Text("Login",
@@ -69,6 +70,3 @@ class OnboardingScreen extends StatelessWidget {
     );
   }
 }
-
-
-

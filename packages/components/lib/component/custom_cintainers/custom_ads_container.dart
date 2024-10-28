@@ -51,13 +51,11 @@ class CustomAdsContainer extends StatelessWidget {
                     width: 24,
                   ),
                   const SizedBox(width: 3),
-                  Text(
-                    remainingDay,
-                    style: TextStyle(
-                      color: const Color(0xffB8B8B8),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  CustomText(
+                    text: remainingDay,
+                    color: const Color(0xffB8B8B8),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
                   ),
                 ],
               ),
@@ -81,13 +79,19 @@ class CustomAdsContainer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    companyName,
-                    style: Theme.of(context).textTheme.bodyLarge,
+                  CustomText(
+                    text: companyName,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: const Color(0xff444444),
                   ),
-                  SizedBox(height: 4),
-                  Text(offers,
-                      style: TextStyle(color: Theme.of(context).primaryColor)),
+                  const SizedBox(height: 4),
+                  CustomText(
+                    text: offers,
+                    color: const Color(0xffA51361),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
                 ],
               ),
             ),

@@ -3,12 +3,13 @@ import 'package:components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:user_app/cubit/theme_cubit.dart';
 import 'package:user_app/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:user_app/screens/profile_screen/bloc/profile_bloc_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -17,7 +18,10 @@ class ProfileScreen extends StatelessWidget {
         final bloc = context.read<ProfileBlocBloc>();
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          appBar: CustomAppBar(title: 'Profile'),
+          appBar: CustomAppBar(
+            title: 'Profile'.tr(),
+            automaticallyImplyLeading: false,
+          ),
           body: SingleChildScrollView(
             child: Wrap(
               children: [
@@ -28,15 +32,19 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: ProfileInfoSection(
-                          imgurl: '',
-                          firstName: 'First',
-                          lasrName: "Last",
-                          email: 'example@example.com',
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    const EditProfileScreen()));
+                        child: BlocBuilder<ProfileBlocBloc, ProfileBlocState>(
+                          builder: (context, state) {
+                            return ProfileInfoSection(
+                              imgurl: '',
+                              firstName: bloc.firstName,
+                              lastName: bloc.lastName,
+                              email: bloc.email,
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EditProfileScreen()));
+                              },
+                            );
                           },
                         ),
                       ),
@@ -54,13 +62,13 @@ class ProfileScreen extends StatelessWidget {
                         },
                       ),
                       const Divider(height: 40),
-                      BlocBuilder<ProfileBlocBloc, ProfileBlocState>(
+                      BlocBuilder<ThemeCubit, ThemeState>(
                         builder: (context, state) {
                           return AppearanceSection(
                             onChanged: (bool) {
-                              bloc.add(ChangeModeEvent());
+                              context.read<ThemeCubit>().toggleTheme();
                             },
-                            isOn: bloc.DarkModeOn,
+                            isOn: context.read<ThemeCubit>().DarkModeOn,
                             text: 'Appearance'.tr(),
                             darkText: 'Dark Mode'.tr(),
                             lightText: 'Light Mode'.tr(),
@@ -72,6 +80,14 @@ class ProfileScreen extends StatelessWidget {
                         builder: (context, state) {
                           return LanguageSection(
                             changeLang: (int? value) {
+                              switch (value) {
+                                case 0:
+                                  context.setLocale(const Locale('en'));
+                                  break;
+                                case 1:
+                                  context.setLocale(const Locale('ar'));
+                                  break;
+                              }
                               bloc.add(ChangeLangEvent(value: value!));
                             },
                             value: bloc.langValue,
