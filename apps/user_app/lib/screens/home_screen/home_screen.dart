@@ -8,8 +8,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/screens/home_screen/cubit/home_cubit.dart';
 import 'package:user_app/setup/setup.dart';
+import 'package:dio/dio.dart';
 import 'package:impression/impression.dart';
-import 'package:lifecycle/lifecycle.dart';
 
 //
 class HomeScreen extends StatelessWidget {
@@ -68,7 +68,47 @@ class HomeScreen extends StatelessWidget {
                       //go to notifications?
                     },
                     icon: SvgPicture.asset('assets/svg/notification.svg')),
-              )
+              ),
+              TextButton(
+                  onPressed: () async {
+                    final dio = Dio();
+                    try {
+                      final response = await dio.post(
+                        "https://api.onesignal.com/api/v1/notifications",
+                        data: {
+                          "app_id": "ebdec5c2-30a4-447d-9577-a1c13b6d553e",
+                          "contents": {
+                            "en": "Check out Burger's king offer nearby!",
+                            "ar": "لا يطوفك عرض Burger king!"
+                          },
+                          "include_external_user_ids": [
+                            getIt.get<DataLayer>().supabase.auth.currentUser!.id
+                          ], // Correct field name
+                        },
+                        options: Options(headers: {
+                          "Authorization":
+                              "Bearer ZGU5ZmExOTEtNmFiZC00ZTUxLTgyMGYtNjc4MDJlYjUyNmM4",
+                          'Content-Type':
+                              'application/json', // Ensure correct casing
+                        }),
+                      );
+
+                      print("------------------- ${response.data}");
+                      print("------------------- ${response.statusCode}");
+                    } on DioException catch (e) {
+                      print("Dio error: ${e.message}");
+                      if (e.response != null) {
+                        print("Response data: ${e.response!.data}");
+                      }
+                    } catch (e) {
+                      print("Error: ${e.toString()}");
+                    }
+                  },
+                  child: Text(
+                    "Send notification test",
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.w900),
+                  ))
             ],
           ),
           body: ListView(
@@ -327,8 +367,6 @@ class HomeScreen extends StatelessWidget {
                                 .map(
                                   (e) => ImpressionDetector(
                                     impressedCallback: () {
-                                      // print(
-                                      //     'impressions for ad: ${e['title']}');
                                       getIt.get<DataLayer>().recordImpressions(e[
                                           'id']); //add impressions to ad id each time it is viewed
                                     },
@@ -347,12 +385,10 @@ class HomeScreen extends StatelessWidget {
                                             builder: (context) {
                                               return ImpressionDetector(
                                                 impressedCallback: () {
-                                                  // print(
-                                                  //     'clicks for ad: ${e['title']}');
                                                   getIt
                                                       .get<DataLayer>()
                                                       .recordClicks(e[
-                                                          'id']); //add clicks to ad id each time it is clicked
+                                                          'id']); //add clicks to ad id each time it is viewed
                                                 },
                                                 child: CustomBottomSheet(
                                                   image: e['bannerimg'],
@@ -408,86 +444,102 @@ class HomeScreen extends StatelessWidget {
               ),
               SizedBox(
                 height: 250,
-                // child: SingleChildScrollView(
-                //   scrollDirection: Axis.horizontal,
-                //   child: BlocBuilder<HomeCubit, HomeState>(
-                //     builder: (context, state) {
-                //       if (state is LoadingState) {
-                //         return const FadeTransitionSwitcher(
-                //           child: Row(
-                //             children: [
-                //               ShimmerContainer(height: 230, width: 160),
-                //               SizedBox(
-                //                 width: 20,
-                //               ),
-                //               ShimmerContainer(height: 230, width: 160),
-                //               SizedBox(
-                //                 width: 20,
-                //               ),
-                //               ShimmerContainer(height: 230, width: 160),
-                //               SizedBox(
-                //                 width: 20,
-                //               ),
-                //             ],
-                //           ),
-                //         );
-                //       }
-                //       if (state is SuccessState) {
-                //         return FadeTransitionSwitcher(
-                //           child: Row(
-                //             key:
-                //                 ValueKey(getIt.get<DataLayer>().allAds!.length),
-                //             children: getIt
-                //                 .get<DataLayer>()
-                //                 .allAds!
-                //                 .map(
-                //                   (e) => CustomAdsContainer(
-                //                     companyLogo: e['business']['logo_img'] ??
-                //                         "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
-                //                     remainingDay: '4d',
-                //                     companyName: e['title'] ?? "----",
-                //                     offers:
-                //                         e['offer_type'] + ' ${'off'.tr()}' ??
-                //                             "----",
-                //                     onTap: () {
-                //                       showModalBottomSheet(
-                //                           isScrollControlled: true,
-                //                           context: context,
-                //                           builder: (context) {
-                //                             return CustomBottomSheet(
-                //                               image: e['bannerimg'],
-                //                               companyName: e['title'] ?? "---",
-                //                               iconImage:
-                //                                   'assets/svg/coffee.svg',
-                //                               description:
-                //                                   e['description'] ?? "---",
-                //                               remainingDay: '4d',
-                //                               onPressed: () {
-                //                                 getIt
-                //                                     .get<DataLayer>()
-                //                                     .myReminders
-                //                                     .add(e);
-                //                               },
-                //                               offerType: '40% ${'off'.tr()}',
-                //                               viewLocation:
-                //                                   'View Location'.tr(),
-                //                               locationOnPressed: () {},
-                //                             );
-                //                           });
-                //                     },
-                //                   ),
-                //                 )
-                //                 .toList(),
-                //           ),
-                //         );
-                //       }
-                //       return const SizedBox(
-                //           height: 100,
-                //           width: 100,
-                //           child: Text("error fetching data.."));
-                //     },
-                //   ),
-                // ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: BlocBuilder<HomeCubit, HomeState>(
+                    builder: (context, state) {
+                      if (state is LoadingState) {
+                        return const FadeTransitionSwitcher(
+                          child: Row(
+                            children: [
+                              ShimmerContainer(height: 230, width: 160),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              ShimmerContainer(height: 230, width: 160),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              ShimmerContainer(height: 230, width: 160),
+                              SizedBox(
+                                width: 20,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      if (state is SuccessState) {
+                        return FadeTransitionSwitcher(
+                          child: Row(
+                            key:
+                                ValueKey(getIt.get<DataLayer>().allAds!.length),
+                            children: getIt
+                                .get<DataLayer>()
+                                .allAds!
+                                .map(
+                                  (e) => ImpressionDetector(
+                                    impressedCallback: () {
+                                      getIt.get<DataLayer>().recordImpressions(e[
+                                          'id']); //add impressions to ad id each time it is viewed
+                                    },
+                                    child: CustomAdsContainer(
+                                      companyLogo: e['business']['logo_img'] ??
+                                          "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
+                                      remainingDay: '4d',
+                                      companyName: e['title'] ?? "----",
+                                      offers:
+                                          e['offer_type'] + ' ${'off'.tr()}' ??
+                                              "----",
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            context: context,
+                                            builder: (context) {
+                                              return ImpressionDetector(
+                                                impressedCallback: () {
+                                                  getIt
+                                                      .get<DataLayer>()
+                                                      .recordClicks(e[
+                                                          'id']); //add clicks to ad id each time it is viewed
+                                                },
+                                                child: CustomBottomSheet(
+                                                  image: e['bannerimg'],
+                                                  companyName:
+                                                      e['title'] ?? "---",
+                                                  iconImage:
+                                                      'assets/svg/coffee.svg',
+                                                  description:
+                                                      e['description'] ?? "---",
+                                                  remainingDay: '4d',
+                                                  onPressed: () {
+                                                    getIt
+                                                        .get<DataLayer>()
+                                                        .myReminders
+                                                        .add(e);
+                                                  },
+                                                  offerType:
+                                                      '40% ${'off'.tr()}',
+                                                  viewLocation:
+                                                      'View Location'.tr(),
+                                                  locationOnPressed: () {},
+                                                ),
+                                              );
+                                            });
+                                      },
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        );
+                      }
+                      return const SizedBox(
+                          height: 100,
+                          width: 100,
+                          child: Text("error fetching data.."));
+                    },
+                  ),
+                ),
               ),
             ],
           ),

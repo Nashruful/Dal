@@ -9,6 +9,7 @@ class DataLayer {
   List<Map<String, dynamic>> myReminders = [];
   Map<String, int> impressions = {};
   Map<String, int> clicks = {};
+  List<Map<String, dynamic>> adData = [];
 
   final box = GetStorage();
 
@@ -32,7 +33,23 @@ class DataLayer {
     clicks[adID] = (clicks[adID] ?? 0) + 1;
   }
 
-  //call it whenever records has been sent
+  sendAdsData() async {
+    // for (var adId in impressions.keys) {
+    //   adData.add({
+    //     "id": adId,
+    //     "impressions": impressions[adId],
+    //     "clicks": clicks[adId] ?? 0,
+    //   });
+    // }
+
+    // await supabase.from("ad").upsert(adData);
+
+    // //call it whenever records has been sent
+    // adData = [];
+    // cleanImpressions();
+    // cleanClicks();
+  }
+
   cleanImpressions() {
     impressions = {};
   }
