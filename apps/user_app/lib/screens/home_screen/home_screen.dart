@@ -8,7 +8,9 @@ import 'package:latlong2/latlong.dart';
 import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/screens/home_screen/cubit/home_cubit.dart';
 import 'package:user_app/setup/setup.dart';
+import 'package:impression/impression.dart';
 
+//
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -28,7 +30,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 20, bottom: 10),
               child: Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Container(
@@ -42,9 +44,17 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text(
-                    "Hello!".tr(),
-                    style: Theme.of(context).textTheme.labelLarge,
+                  Row(
+                    children: [
+                      Text(
+                        "Hello!".tr(),
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      // Text(
+                      //   getIt.get<DataLayer>().currentUserInfo!['first_name'],
+                      //   style: Theme.of(context).textTheme.labelLarge,
+                      // ),
+                    ],
                   )
                 ],
               ),
@@ -69,42 +79,44 @@ class HomeScreen extends StatelessWidget {
                   width: 370,
                   height: 157,
                   decoration: BoxDecoration(
-                      color: const Color(0xffF6B00E),
-                      borderRadius: BorderRadius.circular(4)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    color: const Color(0xffF6B00E),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Stack(
                     children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Stack(
-                            alignment: Alignment.bottomLeft,
-                            clipBehavior: Clip.none,
-                            children: [
-                              Positioned(
-                                top: 0,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'title card'.tr(),
+                                style: Theme.of(context).textTheme.labelLarge,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: SizedBox(
+                                width: 130,
                                 child: Text(
-                                  'Never miss out',
-                                  style: Theme.of(context).textTheme.labelLarge,
+                                  'sub title card'.tr(),
+                                  style: Theme.of(context).textTheme.labelSmall,
                                 ),
                               ),
-                              Positioned(
-                                bottom: 20,
-                                child: SizedBox(
-                                  width: 150,
-                                  child: Text(
-                                    'Catch the latest deals and offers happening near you!',
-                                    style:
-                                        Theme.of(context).textTheme.labelSmall,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                      Image.asset('assets/png/29-Influencer 1.png')
+                      Positioned(
+                        right: 0,
+                        top: 8,
+                        child: Image.asset(
+                          'assets/png/29-Influencer 1.png',
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -164,6 +176,8 @@ class HomeScreen extends StatelessWidget {
                                                       context: context,
                                                       builder: (context) =>
                                                           AlertDialog(
+                                                            contentPadding:
+                                                                EdgeInsets.zero,
                                                             content:
                                                                 CustomBottomSheet(
                                                               image:
@@ -177,16 +191,22 @@ class HomeScreen extends StatelessWidget {
                                                               remainingDay:
                                                                   '4d',
                                                               onPressed: () {},
-                                                              offerType: '40',
+                                                              offerType:
+                                                                  '40% ${'off'.tr()}',
+                                                              viewLocation:
+                                                                  'View Location'
+                                                                      .tr(),
+                                                              locationOnPressed:
+                                                                  () {},
                                                             ),
                                                           ));
                                                 },
-                                                child: Icon(
+                                                child: const Icon(
                                                     color: Colors.blueAccent,
                                                     size: 35,
                                                     Icons.bakery_dining),
                                               )),
-                                          Marker(
+                                          const Marker(
                                               width: 100,
                                               height: 100,
                                               point: LatLng(24.825841754565865,
@@ -195,7 +215,7 @@ class HomeScreen extends StatelessWidget {
                                                   color: Colors.blueAccent,
                                                   size: 35,
                                                   Icons.bakery_dining)),
-                                          Marker(
+                                          const Marker(
                                               width: 100,
                                               height: 100,
                                               point: LatLng(24.829035569055947,
@@ -204,7 +224,7 @@ class HomeScreen extends StatelessWidget {
                                                   color: Colors.blueAccent,
                                                   size: 35,
                                                   Icons.bakery_dining)),
-                                          Marker(
+                                          const Marker(
                                               width: 100,
                                               height: 100,
                                               point: LatLng(24.819142266372218,
@@ -217,12 +237,12 @@ class HomeScreen extends StatelessWidget {
                                       ],
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.all(24),
+                                      padding: const EdgeInsets.all(24),
                                       child: IconButton(
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                          icon: Icon(
+                                          icon: const Icon(
                                               size: 40,
                                               color: Colors.red,
                                               Icons.close_rounded)),
@@ -260,7 +280,7 @@ class HomeScreen extends StatelessWidget {
                 height: 24,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   'Top'.tr(),
                   style: Theme.of(context).textTheme.headlineSmall,
@@ -298,38 +318,62 @@ class HomeScreen extends StatelessWidget {
                       if (state is SuccessState) {
                         return FadeTransitionSwitcher(
                           child: Row(
-                            key: ValueKey(cubit.allAds!.length),
-                            children: cubit.allAds!
+                            key:
+                                ValueKey(getIt.get<DataLayer>().allAds!.length),
+                            children: getIt
+                                .get<DataLayer>()
+                                .allAds!
                                 .map(
-                                  (e) => CustomAdsContainer(
-                                    companyLogo: e['bannerimg'] ??
-                                        "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
-                                    remainingDay: '4d',
-                                    companyName: e['title'] ?? "----",
-                                    offers: e['offer_type'] ?? "----",
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          context: context,
-                                          builder: (context) {
-                                            return CustomBottomSheet(
-                                              image: e['bannerimg'],
-                                              companyName: e['title'] ?? "---",
-                                              iconImage:
-                                                  'assets/svg/coffee.svg',
-                                              description:
-                                                  e['description'] ?? "---",
-                                              remainingDay: '4d',
-                                              onPressed: () {
-                                                getIt
-                                                    .get<DataLayer>()
-                                                    .myReminders
-                                                    .add(e);
-                                              },
-                                              offerType: '40',
-                                            );
-                                          });
+                                  (e) => ImpressionDetector(
+                                    impressedCallback: () {
+                                      getIt.get<DataLayer>().recordImpressions(e[
+                                          'id']); //add impressions to ad id each time it is viewed
                                     },
+                                    child: CustomAdsContainer(
+                                      companyLogo: e['bannerimg'] ??
+                                          "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
+                                      remainingDay: '4d',
+                                      companyName: e['title'] ?? "----",
+                                      offers:
+                                          e['offer_type'] + ' ${'off'.tr()}' ??
+                                              "----",
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            context: context,
+                                            builder: (context) {
+                                              return ImpressionDetector(
+                                                impressedCallback: () {
+                                                  getIt
+                                                      .get<DataLayer>()
+                                                      .recordClicks(e[
+                                                          'id']); //add clicks to ad id each time it is clicked
+                                                },
+                                                child: CustomBottomSheet(
+                                                  image: e['bannerimg'],
+                                                  companyName:
+                                                      e['title'] ?? "---",
+                                                  iconImage:
+                                                      'assets/svg/coffee.svg',
+                                                  description:
+                                                      e['description'] ?? "---",
+                                                  remainingDay: '4d',
+                                                  onPressed: () {
+                                                    getIt
+                                                        .get<DataLayer>()
+                                                        .myReminders
+                                                        .add(e);
+                                                  },
+                                                  offerType:
+                                                      '40% ${'off'.tr()}',
+                                                  viewLocation:
+                                                      'View Location'.tr(),
+                                                  locationOnPressed: () {},
+                                                ),
+                                              );
+                                            });
+                                      },
+                                    ),
                                   ),
                                 )
                                 .toList(),
@@ -348,7 +392,7 @@ class HomeScreen extends StatelessWidget {
                 height: 12,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   'Around you'.tr(),
                   style: Theme.of(context).textTheme.headlineSmall,
@@ -386,15 +430,20 @@ class HomeScreen extends StatelessWidget {
                       if (state is SuccessState) {
                         return FadeTransitionSwitcher(
                           child: Row(
-                            key: ValueKey(cubit.allAds!.length),
-                            children: cubit.allAds!
+                            key:
+                                ValueKey(getIt.get<DataLayer>().allAds!.length),
+                            children: getIt
+                                .get<DataLayer>()
+                                .allAds!
                                 .map(
                                   (e) => CustomAdsContainer(
-                                    companyLogo: e['bannerimg'] ??
+                                    companyLogo: e['business']['logo_img'] ??
                                         "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
                                     remainingDay: '4d',
                                     companyName: e['title'] ?? "----",
-                                    offers: e['offer_type'] ?? "----",
+                                    offers:
+                                        e['offer_type'] + ' ${'off'.tr()}' ??
+                                            "----",
                                     onTap: () {
                                       showModalBottomSheet(
                                           isScrollControlled: true,
@@ -414,7 +463,10 @@ class HomeScreen extends StatelessWidget {
                                                     .myReminders
                                                     .add(e);
                                               },
-                                              offerType: '40',
+                                              offerType: '40% ${'off'.tr()}',
+                                              viewLocation:
+                                                  'View Location'.tr(),
+                                              locationOnPressed: () {},
                                             );
                                           });
                                     },

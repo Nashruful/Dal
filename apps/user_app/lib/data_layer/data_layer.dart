@@ -5,6 +5,10 @@ class DataLayer {
   final supabase = Supabase.instance.client;
 
   Map? currentUserInfo;
+  List<Map<String, dynamic>>? allAds;
+  List<Map<String, dynamic>> myReminders = [];
+  Map<String, int> impressions = {};
+  Map<String, int> clicks = {};
 
   final box = GetStorage();
 
@@ -17,4 +21,16 @@ class DataLayer {
 
     box.write("currentUser", currentUserInfo);
   }
+
+  //icrement
+  recordImpressions(String adID) {
+    impressions[adID] = (impressions[adID] ?? 0) + 1;
+
+  }
+
+  recordClicks(String adID) {
+        clicks[adID] = (clicks[adID] ?? 0) + 1;
+  }
+  cleanImpressions() {}
+  cleanClicks() {}
 }
