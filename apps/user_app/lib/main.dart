@@ -9,7 +9,6 @@ import 'package:user_app/screens/bottom_nav_bar_screen/bottom_nav_bar_screen.dar
 import 'package:user_app/screens/home_screen/home_screen.dart';
 import 'package:user_app/services/supabase/supabase_configration.dart';
 import 'package:user_app/setup/setup.dart';
-import 'package:adaptive_theme/adaptive_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
