@@ -36,7 +36,7 @@ class CustomAdsContainer extends StatelessWidget {
             Positioned.fill(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
-              child: Image.asset(ComapanyLogo,fit: BoxFit.fill,)),
+              child: Image.network(ComapanyLogo,fit: BoxFit.fill,)),
             ),
           
 ///
