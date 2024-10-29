@@ -35,7 +35,7 @@ class StatsScreen extends StatelessWidget {
                       numbers: 1234,
                     ),
                     StatCards(
-                      lable: 'Total Clicks'.tr(),
+                      lable: 'last commit',
                       numbers: 234,
                     ),
                   ],
