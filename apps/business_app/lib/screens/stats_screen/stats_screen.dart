@@ -31,7 +31,7 @@ class StatsScreen extends StatelessWidget {
                           getIt.get<DataLayer>().allbusinessAds.length ?? 0,
                     ),
                     StatCards(
-                      lable: 'lujain test 2',
+                      lable: 'test test',
                       numbers: 1234,
                     ),
                     StatCards(
