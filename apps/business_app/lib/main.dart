@@ -1,3 +1,4 @@
+import 'package:business_app/screens/bottom_nav_bar_screen/bottom_nav_bar_screen.dart';
 import 'package:business_app/screens/onbording_screen/onbording_screen.dart';
 import 'package:business_app/services/supabase/supabase_configration.dart';
 import 'package:business_app/setup/setup.dart';
@@ -10,15 +11,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await SupabaseConfigration.connectSupabase();
- await setup();
+  await setup();
   runApp(
     DevicePreview(
-      enabled: false,
+      enabled: true,
       builder: (context) => EasyLocalization(
           supportedLocales: const [Locale('en'), Locale('ar')],
           path: 'assets/translations',
-          //fallbackLocale: Locale('en', 'US'),
-          child: const MainApp()), // Wrap your app
+          child: const MainApp()),
     ),
   );
 }
@@ -36,6 +36,6 @@ class MainApp extends StatelessWidget {
         theme: AppThemes.lightTheme,
         darkTheme: AppThemes.darkTheme,
         themeMode: ThemeMode.system,
-        home: OnboardingScreen());
+        home: BottomNavBarScreen());
   }
 }

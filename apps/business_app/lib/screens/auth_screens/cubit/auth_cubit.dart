@@ -66,7 +66,7 @@ class AuthCubit extends Cubit<AuthStatee> {
 
       // await OneSignal.login(supabase.auth.currentUser!.id); ---- Later when connecting with OneSignal
 
-      await getIt.get<DataLayer>().getUserInfo();
+      await getIt.get<DataLayer>().getBusinessInfo();
 
       emit(SuccessState());
     } on AuthException catch (e) {
@@ -95,7 +95,7 @@ class AuthCubit extends Cubit<AuthStatee> {
 
       OneSignal.login(supabase.auth.currentUser!.id);
 
-      await getIt.get<DataLayer>().getUserInfo();
+      await getIt.get<DataLayer>().getBusinessInfo();
 
       emit(SuccessState());
     } on AuthException catch (e) {
