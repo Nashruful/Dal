@@ -9,21 +9,25 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   final supabase = getIt.get<DataLayer>().supabase;
 
-  List<Map<String, dynamic>>? allAds;
-
   HomeCubit() : super(HomeInitial());
 
   getAllAds() async {
-    emit(LoadingState());
-
-    try {
-      allAds = await supabase.from("ad").select('*,business(logo_img)');
+    if (getIt.get<DataLayer>().allAds == null) {
+      emit(LoadingState());
+      try {
+        getIt.get<DataLayer>().allAds =
+            await supabase.from("ad").select('*,branch(*, business(*))');
+        print('------');
+        print(getIt.get<DataLayer>().allAds);
+        print("--------------- data fetched");
+        emit(SuccessState());
+      } on PostgrestException catch (e) {
+        emit(ErrorState(msg: e.message));
+      } on AuthException catch (e) {
+        emit(ErrorState(msg: e.message));
+      }
+    } else {
       emit(SuccessState());
-    } on PostgrestException catch (e) {
-      emit(ErrorState(msg: e.message));
-    }
-    try {} on AuthException catch (e) {
-      emit(ErrorState(msg: e.message));
     }
   }
 }

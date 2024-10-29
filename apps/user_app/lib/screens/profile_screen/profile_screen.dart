@@ -47,6 +47,7 @@ class ProfileScreen extends StatelessWidget {
                                         const EditProfileScreen()));
                               },
                             );
+                            
                           },
                         ),
                       ),

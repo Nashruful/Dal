@@ -8,6 +8,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/screens/home_screen/cubit/home_cubit.dart';
 import 'package:user_app/setup/setup.dart';
+
 //
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -308,8 +309,11 @@ class HomeScreen extends StatelessWidget {
                       if (state is SuccessState) {
                         return FadeTransitionSwitcher(
                           child: Row(
-                            key: ValueKey(cubit.allAds!.length),
-                            children: cubit.allAds!
+                            key:
+                                ValueKey(getIt.get<DataLayer>().allAds!.length),
+                            children: getIt
+                                .get<DataLayer>()
+                                .allAds!
                                 .map(
                                   (e) => CustomAdsContainer(
                                     companyLogo: e['bannerimg'] ??
@@ -401,14 +405,20 @@ class HomeScreen extends StatelessWidget {
                       if (state is SuccessState) {
                         return FadeTransitionSwitcher(
                           child: Row(
-                            key: ValueKey(cubit.allAds!.length),
-                            children: cubit.allAds!
+                            key:
+                                ValueKey(getIt.get<DataLayer>().allAds!.length),
+                            children: getIt
+                                .get<DataLayer>()
+                                .allAds!
                                 .map(
                                   (e) => CustomAdsContainer(
-                                    companyLogo: e['business']['logo_img'] ??
+                                    companyLogo: e['branch']?['business']
+                                            ?['logo_img'] ??
                                         "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
                                     remainingDay: '4d',
-                                    companyName: e['title'] ?? "----",
+                                    companyName: e['branch']?['business']
+                                            ?['name'] ??
+                                        "----",
                                     offers:
                                         e['offer_type'] + ' ${'off'.tr()}' ??
                                             "----",
@@ -419,7 +429,9 @@ class HomeScreen extends StatelessWidget {
                                           builder: (context) {
                                             return CustomBottomSheet(
                                               image: e['bannerimg'],
-                                              companyName: e['title'] ?? "---",
+                                              companyName: e['branch']
+                                                      ?['business']?['name'] ??
+                                                  "---",
                                               iconImage:
                                                   'assets/svg/coffee.svg',
                                               description:
@@ -431,7 +443,8 @@ class HomeScreen extends StatelessWidget {
                                                     .myReminders
                                                     .add(e);
                                               },
-                                              offerType: '40% ${'off'.tr()}',
+                                              offerType:
+                                                  '${e['offer_type']} ${'off'.tr()}',
                                               viewLocation:
                                                   'View Location'.tr(),
                                               locationOnPressed: () {},
