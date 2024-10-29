@@ -21,9 +21,16 @@ class ProfileInfoSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            CircleAvatar(
-              radius: 40,
-              //child: Image.network(imgurl),
+            Container(
+              width: 60,
+              height: 60,
+              decoration: const BoxDecoration(shape: BoxShape.circle),
+              child: ClipOval(
+                child: Image.network(
+                  imgurl,
+                  fit: BoxFit.fill,
+                ),
+              ),
             ),
             const SizedBox(
               width: 10,
@@ -78,12 +85,9 @@ class FilterSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          text,
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
+        Text(text, style: Theme.of(context).textTheme.bodyLarge),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Text(
             subText,
             style: Theme.of(context).textTheme.bodyMedium,
@@ -95,7 +99,8 @@ class FilterSection extends StatelessWidget {
             return ChoiceChip(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                labelStyle: TextStyle(color: Color(0xffF7F7F7), fontSize: 14),
+                labelStyle:
+                    const TextStyle(color: Color(0xffF7F7F7), fontSize: 14),
                 label: Text(category),
                 selected: categories[category]!,
                 onSelected: (isSelected) => selectFilter(category),
@@ -104,7 +109,7 @@ class FilterSection extends StatelessWidget {
                 showCheckmark: false,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Colors.transparent,
                     )));
           }).toList(),
@@ -245,7 +250,7 @@ class PlanSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Text(plan,
                         style: TextStyle(
                             fontSize: 14,

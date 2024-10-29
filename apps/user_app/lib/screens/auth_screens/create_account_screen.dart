@@ -1,4 +1,4 @@
-import 'package:components/component/custom_text_field/custom_text_form_field.dart';
+import 'package:components/component/custom_text_field/custom_text_field.dart';
 import 'package:components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -186,7 +186,7 @@ class CreateAccountScreen extends StatelessWidget {
                         const SizedBox(
                           height: 48,
                         ),
-                        CustomTextFormField(
+                        CustomTextField(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Please enter your email";

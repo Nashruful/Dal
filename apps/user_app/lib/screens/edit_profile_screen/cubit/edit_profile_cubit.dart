@@ -17,13 +17,28 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   ImagePicker pick = ImagePicker();
-  File? image;
+  //late File image;
 
   Future<void> pickAdsImage() async {
     final XFile? imageFile = await pick.pickImage(source: ImageSource.gallery);
     if (imageFile != null) {
-      image = File(imageFile.path);
-      emit(AdsImageState(image: File(imageFile.path)));
+      final File image = File(imageFile.path);
+
+      final uploadImage = await supabase.storage
+          .from('user profile images')
+          .upload('images/${imageFile.name}', image);
+
+      print('Image uploaded successfully: $uploadImage');
+      final getUrl = await supabase.storage
+          .from('user profile images')
+          .getPublicUrl('images/${imageFile.name}');
+      print(getUrl);
+      // add image to users table
+      await supabase.from('users').update({'profile_image': getUrl}).eq(
+          'id', supabase.auth.currentUser!.id);
+      emit(AdsImageState(image: image));
+    } else {
+      print('No image selected');
     }
   }
 

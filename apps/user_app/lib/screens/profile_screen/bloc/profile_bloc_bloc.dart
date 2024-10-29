@@ -21,10 +21,10 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
   };
   int langValue = 0;
 
-  bool DarkModeOn = true;
   String firstName = '';
   String lastName = '';
   String email = '';
+  String image = '';
 
   ThemeMode themeMode = ThemeMode.system;
 
@@ -37,12 +37,6 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
       emit(UpdatedFilterState());
     });
 
-    //change theme mode
-    on<ChangeModeEvent>((event, emit) {
-      DarkModeOn = !DarkModeOn;
-
-      emit(ChangedModeState());
-    });
 
     //change lang
     on<ChangeLangEvent>((event, emit) {
@@ -63,8 +57,9 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
         firstName = info['first_name'];
         lastName = info['last_name'];
         email = info['email'];
+        image = info['profile_image'];
         emit(GetInfoState(
-            firstName: firstName, lastName: lastName, email: email));
+            firstName: firstName, lastName: lastName, email: email, image: image));
       } on AuthException catch (e) {
         emit(ErrorState(msg: e.message));
         print(e.message);

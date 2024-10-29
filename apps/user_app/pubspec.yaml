@@ -25,6 +25,9 @@ dependencies:
   geolocator: ^13.0.1
   easy_localization: ^3.0.7
   adaptive_theme: ^3.6.0
+  cached_network_image: ^3.4.1
+  dio: ^5.7.0
+
 
 dev_dependencies:
   flutter_test:

@@ -9,6 +9,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/screens/home_screen/cubit/home_cubit.dart';
 import 'package:user_app/setup/setup.dart';
+import 'package:dio/dio.dart';
+
 //
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -58,7 +60,47 @@ class HomeScreen extends StatelessWidget {
                       //go to notifications?
                     },
                     icon: SvgPicture.asset('assets/svg/notification.svg')),
-              )
+              ),
+              TextButton(
+                  onPressed: () async {
+                    final dio = Dio();
+                    try {
+                      final response = await dio.post(
+                        "https://api.onesignal.com/api/v1/notifications",
+                        data: {
+                          "app_id": "ebdec5c2-30a4-447d-9577-a1c13b6d553e",
+                          "contents": {
+                            "en": "Check out Burger's king offer nearby!",
+                            "ar": "لا يطوفك عرض Burger king!"
+                          },
+                          "include_external_user_ids": [
+                            getIt.get<DataLayer>().supabase.auth.currentUser!.id
+                          ], // Correct field name
+                        },
+                        options: Options(headers: {
+                          "Authorization":
+                              "Bearer ZGU5ZmExOTEtNmFiZC00ZTUxLTgyMGYtNjc4MDJlYjUyNmM4",
+                          'Content-Type':
+                              'application/json', // Ensure correct casing
+                        }),
+                      );
+
+                      print("------------------- ${response.data}");
+                      print("------------------- ${response.statusCode}");
+                    } on DioException catch (e) {
+                      print("Dio error: ${e.message}");
+                      if (e.response != null) {
+                        print("Response data: ${e.response!.data}");
+                      }
+                    } catch (e) {
+                      print("Error: ${e.toString()}");
+                    }
+                  },
+                  child: Text(
+                    "Send notification test",
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.w900),
+                  ))
             ],
           ),
           body: ListView(
@@ -311,8 +353,11 @@ class HomeScreen extends StatelessWidget {
                       if (state is SuccessState) {
                         return FadeTransitionSwitcher(
                           child: Row(
-                            key: ValueKey(getIt.get<DataLayer>().allAds!.length),
-                            children: getIt.get<DataLayer>().allAds!
+                            key:
+                                ValueKey(getIt.get<DataLayer>().allAds!.length),
+                            children: getIt
+                                .get<DataLayer>()
+                                .allAds!
                                 .map(
                                   (e) => CustomAdsContainer(
                                     companyLogo: e['bannerimg'] ??
@@ -405,8 +450,11 @@ class HomeScreen extends StatelessWidget {
                       if (state is SuccessState) {
                         return FadeTransitionSwitcher(
                           child: Row(
-                            key: ValueKey(getIt.get<DataLayer>().allAds!.length),
-                            children: getIt.get<DataLayer>().allAds!
+                            key:
+                                ValueKey(getIt.get<DataLayer>().allAds!.length),
+                            children: getIt
+                                .get<DataLayer>()
+                                .allAds!
                                 .map(
                                   (e) => CustomAdsContainer(
                                     companyLogo: e['bannerimg'] ??

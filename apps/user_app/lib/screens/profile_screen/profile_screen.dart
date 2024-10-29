@@ -9,7 +9,7 @@ import 'package:user_app/screens/profile_screen/bloc/profile_bloc_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
-//
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -35,7 +35,9 @@ class ProfileScreen extends StatelessWidget {
                         child: BlocBuilder<ProfileBlocBloc, ProfileBlocState>(
                           builder: (context, state) {
                             return ProfileInfoSection(
-                              imgurl: '',
+                              imgurl: bloc.image == ''
+                                  ? 'https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg'
+                                  : bloc.image,
                               firstName: bloc.firstName,
                               lastName: bloc.lastName,
                               email: bloc.email,

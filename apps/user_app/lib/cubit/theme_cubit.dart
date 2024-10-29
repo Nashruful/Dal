@@ -6,11 +6,12 @@ import 'package:meta/meta.dart';
 part 'theme_state.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
-    bool DarkModeOn = true;
+  bool DarkModeOn = true;
 
-  ThemeCubit() : super(ThemeInitial(themeData: AppThemes.darkTheme));
+  ThemeCubit() : super(ThemeInitial(themeData: AppThemes.lightTheme));
 
   void toggleTheme() {
+    DarkModeOn = !DarkModeOn;
     if (state.themeData == AppThemes.darkTheme) {
       emit(ThemeInitial(themeData: AppThemes.lightTheme));
     } else {

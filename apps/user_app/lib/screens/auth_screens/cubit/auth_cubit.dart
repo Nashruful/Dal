@@ -86,7 +86,7 @@ class AuthCubit extends Cubit<AuthStatee> {
                 "email", email);
       }
 
-      // await OneSignal.login(supabase.auth.currentUser!.id); ---- Later when connecting with OneSignal
+      await OneSignal.login(supabase.auth.currentUser!.id);
 
       await getIt.get<DataLayer>().getUserInfo();
 
