@@ -7,6 +7,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../my_ads_screen/My_ads.dart';
 import 'bloc/nav_bar_bloc.dart';
 
 class BottomNavBarScreen extends StatelessWidget {
@@ -20,7 +21,7 @@ class BottomNavBarScreen extends StatelessWidget {
         int index = 0;
         List navBarPages = const [
           HomeScreen(),
-          AddAdsScreen(),
+          MyAdsScreen(),
           StatsScreen(),
           ProfileScreen(),
         ];

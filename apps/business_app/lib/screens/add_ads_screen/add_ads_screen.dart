@@ -7,6 +7,7 @@ import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multi_dropdown/multi_dropdown.dart';
 
 class AddAdsScreen extends StatelessWidget {
   const AddAdsScreen({super.key});
@@ -20,6 +21,7 @@ class AddAdsScreen extends StatelessWidget {
         final cubit = context.read<AddAdsCubit>();
         DateTime? startDate;
         DateTime? endDate;
+
         return Scaffold(
             appBar: AppBar(
               backgroundColor: const Color(0xffA51361),
@@ -37,7 +39,7 @@ class AddAdsScreen extends StatelessWidget {
                     children: [
                       CustomText(
                         text: 'Ad type'.tr(),
-                        color: Color(0xff444444),
+                        color: const Color(0xff444444),
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -64,7 +66,7 @@ class AddAdsScreen extends StatelessWidget {
                       ),
                       CustomText(
                         text: 'Category'.tr(),
-                        color: Color(0xff444444),
+                        color: const Color(0xff444444),
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -75,8 +77,7 @@ class AddAdsScreen extends StatelessWidget {
                         builder: (context, state) {
                           return CustomDrobDownButton(
                             value: cubit.categoryValue,
-                            items:
-                            [
+                            items: [
                               DropdownMenuEntry(value: 0, label: "Cafes".tr()),
                               DropdownMenuEntry(value: 1, label: "Bakery".tr()),
                               DropdownMenuEntry(
@@ -106,7 +107,7 @@ class AddAdsScreen extends StatelessWidget {
                       ),
                       CustomText(
                         text: 'Ads Duration'.tr(),
-                        color: Color(0xff444444),
+                        color: const Color(0xff444444),
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -192,7 +193,7 @@ class AddAdsScreen extends StatelessWidget {
                                                   const Color(0xffA51361),
                                               child: CustomText(
                                                 text: 'Confirm button'.tr(),
-                                                color: Color(0xffF7F7F7),
+                                                color: const Color(0xffF7F7F7),
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -203,7 +204,7 @@ class AddAdsScreen extends StatelessWidget {
                                 },
                                 child: CustomText(
                                   text: 'Change date'.tr(),
-                                  color: Color(0xffA51361),
+                                  color: const Color(0xffA51361),
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -217,7 +218,7 @@ class AddAdsScreen extends StatelessWidget {
                       ),
                       CustomText(
                         text: 'Description'.tr(),
-                        color: Color(0xff444444),
+                        color: const Color(0xff444444),
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -243,7 +244,7 @@ class AddAdsScreen extends StatelessWidget {
                       ),
                       CustomText(
                         text: 'Location'.tr(),
-                        color: Color(0xff444444),
+                        color: const Color(0xff444444),
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -252,24 +253,54 @@ class AddAdsScreen extends StatelessWidget {
                       ),
                       BlocBuilder<AddAdsCubit, AddAdsState>(
                         builder: (context, state) {
-                          return CustomDrobDownButton(
-                            value: cubit.locationValue,
+                          return MultiDropdown(
+                            controller: cubit.branchLocationController,
+                            singleSelect: true,
+                            enabled: true,
+                            maxSelections: 2,
+                            searchEnabled: true,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             items: [
-                              const DropdownMenuEntry(
-                                  value: 0, label: "Tuwaiq"),
-                              const DropdownMenuEntry(value: 1, label: "Mall"),
-                            ].map((entry) {
-                              return DropdownMenuItem<int>(
-                                value: entry.value,
-                                child: Text(entry.label),
-                              );
-                            }).toList(),
-                            onChanged: (int? value) {
-                              if (value != null) {
-                                cubit.selectLocation(value);
-                              }
-                            },
+                              DropdownItem(label: "Tuwaiq", value: 0),
+                              DropdownItem(label: "----", value: 1),
+                              DropdownItem(label: "aaaa", value: 2),
+                              DropdownItem(label: "gg", value: 3),
+                            ],
+                            fieldDecoration: const FieldDecoration(
+                              hintText: 'Select a branch',
+                            ),
+                            dropdownDecoration: const DropdownDecoration(
+                                backgroundColor: Color(0xffEAEAEA)),
+                            dropdownItemDecoration:
+                                const DropdownItemDecoration(
+                                    backgroundColor: Color(0xffEAEAEA),
+                                    selectedBackgroundColor: Color(0xffEAEAEA),
+                                    selectedIcon: Icon(Icons.check),
+                                    disabledIcon: Icon(Icons
+                                        .check_box_outline_blank_outlined)),
+                            chipDecoration: const ChipDecoration(
+                                backgroundColor: Color(0xffEAEAEA)),
                           );
+
+                          // CustomDrobDownButton(
+                          //   value: cubit.locationValue,
+                          //   items: [
+                          //     const DropdownMenuEntry(
+                          //         value: 0, label: "Tuwaiq"),
+                          //     const DropdownMenuEntry(value: 1, label: "Mall"),
+                          //   ].map((entry) {
+                          //     return DropdownMenuItem<int>(
+                          //       value: entry.value,
+                          //       child: Text(entry.label),
+                          //     );
+                          //   }).toList(),
+                          //   onChanged: (int? value) {
+                          //     if (value != null) {
+                          //       cubit.selectLocation(value);
+                          //     }
+                          //   },
+                          // );
                         },
                       ),
                       const SizedBox(
@@ -277,7 +308,7 @@ class AddAdsScreen extends StatelessWidget {
                       ),
                       CustomText(
                         text: 'Ads image'.tr(),
-                        color: Color(0xff444444),
+                        color: const Color(0xff444444),
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -324,14 +355,17 @@ class AddAdsScreen extends StatelessWidget {
                       // ---------------- button --------------
                       CustomElevatedButton(
                         backgroundColor: const Color(0xffA51361),
-                        onPressed: () {
+                        onPressed: () async {
                           if (formKey.currentState?.validate() == true) {
+                            final selectbranchLocation =
+                                cubit.branchLocationController;
+                            print(selectbranchLocation);
                             cubit.addAds();
                           }
                         },
                         child: CustomText(
                           text: 'Post button'.tr(),
-                          color: Color(0xffF7F7F7),
+                          color: const Color(0xffF7F7F7),
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),

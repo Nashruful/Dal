@@ -6,6 +6,7 @@ import 'package:business_app/setup/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
+import 'package:multi_dropdown/multi_dropdown.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'add_ads_state.dart';
@@ -15,6 +16,8 @@ class AddAdsCubit extends Cubit<AddAdsState> {
 
   TextEditingController addTypeController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  MultiSelectController<int>? branchLocationController =
+      MultiSelectController();
 
   final supabase = getIt.get<DataLayer>().supabase;
 

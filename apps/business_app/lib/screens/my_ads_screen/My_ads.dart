@@ -1,12 +1,9 @@
-
-
+import 'package:business_app/screens/add_ads_screen/add_ads_screen.dart';
 import 'package:components/component/custom_app_bar/custom_app_bar.dart';
-import 'package:components/component/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'current_ads.dart';
 import 'custom_tabbar.dart';
 import 'past_ads.dart';
-
 
 class MyAdsScreen extends StatelessWidget {
   const MyAdsScreen({super.key});
@@ -16,8 +13,11 @@ class MyAdsScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-      appBar: CustomAppBar(title: "My Ads",
-      bottom: MyAdsTabBar(), automaticallyImplyLeading: false,),
+        appBar: CustomAppBar(
+          title: "My Ads",
+          bottom: MyAdsTabBar(),
+          automaticallyImplyLeading: false,
+        ),
         body: const TabBarView(
           children: [
             CurrentAdsTap(),
@@ -25,9 +25,12 @@ class MyAdsScreen extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => AddAdsScreen()));
+          },
           backgroundColor: const Color(0xffA51361),
-          child:  Icon(Icons.add, color: Colors.white),
+          child: Icon(Icons.add, color: Colors.white),
           shape: const CircleBorder(),
         ),
       ),
