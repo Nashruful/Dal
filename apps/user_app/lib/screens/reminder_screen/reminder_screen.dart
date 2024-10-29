@@ -1,4 +1,5 @@
 import 'package:components/component/custom_containers/custom_ads_container.dart';
+import 'package:components/component/custom_containers/reminders_ads_container.dart';
 import 'package:components/component/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,20 +9,14 @@ import 'package:user_app/screens/reminder_screen/bloc/reminder_state.dart';
 import 'package:user_app/screens/reminder_screen/bloc/reminedr_bloc.dart';
 import 'package:user_app/setup/setup.dart';
 
-class ReminderScreen extends StatefulWidget {
-  ReminderScreen();
 
-  @override
-  State<ReminderScreen> createState() => ReminderScreenState();
-}
-
-class ReminderScreenState extends State<ReminderScreen> {
+class ReminderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ReminderBloc(),
-      child: Builder(builder: (context) {
-        context.read<ReminderBloc>().add(LoadReminders());
+      create: (blockContext) => ReminderBloc(),
+      child: Builder(builder: (blockContext) {
+        blockContext.read<ReminderBloc>().add(LoadReminders());
         return Scaffold(
           appBar: AppBar(
             backgroundColor: const Color(0xffA51361),
@@ -48,7 +43,7 @@ class ReminderScreenState extends State<ReminderScreen> {
                     bool isReminder = true;
                     return Padding(
                       padding: const EdgeInsets.only(top: 12),
-                      child: CustomAdsContainer(
+                      child: RemindersAdsContainer(
                         companyLogo: item['bannerimg'] ??
                             "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
                         remainingDay: '4d',
@@ -134,7 +129,7 @@ class ReminderScreenState extends State<ReminderScreen> {
                                             ],
                                           ),
                                           Text(
-                                            item['title'],
+                                            item['title']??"",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge,
@@ -163,15 +158,13 @@ class ReminderScreenState extends State<ReminderScreen> {
                                             children: [
                                               ElevatedButton(
                                                   onPressed: () {
-                                                    getIt
-                                                        .get<ReminderBloc>()
-                                                        .add(RemoveReminder(
-                                                            item));
+                                                  blockContext
+                                                        .read<ReminderBloc>()
+                                                        .add(RemoveReminder(item));
                                                     Navigator.pop(context);
-                                                    getIt
-                                                        .get<ReminderBloc>()
+                                                    blockContext
+                                                        .read<ReminderBloc>()
                                                         .add(LoadReminders());
-                                                    setState(() {});
                                                   },
                                                   style:
                                                       ElevatedButton.styleFrom(
