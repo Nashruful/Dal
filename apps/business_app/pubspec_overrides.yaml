@@ -1,4 +1,4 @@
 # melos_managed_dependency_overrides: components
 dependency_overrides:
   components:
-    path: ..\\..\\packages\\components
+    path: ../../packages/components

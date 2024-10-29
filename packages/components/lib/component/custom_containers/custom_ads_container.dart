@@ -5,11 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CustomAdsContainer extends StatelessWidget {
   const CustomAdsContainer(
       {super.key,
-      required this.ComapanyLogo,
+      required this.companyLogo,
       required this.remainingDay,
       required this.companyName,
-      required this.offers, this.onTap});
-  final String ComapanyLogo;
+      required this.offers,
+      this.onTap});
+  final String companyLogo;
   final String remainingDay;
   final String companyName;
   final String offers;
@@ -17,7 +18,6 @@ class CustomAdsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -26,20 +26,26 @@ class CustomAdsContainer extends StatelessWidget {
         height: 230,
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
-              color: const Color(0xff000000).withOpacity(0.25),
+              color: const Color(0xff000000).withOpacity(0.2),
               blurStyle: BlurStyle.outer,
               blurRadius: 4,
               offset: const Offset(0, 2))
         ]),
         child: Stack(
           children: [
-            Positioned.fill(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(ComapanyLogo,fit: BoxFit.fill,)),
+            Positioned(
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network(
+                    companyLogo,
+                    fit: BoxFit.fill,
+                    height: 172,
+                  )),
             ),
-          
-///
+
+            ///
+
+////
             Positioned(
               top: 0,
               right: 0,
@@ -61,11 +67,9 @@ class CustomAdsContainer extends StatelessWidget {
                       width: 24,
                     ),
                     const SizedBox(width: 3),
-                    CustomText(
-                      text: remainingDay,
-                      color: const Color(0xffB8B8B8),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
+                    Text(
+                      remainingDay,
+                      style: TextStyle(color: AppColors().grey2),
                     ),
                   ],
                 ),
@@ -78,9 +82,10 @@ class CustomAdsContainer extends StatelessWidget {
               child: Container(
                 width: 70,
                 height: 70,
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                decoration: const BoxDecoration(
-                  color: Color(0xffF7F7F7),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).canvasColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(12),
                     topRight: Radius.circular(12),
@@ -89,18 +94,16 @@ class CustomAdsContainer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(
-                      text: companyName,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
-                      color: const Color(0xff444444),
+                    Text(
+                      companyName,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
-                    CustomText(
-                      text: offers,
-                      color: const Color(0xffA51361),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
+                    Text(
+                      offers,
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),

@@ -5,6 +5,7 @@ class DataLayer {
   final supabase = Supabase.instance.client;
 
   Map? currentUserInfo;
+   List<Map<String, dynamic>>? allAds;
   List<Map<String, dynamic>> myReminders = [];
 
   final box = GetStorage();

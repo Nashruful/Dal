@@ -1,4 +1,5 @@
 import 'package:components/components.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -44,7 +45,7 @@ class VerifyScreen extends StatelessWidget {
             }
           },
           child: Scaffold(
-            backgroundColor: const Color(0xffF7F7F7),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             body: Form(
               key: cubit.formKey,
               child: Stack(
@@ -173,12 +174,12 @@ class VerifyScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Align(
+                        Align(
                           alignment: Alignment.centerLeft,
-                          child: CustomText(
-                              text: "Check your email",
-                              color: Color(0xff444444),
-                              fontSize: 32),
+                          child: Text("Verify title",
+                                  style:
+                                      Theme.of(context).textTheme.headlineLarge)
+                              .tr(),
                         ),
                         const SizedBox(
                           height: 20,
@@ -187,10 +188,9 @@ class VerifyScreen extends StatelessWidget {
                           alignment: Alignment.centerLeft,
                           child: RichText(
                               text: TextSpan(
-                                  text:
-                                      "We’ve send you a confirmation code at ",
+                                  text: "Verify subtitle".tr(),
                                   style: const TextStyle(
-                                      color:  Color(0xff444444), fontSize: 16),
+                                      color: Color(0xff444444), fontSize: 16),
                                   children: [
                                 TextSpan(
                                     text: "\n$email",
@@ -201,12 +201,11 @@ class VerifyScreen extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        const Align(
+                        Align(
                           alignment: Alignment.centerLeft,
-                          child: CustomText(
-                              text: "Confirmation code: ",
-                              color: Color(0xff444444),
-                              fontSize: 16),
+                          child: Text("Confirmation code",
+                                  style: Theme.of(context).textTheme.bodyMedium)
+                              .tr(),
                         ),
                         const SizedBox(
                           height: 10,
@@ -227,19 +226,19 @@ class VerifyScreen extends StatelessWidget {
                               if (cubit.formKey.currentState!.validate()) {}
                             },
                             backgroundColor: const Color(0xffA51361),
-                            child: const CustomText(
-                                text: "Verify",
-                                color: Color(0xffF7F7F7),
-                                fontSize: 14)),
+                            child: Text("Verify",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium)
+                                .tr()),
                         const SizedBox(
                           height: 20,
                         ),
                         TextButton(
                             onPressed: () {},
-                            child: const CustomText(
-                                text: "Resend OTP",
-                                color: Color(0xff444444),
-                                fontSize: 14))
+                            child: Text("Resend OTP",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium)
+                                .tr())
                       ],
                     ),
                   ),

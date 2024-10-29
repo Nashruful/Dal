@@ -90,8 +90,6 @@ class AuthCubit extends Cubit<AuthStatee> {
 
       await getIt.get<DataLayer>().getUserInfo();
 
-      
-
       emit(SuccessState());
     } on AuthException catch (e) {
       emit(ErrorState(msg: e.message));

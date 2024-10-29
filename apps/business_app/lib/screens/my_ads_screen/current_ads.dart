@@ -26,7 +26,7 @@ class CurrentAdsTap extends StatelessWidget {
         itemBuilder: (context, index) {
           return CustomAdsContainer(
             companyName: 'Half Million',
-            ComapanyLogo: 'assets/png/company_logo.png',
+            companyLogo: 'assets/png/company_logo.png',
             remainingDay: '4d',
             offers: '50% off',
           );

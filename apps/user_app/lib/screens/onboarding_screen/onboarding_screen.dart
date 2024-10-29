@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:user_app/screens/auth_screens/create_account_screen.dart';
 import 'package:user_app/screens/auth_screens/login_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -10,7 +11,7 @@ class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF7F7F7),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -25,23 +26,16 @@ class OnboardingScreen extends StatelessWidget {
                 const SizedBox(
                   height: 40,
                 ),
-                const Column(
+                Column(
                   children: [
-                    CustomText(
-                        textAlign: TextAlign.center,
-                        fontWeight: FontWeight.bold,
-                        text: "Know Whats Ahead Of You!",
-                        color: Color(0xff444444),
-                        fontSize: 36),
+                    Text("Onboarding title",
+                            style: Theme.of(context).textTheme.headlineLarge)
+                        .tr(),
                     SizedBox(
                       height: 9,
                     ),
-                    CustomText(
-                        textAlign: TextAlign.center,
-                        text:
-                            "Login and get to know all about the activities around you ",
-                        color: Color(0xff444444),
-                        fontSize: 16),
+                    Text("Onbording subtitle".tr(),
+                        style: Theme.of(context).textTheme.bodyMedium),
                   ],
                 ),
                 const SizedBox(
@@ -57,26 +51,24 @@ class OnboardingScreen extends StatelessWidget {
                                 builder: (context) => const LoginScreen()));
                       },
                       backgroundColor: const Color(0xffA51361),
-                      child: const CustomText(
-                          text: "Login",
-                          color: Color(0xffF7F7F7),
-                          fontSize: 14),
+                      child: Text("Login",
+                              style: Theme.of(context).textTheme.titleMedium)
+                          .tr(),
                     ),
                     const SizedBox(
                       height: 25,
                     ),
                     TextButton(
                         onPressed: () {
+                          print(EasyLocalization.of(context)!.currentLocale);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
                                       const CreateAccountScreen()));
                         },
-                        child: const CustomText(
-                            text: "Or create an account",
-                            color: Color(0xff444444),
-                            fontSize: 16))
+                        child: Text("Or create an account".tr(),
+                            style: Theme.of(context).textTheme.bodyMedium))
                   ],
                 ),
               ],

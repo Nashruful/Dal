@@ -1,5 +1,6 @@
 import 'package:components/component/custom_text_field/custom_text_form_field.dart';
 import 'package:components/components.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -47,7 +48,7 @@ class CreateAccountScreen extends StatelessWidget {
             }
           },
           child: Scaffold(
-            backgroundColor: const Color(0xffF7F7F7),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             body: Form(
               key: cubit.formKey,
               child: Stack(
@@ -176,12 +177,11 @@ class CreateAccountScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Align(
+                        Align(
                           alignment: Alignment.centerLeft,
-                          child: CustomText(
-                              text: "Sign Up",
-                              color: Color(0xff444444),
-                              fontSize: 32),
+                          child: Text("Sign Up",
+                                  style: Theme.of(context).textTheme.bodyLarge)
+                              .tr(),
                         ),
                         const SizedBox(
                           height: 48,
@@ -201,7 +201,7 @@ class CreateAccountScreen extends StatelessWidget {
                           },
                           controller: cubit.emailController,
                           hintStyle: const TextStyle(color: Color(0x80000000)),
-                          hintText: "Enter your email",
+                          hintText: "Email hint text".tr(),
                           fillColor: const Color(0xffEAEAEA),
                         ),
                         const SizedBox(
@@ -214,20 +214,20 @@ class CreateAccountScreen extends StatelessWidget {
                               }
                             },
                             backgroundColor: const Color(0xffA51361),
-                            child: const CustomText(
-                                text: "Sign Up",
-                                color: Color(0xffF7F7F7),
-                                fontSize: 14)),
+                            child: Text("Sign Up",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium)
+                                .tr()),
                         const SizedBox(
                           height: 20,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            CustomText(
-                                text: "Already Have An Account?",
-                                color: Color(0xff444444),
-                                fontSize: 14),
+                            Text("Already Have An Account?",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium)
+                                .tr(),
                             TextButton(
                                 onPressed: () {
                                   Navigator.push(
@@ -235,10 +235,11 @@ class CreateAccountScreen extends StatelessWidget {
                                       MaterialPageRoute(
                                           builder: (context) => LoginScreen()));
                                 },
-                                child: const CustomText(
-                                    text: "Login",
-                                    color: Color(0xff8CBFAE),
-                                    fontSize: 14)),
+                                child: Text("Login",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium)
+                                    .tr()),
                           ],
                         )
                       ],

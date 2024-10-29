@@ -1,5 +1,6 @@
 import 'package:components/component/custom_cards/subscriptions_card.dart';
 import 'package:components/components.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -9,9 +10,8 @@ class SubscriptionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      
       return Scaffold(
-        backgroundColor: Color(0xffF7F7F7),
+        backgroundColor: Theme.of(context).canvasColor,
         appBar: AppBar(),
         body: Center(
           child: Padding(
@@ -29,22 +29,15 @@ class SubscriptionsScreen extends StatelessWidget {
                     SizedBox(
                       height: 15,
                     ),
-                    CustomText(
-                      text: 'Draw In Passing Customers!',
-                      color: Color(0xff444444),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
+                    Text(
+                      'title plan'.tr(),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     SizedBox(
                       height: 15,
                     ),
-                    CustomText(
-                      text:
-                          'Make your business stand out! Attract passing customers with your best deals and invites by choosing one of the following subscription plans:',
-                      color: Color(0xff444444),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    Text('sub title plan'.tr(),
+                        style: Theme.of(context).textTheme.bodyMedium),
                     SizedBox(
                       height: 15,
                     ),
@@ -52,38 +45,34 @@ class SubscriptionsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomSubscriptionsCard(
-                          duration: '1 Month',
+                          duration: 'subscription one month'.tr(),
                           price: 100,
-                          plan: 'Basic',
+                          plan: 'Basic'.tr(),
                           selected: true,
                           onTap: () {},
+                          currency: 'SAR'.tr(),
                         ),
                         CustomSubscriptionsCard(
-                          duration: '1 Month',
-                          price: 250,
-                          plan: 'Premium',
-                          selected: false,
-                          onTap: () {},
-                        ),
+                            duration: 'subscription two month'.tr(),
+                            price: 250,
+                            plan: 'Standard'.tr(),
+                            selected: false,
+                            onTap: () {},
+                            currency: 'SAR'.tr()),
                         CustomSubscriptionsCard(
-                          duration: '1 Month',
-                          price: 500,
-                          plan: 'Enterprise',
-                          selected: false,
-                          onTap: () {},
-                        )
+                            duration: 'subscription three month'.tr(),
+                            price: 500,
+                            plan: 'Enterprise'.tr(),
+                            selected: false,
+                            onTap: () {},
+                            currency: 'SAR'.tr())
                       ],
                     ),
                     SizedBox(
                       height: 15,
                     ),
-                    CustomText(
-                      text:
-                          'Post your ads for passing customers for a month at a single business location, with access to basic ad stats.',
-                      color: Color(0xff444444),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    Text('Basic description'.tr(),
+                        style: Theme.of(context).textTheme.bodyMedium),
                     SizedBox(
                       height: 15,
                     ),
@@ -92,25 +81,19 @@ class SubscriptionsScreen extends StatelessWidget {
                             onPressed: () {
                               //
                             },
-                            backgroundColor: Color(0xff8CBFAE),
-                            child: CustomText(
-                              text: 'Free Trial',
-                              color: Color(0xffF7F7F7),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                            ),
+                            backgroundColor: AppColors().green,
+                            child: Text('free Trial button'.tr(),
+                                style: Theme.of(context).textTheme.bodyMedium),
                           )
                         : SizedBox(),
                     CustomElevatedButton(
                       onPressed: () {
                         //
                       },
-                      backgroundColor: Color(0xffA51361),
-                      child: CustomText(
-                        text: 'Choose Plan',
-                        color: Color(0xffF7F7F7),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                      backgroundColor: Theme.of(context).primaryColor,
+                      child: Text(
+                        'choose Plan button'.tr(),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
                   ],

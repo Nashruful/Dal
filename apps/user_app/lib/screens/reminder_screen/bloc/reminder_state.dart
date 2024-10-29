@@ -13,6 +13,7 @@ class ReminderLoaded extends ReminderState {
 class ReminderError extends ReminderState {}
 class ReminderNoData extends ReminderState {}
 class ReminderRemoved extends ReminderState {}
+//class ReminderRemoved extends ReminderState {}
 /*
 class MyReminder {
   final String bannerimg;

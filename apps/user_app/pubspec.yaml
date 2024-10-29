@@ -20,6 +20,11 @@ dependencies:
   onesignal_flutter: ^5.2.6
   pinput: ^5.0.0
   image_picker: ^1.1.2
+  latlong2: ^0.9.1
+  flutter_map: ^7.0.2
+  geolocator: ^13.0.1
+  easy_localization: ^3.0.7
+  adaptive_theme: ^3.6.0
 
 dev_dependencies:
   flutter_test:
@@ -33,3 +38,4 @@ flutter:
     - assets/
     - assets/svg/
     - assets/png/
+    - assets/translations/
