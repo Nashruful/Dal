@@ -14,6 +14,7 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  // location permission
   getPermission() async {
     await determinePosition();
   }

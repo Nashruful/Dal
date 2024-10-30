@@ -10,6 +10,7 @@ class ThemeCubit extends Cubit<ThemeState> {
 
   ThemeCubit() : super(ThemeInitial(themeData: AppThemes.lightTheme));
 
+  // toggle theme 
   void toggleTheme() {
     DarkModeOn = !DarkModeOn;
     if (state.themeData == AppThemes.darkTheme) {

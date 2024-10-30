@@ -6,7 +6,7 @@ sealed class ThemeState {
 
   ThemeState({required this.themeData});
 }
-
+// theme state
 final class ThemeInitial extends ThemeState {
   ThemeInitial({required super.themeData});
 }
