@@ -18,6 +18,7 @@ class DataLayer {
   List currentBusinessInfo = [];
   List businessBranches = [];
   List allbusinessAds = [];
+  
 
 //call this func to refresh
   getBusinessInfo() async {
