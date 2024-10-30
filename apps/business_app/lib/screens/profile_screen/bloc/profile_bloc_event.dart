@@ -18,3 +18,5 @@ final class ChangeLangEvent extends ProfileBlocEvent {
 
   ChangeLangEvent({required this.value});
 }
+
+final class GetInfoEvent extends ProfileBlocEvent {}

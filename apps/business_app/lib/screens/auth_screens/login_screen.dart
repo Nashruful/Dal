@@ -1,12 +1,11 @@
-import 'package:components/component/custom_text_field/custom_text_field.dart';
+import 'package:business_app/screens/auth_screens/cubit/auth_cubit.dart';
+import 'package:business_app/screens/auth_screens/verify_screen.dart';
+import 'package:components/component/custom_text_field/custom_text_form_field.dart';
 import 'package:components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:user_app/screens/auth_screens/create_account_screen.dart';
-import 'package:user_app/screens/auth_screens/cubit/auth_cubit.dart';
-import 'package:user_app/screens/auth_screens/verify_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -190,7 +189,7 @@ class LoginScreen extends StatelessWidget {
                         const SizedBox(
                           height: 48,
                         ),
-                        CustomTextField(
+                        CustomTextFormField(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Please enter your email";
@@ -208,6 +207,7 @@ class LoginScreen extends StatelessWidget {
                           labelText: "Email".tr(),
                           hintText: "Email hint text".tr(),
                           fillColor: const Color(0xffEAEAEA),
+                          maxLines: 1,
                         ),
                         const SizedBox(
                           height: 45,
@@ -223,21 +223,6 @@ class LoginScreen extends StatelessWidget {
                                     style:
                                         Theme.of(context).textTheme.bodyMedium)
                                 .tr()),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CreateAccountScreen()));
-                          },
-                          child: Text("Create An Account",
-                                  style: Theme.of(context).textTheme.bodyMedium)
-                              .tr(),
-                        )
                       ],
                     ),
                   ),

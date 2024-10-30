@@ -11,6 +11,17 @@ class ReminderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final response = await getIt
+              .get<DataLayer>()
+              .supabase
+              .from("ad")
+              .select('*,branch(*,business(*))');
+          print(response[0]);
+        },
+        child: Icon(Icons.data_array),
+      ),
       appBar: CustomAppBar(
         title: "My Reminders".tr(),
         automaticallyImplyLeading: false,

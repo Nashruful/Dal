@@ -7,17 +7,19 @@ class CustomTextField extends StatelessWidget {
   final String? hintText;
   final TextStyle? hintStyle;
   final String? labelText;
+  final String? Function(String?)? validator;
   const CustomTextField(
       {super.key,
       this.controller,
       this.fillColor,
       this.hintText,
       this.hintStyle,
-      this.labelText});
+      this.labelText, this.validator});
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: validator,
       controller: controller,
       decoration: InputDecoration(
           labelText: labelText,

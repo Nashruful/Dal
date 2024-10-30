@@ -34,7 +34,7 @@ class BottomNavBarScreen extends StatelessWidget {
                 index: index,
                 icons1: 'assets/svg/home.svg',
                 icons2: 'assets/svg/discover.svg',
-                icons3: 'assets/svg/profile.svg',
+                icons3: 'assets/svg/notification.svg',
                 icons4: 'assets/svg/profile.svg',
                 label1: 'Home'.tr(),
                 label2: 'Discover'.tr(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:user_app/screens/discover_screen/bloc/discover_bloc.dart';
 
@@ -13,17 +14,38 @@ class DiscoverScreen extends StatelessWidget {
       create: (context) => DiscoverBloc(),
       child: Builder(builder: (context) {
         final bloc = context.read<DiscoverBloc>();
-        bloc.add(LoadScreenEvent());
+        const LocationSettings locationSettings = LocationSettings();
+        bloc.positionStream =
+            Geolocator.getPositionStream(locationSettings: locationSettings)
+                .listen((Position position) {
+          bloc.add(LoadScreenEvent(position: position));
+        });
+
         return Scaffold(
-            floatingActionButton: FloatingActionButton(
-              shape: const CircleBorder(),
-              backgroundColor: const Color(0xffA51361),
-              onPressed: () {},
-              child: const Icon(
-                Icons.radar_rounded,
-                color: Color(0xffF7F7F7),
-                size: 36,
-              ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+            floatingActionButton: BlocBuilder<DiscoverBloc, DiscoverState>(
+              builder: (context, state) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 40, bottom: 10),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: FloatingActionButton(
+                      shape: const CircleBorder(),
+                      backgroundColor: const Color(0xffA51361),
+                      onPressed: () {
+                        bloc.buttonClicked = !bloc.buttonClicked;
+                        bloc.add(LoadScreenEvent(position: bloc.positionn));
+                      },
+                      child: Icon(
+                        Icons.radar_rounded,
+                        color:
+                            Color(bloc.buttonClicked ? 0x30F7F7F7 : 0xffF7F7F7),
+                        size: 36,
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
             body: BlocBuilder<DiscoverBloc, DiscoverState>(
               builder: (context, state) {
@@ -34,7 +56,9 @@ class DiscoverScreen extends StatelessWidget {
                           onTap: (tapPosition, point) {
                             print("${point.latitude},${point.longitude}");
                           },
-                          initialCenter: bloc.initialCenter),
+                          initialCenter: LatLng(
+                              bloc.positionn?.latitude ?? 24.82741851222009,
+                              bloc.positionn?.longitude ?? 46.754407525179346)),
                       children: [
                         TileLayer(
                           urlTemplate:
@@ -44,7 +68,10 @@ class DiscoverScreen extends StatelessWidget {
                         MarkerLayer(markers: bloc.filteredMarkers),
                         MarkerLayer(markers: [
                           Marker(
-                              point: bloc.initialCenter,
+                              point: LatLng(
+                                  bloc.positionn?.latitude ?? 24.82741851222009,
+                                  bloc.positionn?.longitude ??
+                                      46.754407525179346),
                               child: Container(
                                 height: 26,
                                 width: 26,
@@ -127,6 +154,9 @@ class DiscoverScreen extends StatelessWidget {
                       ),
                     ])
                   ]);
+                }
+                if (state is ErrorState) {
+                  return Center(child: Text(state.msg.toString()));
                 }
                 return const CircularProgressIndicator();
               },

@@ -16,9 +16,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(LoadingState());
       try {
         getIt.get<DataLayer>().allAds =
-            await supabase.from("ad").select('*,branch(*, business(*))');
-        print('------');
-        print(getIt.get<DataLayer>().allAds);
+            await supabase.from("ad").select('*,branch(*,business(*))');
         print("--------------- data fetched");
         emit(SuccessState());
       } on PostgrestException catch (e) {

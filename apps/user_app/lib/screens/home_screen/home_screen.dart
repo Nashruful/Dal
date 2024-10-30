@@ -8,6 +8,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/screens/home_screen/cubit/home_cubit.dart';
 import 'package:user_app/setup/setup.dart';
+import 'package:dio/dio.dart';
+import 'package:impression/impression.dart';
 
 //
 class HomeScreen extends StatelessWidget {
@@ -58,7 +60,47 @@ class HomeScreen extends StatelessWidget {
                       //go to notifications?
                     },
                     icon: SvgPicture.asset('assets/svg/notification.svg')),
-              )
+              ),
+              TextButton(
+                  onPressed: () async {
+                    final dio = Dio();
+                    try {
+                      final response = await dio.post(
+                        "https://api.onesignal.com/api/v1/notifications",
+                        data: {
+                          "app_id": "ebdec5c2-30a4-447d-9577-a1c13b6d553e",
+                          "contents": {
+                            "en": "Check out Burger's king offer nearby!",
+                            "ar": "لا يطوفك عرض Burger king!"
+                          },
+                          "include_external_user_ids": [
+                            getIt.get<DataLayer>().supabase.auth.currentUser!.id
+                          ], // Correct field name
+                        },
+                        options: Options(headers: {
+                          "Authorization":
+                              "Bearer ZGU5ZmExOTEtNmFiZC00ZTUxLTgyMGYtNjc4MDJlYjUyNmM4",
+                          'Content-Type':
+                              'application/json', // Ensure correct casing
+                        }),
+                      );
+
+                      print("------------------- ${response.data}");
+                      print("------------------- ${response.statusCode}");
+                    } on DioException catch (e) {
+                      print("Dio error: ${e.message}");
+                      if (e.response != null) {
+                        print("Response data: ${e.response!.data}");
+                      }
+                    } catch (e) {
+                      print("Error: ${e.toString()}");
+                    }
+                  },
+                  child: Text(
+                    "Send notification test",
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.w900),
+                  ))
             ],
           ),
           body: ListView(
@@ -315,40 +357,56 @@ class HomeScreen extends StatelessWidget {
                                 .get<DataLayer>()
                                 .allAds!
                                 .map(
-                                  (e) => CustomAdsContainer(
-                                    companyLogo: e['bannerimg'] ??
-                                        "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
-                                    remainingDay: '4d',
-                                    companyName: e['title'] ?? "----",
-                                    offers:
-                                        e['offer_type'] + ' ${'off'.tr()}' ??
-                                            "----",
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          context: context,
-                                          builder: (context) {
-                                            return CustomBottomSheet(
-                                              image: e['bannerimg'],
-                                              companyName: e['title'] ?? "---",
-                                              iconImage:
-                                                  'assets/svg/coffee.svg',
-                                              description:
-                                                  e['description'] ?? "---",
-                                              remainingDay: '4d',
-                                              onPressed: () {
-                                                getIt
-                                                    .get<DataLayer>()
-                                                    .myReminders
-                                                    .add(e);
-                                              },
-                                              offerType: '40% ${'off'.tr()}',
-                                              viewLocation:
-                                                  'View Location'.tr(),
-                                              locationOnPressed: () {},
-                                            );
-                                          });
+                                  (e) => ImpressionDetector(
+                                    impressedCallback: () {
+                                      getIt.get<DataLayer>().recordImpressions(e[
+                                          'id']); //add impressions to ad id each time it is viewed
                                     },
+                                    child: CustomAdsContainer(
+                                      companyLogo: e['bannerimg'] ??
+                                          "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
+                                      remainingDay: '4d',
+                                      companyName: e['title'] ?? "----",
+                                      offers:
+                                          e['offer_type'] + ' ${'off'.tr()}' ??
+                                              "----",
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            context: context,
+                                            builder: (context) {
+                                              return ImpressionDetector(
+                                                impressedCallback: () {
+                                                  getIt
+                                                      .get<DataLayer>()
+                                                      .recordClicks(e[
+                                                          'id']); //add clicks to ad id each time it is viewed
+                                                },
+                                                child: CustomBottomSheet(
+                                                  image: e['bannerimg'],
+                                                  companyName:
+                                                      e['title'] ?? "---",
+                                                  iconImage:
+                                                      'assets/svg/coffee.svg',
+                                                  description:
+                                                      e['description'] ?? "---",
+                                                  remainingDay: '4d',
+                                                  onPressed: () {
+                                                    getIt
+                                                        .get<DataLayer>()
+                                                        .myReminders
+                                                        .add(e);
+                                                  },
+                                                  offerType:
+                                                      '40% ${'off'.tr()}',
+                                                  viewLocation:
+                                                      'View Location'.tr(),
+                                                  locationOnPressed: () {},
+                                                ),
+                                              );
+                                            });
+                                      },
+                                    ),
                                   ),
                                 )
                                 .toList(),
@@ -411,46 +469,56 @@ class HomeScreen extends StatelessWidget {
                                 .get<DataLayer>()
                                 .allAds!
                                 .map(
-                                  (e) => CustomAdsContainer(
-                                    companyLogo: e['branch']?['business']
-                                            ?['logo_img'] ??
-                                        "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
-                                    remainingDay: '4d',
-                                    companyName: e['branch']?['business']
-                                            ?['name'] ??
-                                        "----",
-                                    offers:
-                                        e['offer_type'] + ' ${'off'.tr()}' ??
-                                            "----",
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          context: context,
-                                          builder: (context) {
-                                            return CustomBottomSheet(
-                                              image: e['bannerimg'],
-                                              companyName: e['branch']
-                                                      ?['business']?['name'] ??
-                                                  "---",
-                                              iconImage:
-                                                  'assets/svg/coffee.svg',
-                                              description:
-                                                  e['description'] ?? "---",
-                                              remainingDay: '4d',
-                                              onPressed: () {
-                                                getIt
-                                                    .get<DataLayer>()
-                                                    .myReminders
-                                                    .add(e);
-                                              },
-                                              offerType:
-                                                  '${e['offer_type']} ${'off'.tr()}',
-                                              viewLocation:
-                                                  'View Location'.tr(),
-                                              locationOnPressed: () {},
-                                            );
-                                          });
+                                  (e) => ImpressionDetector(
+                                    impressedCallback: () {
+                                      getIt.get<DataLayer>().recordImpressions(e[
+                                          'id']); //add impressions to ad id each time it is viewed
                                     },
+                                    child: CustomAdsContainer(
+                                      companyLogo: e['branch']?['business']?['logo_img'] ??
+                                          "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
+                                      remainingDay: '4d',
+                                      companyName: e['title'] ?? "----",
+                                      offers:
+                                          e['offer_type'] + ' ${'off'.tr()}' ??
+                                              "----",
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            context: context,
+                                            builder: (context) {
+                                              return ImpressionDetector(
+                                                impressedCallback: () {
+                                                  getIt
+                                                      .get<DataLayer>()
+                                                      .recordClicks(e[
+                                                          'id']); //add clicks to ad id each time it is viewed
+                                                },
+                                                child: CustomBottomSheet(
+                                                  image: e['bannerimg'],
+                                                  companyName:
+                                                      e['title'] ?? "---",
+                                                  iconImage:
+                                                      'assets/svg/coffee.svg',
+                                                  description:
+                                                      e['description'] ?? "---",
+                                                  remainingDay: '4d',
+                                                  onPressed: () {
+                                                    getIt
+                                                        .get<DataLayer>()
+                                                        .myReminders
+                                                        .add(e);
+                                                  },
+                                                  offerType:
+                                                      '40% ${'off'.tr()}',
+                                                  viewLocation:
+                                                      'View Location'.tr(),
+                                                  locationOnPressed: () {},
+                                                ),
+                                              );
+                                            });
+                                      },
+                                    ),
                                   ),
                                 )
                                 .toList(),
