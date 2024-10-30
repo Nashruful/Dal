@@ -36,6 +36,6 @@ class MainApp extends StatelessWidget {
         theme: AppThemes.lightTheme,
         darkTheme: AppThemes.darkTheme,
         themeMode: ThemeMode.system,
-        home: BottomNavBarScreen());
+        home: OnboardingScreen());
   }
 }

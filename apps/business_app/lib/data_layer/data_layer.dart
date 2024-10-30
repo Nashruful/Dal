@@ -15,6 +15,7 @@ class DataLayer {
     5: 'Drinks',
   };
   final box = GetStorage();
+  String? businessId;
   List currentBusinessInfo = [];
   List businessBranches = [];
   List allbusinessAds = [];
@@ -25,17 +26,15 @@ class DataLayer {
         .from('business')
         .select(
             '*, branch(*,ad(*))') // Select all from business, branch, and ad
-        .eq('id',
-            '8db8aae9-cbaa-4aff-81c6-5f6223149233'); // change with incomming businessId
+        .eq('id', businessId!); // change with incomming businessId
 
     businessBranches =
         currentBusinessInfo[0]['branch']; //save branches into a seperate list
     //print('-------branchs $businessBranches');
-
+    allbusinessAds = [];
     businessBranches.forEach((branch) {
       List ads = branch['ad']; // Get the list of ads for the current branch
-      allbusinessAds.addAll(
-          ads); 
+      allbusinessAds.addAll(ads);
     });
     print('-------ads: $allbusinessAds');
 

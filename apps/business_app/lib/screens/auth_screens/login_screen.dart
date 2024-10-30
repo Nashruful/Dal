@@ -207,6 +207,7 @@ class LoginScreen extends StatelessWidget {
                           labelText: "Email".tr(),
                           hintText: "Email hint text".tr(),
                           fillColor: const Color(0xffEAEAEA),
+                          maxLines: 1,
                         ),
                         const SizedBox(
                           height: 45,

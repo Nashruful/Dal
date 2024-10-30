@@ -1,10 +1,13 @@
-import 'package:business_app/data_layer/data_layer.dart';
 import 'package:get_it/get_it.dart';
-import 'package:get_storage/get_storage.dart';
+
+import '../data_layer/data_layer.dart';
+
+
 
 final getIt = GetIt.instance;
 
-Future<void> setup() async {
-  await GetStorage.init();
+Future<void> setup() async{
   getIt.registerSingleton<DataLayer>(DataLayer());
+
+
 }
