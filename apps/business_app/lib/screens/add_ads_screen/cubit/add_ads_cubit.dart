@@ -23,7 +23,7 @@ class AddAdsCubit extends Cubit<AddAdsState> {
 
   ImagePicker pick = ImagePicker();
   File? image;
-  int locationValue = 0;
+  List selectedBranch = [];
   int? categoryValue = 0;
   DateTime? startDate;
   DateTime? endDate;
@@ -50,10 +50,8 @@ class AddAdsCubit extends Cubit<AddAdsState> {
       getUrl = await supabase.storage
           .from('offer images')
           .getPublicUrl(imageFile.name);
-      print(getUrl);
       emit(AdsImageState(image: image!));
     } catch (e) {
-      print('Image upload failed: $e');
       emit(ErrorState(msg: 'Image upload failed'));
     }
   }
@@ -61,11 +59,6 @@ class AddAdsCubit extends Cubit<AddAdsState> {
   selectCategory(int value) {
     categoryValue = value;
     emit(CategoryState(categoryValue: value));
-  }
-
-  selectLocation(int value) {
-    locationValue = value;
-    emit(LocationState(locationValue: value));
   }
 
   selectAdsRangeDate(DateTime start, DateTime end) {
@@ -82,46 +75,9 @@ class AddAdsCubit extends Cubit<AddAdsState> {
     return displayDate;
   }
 
-  // add ads
-  // so messy i know :(, i hope the comment is good for clarification
+  // add ads method
   Future<void> addAds() async {
     try {
-      // get business info
-      final businessInfo = await supabase
-          .from('business')
-          .select()
-          .eq('id',
-              '5e84d2bf-4c17-4483-9eab-c017767b58bc') // ***** change the id ****
-          .single();
-      print('businessInfo $businessInfo');
-
-      final title = businessInfo['name'];
-      print('title $title');
-      final businessLogo = businessInfo['logo_img'];
-      print('businessLogo $businessLogo');
-      if (title == null) {
-        print("title is null");
-      }
-
-      if (businessLogo == null) {
-        print("businessLogo is null");
-      }
-
-      // get branch info // we need it later
-      final branchInfo = await supabase
-          .from('branch')
-          .select()
-          .eq('id',
-              '274d1a55-c8a7-4041-be4b-0131be227072') // ***** change the id ****
-          .single();
-
-      final location = branchInfo['address'];
-      if (location == null) {
-        print("location is null");
-      }
-      print(location);
-      print('-------------');
-
       // format date as in supabase
       final String startDateFormat = startDate!.toIso8601String();
       final String endDateFormat = endDate!.toIso8601String();
@@ -133,20 +89,32 @@ class AddAdsCubit extends Cubit<AddAdsState> {
       // upload image to storage
       await uploadImage(imageFile!);
 
-      // insert into ad table
-      await supabase.from('ad').insert({
-        "branch_id": '274d1a55-c8a7-4041-be4b-0131be227072',
-        "category": categoryLabel,
-        "title": title,
-        "description": descriptionController.text,
-        "bannerimg": getUrl,
-        "startdate": startDateFormat,
-        "enddate": endDateFormat,
-        "offer_type": addTypeController.text,
-        'clicks': null
-      });
+      if (selectedBranch.isNotEmpty) {
+        // get branch ids for selected branches
+        final branchIds = getIt
+            .get<DataLayer>()
+            .businessBranches
+            .where((branch) => selectedBranch.contains(branch['address']))
+            .map((branch) => branch['id'])
+            .toList();
 
-      print("success");
+        for (var branchId in branchIds) {
+          // Insert into ad table for each branch
+          await supabase.from('ad').insert({
+            "branch_id": branchId,
+            "category": categoryLabel,
+            "description": descriptionController.text,
+            "bannerimg": getUrl,
+            "startdate": startDateFormat,
+            "enddate": endDateFormat,
+            "offer_type": addTypeController.text,
+            'clicks': null,
+          });
+          print("Ad successfully inserted for branch: $branchId");
+        }
+      } else {
+        print("There is no branches :( ");
+      }
     } on AuthException catch (e) {
       emit(ErrorState(msg: e.message));
       print(e.message);

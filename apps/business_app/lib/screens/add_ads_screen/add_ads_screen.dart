@@ -21,7 +21,8 @@ class AddAdsScreen extends StatelessWidget {
         final cubit = context.read<AddAdsCubit>();
         DateTime? startDate;
         DateTime? endDate;
-
+        final branches = getIt.get<DataLayer>().businessBranches;
+        print("-------------branches $branches");
         return Scaffold(
             appBar: AppBar(
               backgroundColor: const Color(0xffA51361),
@@ -65,7 +66,7 @@ class AddAdsScreen extends StatelessWidget {
                         height: 20,
                       ),
                       CustomText(
-                        text: 'Category'.tr(),
+                        text: 'Ad Category'.tr(),
                         color: const Color(0xff444444),
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -78,15 +79,13 @@ class AddAdsScreen extends StatelessWidget {
                           return CustomDrobDownButton(
                             value: cubit.categoryValue,
                             items: [
-                              DropdownMenuEntry(value: 0, label: "Cafes".tr()),
-                              DropdownMenuEntry(value: 1, label: "Bakery".tr()),
                               DropdownMenuEntry(
-                                  value: 2, label: "Breakfast".tr()),
+                                  value: 0, label: "Markets".tr()),
+                              DropdownMenuEntry(value: 1, label: "Dining".tr()),
+                              DropdownMenuEntry(value: 2, label: "Gym".tr()),
                               DropdownMenuEntry(
-                                  value: 3, label: "Ice creams".tr()),
-                              DropdownMenuEntry(
-                                  value: 4, label: "Dinning".tr()),
-                              DropdownMenuEntry(value: 5, label: "Drinks".tr()),
+                                  value: 3, label: "Clothes".tr()),
+                              DropdownMenuEntry(value: 4, label: "Hotels".tr()),
                             ].map((entry) {
                               return DropdownMenuItem<int>(
                                 value: entry.value,
@@ -106,7 +105,7 @@ class AddAdsScreen extends StatelessWidget {
                         height: 20,
                       ),
                       CustomText(
-                        text: 'Ads Duration'.tr(),
+                        text: 'Ad Duration'.tr(),
                         color: const Color(0xff444444),
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -251,92 +250,58 @@ class AddAdsScreen extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-                      BlocBuilder<AddAdsCubit, AddAdsState>(
-                        builder: (context, state) {
-                          final branches =
-                              getIt.get<DataLayer>().businessBranches;
-                          final id = '8db8aae9-cbaa-4aff-81c6-5f6223149233';
-                          final filteredBranches = branches.where((branch) {
-                            print('Checking branch: ${branch['business_id']}');
-                            return branch['business_id'] ==
-                                id; // Adjust the key if necessary
-                          }).toList();
-                          print(branches);
-                          return MultiDropdown(
-                            controller: cubit.branchLocationController,
-                            singleSelect: false,
-                            enabled: true,
-                            maxSelections:
-                                2, // add a condition based on subscription
-                            searchEnabled: true,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            items: filteredBranches.map((branch) {
-                              return DropdownItem(
-                                  value: id,
-                                  label: branch['address'].toString());
-                            }).toList()
-                            // DropdownItem(
-                            //     label: branches[0]['address'].toString(),
-                            //     value: 0),
-                            // DropdownItem(
-                            //     label: branches[1]['address'].toString(),
-                            //     value: 1),
-                            // // DropdownItem(
-                            // //     label: branches[2].toString(), value: 2),
-                            // // DropdownItem(
-                            // //     label: branches[3].toString(), value: 3),
-                            ,
-                            fieldDecoration: FieldDecoration(
-                                hintText: 'Select a branch',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide.none),
-                                backgroundColor: Color(0xffEAEAEA)),
-                            dropdownDecoration: const DropdownDecoration(
-                                backgroundColor: Color(0xffEAEAEA)),
-                            dropdownItemDecoration:
-                                const DropdownItemDecoration(
-                              backgroundColor: Color(0xffEAEAEA),
-                              selectedBackgroundColor: Color(0xffEAEAEA),
-                              selectedIcon: Icon(Icons.check_box_outlined,
-                                  color: Color(0xffA51361)),
-                            ),
-                            chipDecoration: const ChipDecoration(
-                                backgroundColor: Color(0xffEAEAEA)),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please select a branch';
-                              }
-                              return null;
-                            },
-                          );
 
-                          // CustomDrobDownButton(
-                          //   value: cubit.locationValue,
-                          //   items: [
-                          //     const DropdownMenuEntry(
-                          //         value: 0, label: "Tuwaiq"),
-                          //     const DropdownMenuEntry(value: 1, label: "Mall"),
-                          //   ].map((entry) {
-                          //     return DropdownMenuItem<int>(
-                          //       value: entry.value,
-                          //       child: Text(entry.label),
-                          //     );
-                          //   }).toList(),
-                          //   onChanged: (int? value) {
-                          //     if (value != null) {
-                          //       cubit.selectLocation(value);
-                          //     }
-                          //   },
-                          // );
+                      MultiDropdown(
+                        controller: cubit.branchLocationController,
+                        singleSelect: false,
+                        enabled: true,
+                        maxSelections:
+                            2, // add a condition based on subscription
+                        searchEnabled: true,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        items: branches.map((branch) {
+                          return DropdownItem(
+                              label: branch['address'].toString(),
+                              value: branches.indexOf(branch));
+                        }).toList(),
+                        onSelectionChange: (selectedLocation) {
+                          cubit.selectedBranch.clear();
+                          for (var location in selectedLocation) {
+                            if (location < branches.length) {
+                              var branch = branches[location];
+                              cubit.selectedBranch.add(branch['address']);
+                              print(cubit.selectedBranch);
+                            }
+                          }
+                        },
+                        fieldDecoration: FieldDecoration(
+                            hintText: 'Select a branch',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none),
+                            backgroundColor: Color(0xffEAEAEA)),
+                        dropdownDecoration: const DropdownDecoration(
+                            backgroundColor: Color(0xffEAEAEA)),
+                        dropdownItemDecoration: const DropdownItemDecoration(
+                          backgroundColor: Color(0xffEAEAEA),
+                          selectedBackgroundColor: Color(0xffEAEAEA),
+                          selectedIcon: Icon(Icons.check_box_outlined,
+                              color: Color(0xffA51361)),
+                        ),
+                        chipDecoration: const ChipDecoration(
+                            wrap: false, backgroundColor: Color(0xff8CBFAE)),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please select a branch';
+                          }
+                          return null;
                         },
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       CustomText(
-                        text: 'Ads image'.tr(),
+                        text: 'Ad image'.tr(),
                         color: const Color(0xff444444),
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -386,9 +351,9 @@ class AddAdsScreen extends StatelessWidget {
                         backgroundColor: const Color(0xffA51361),
                         onPressed: () async {
                           if (formKey.currentState?.validate() == true) {
-                            final selectbranchLocation =
-                                cubit.branchLocationController;
-                            print(selectbranchLocation);
+                            cubit.branchLocationController;
+                            cubit.addTypeController;
+                            cubit.descriptionController;
                             cubit.addAds();
                           }
                         },

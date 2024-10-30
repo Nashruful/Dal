@@ -1,3 +1,6 @@
+import 'package:business_app/add_ads_screen/add_ads_screen.dart';
+import 'package:business_app/screens/my_ads_screen/My_ads.dart';
+import 'package:business_app/screens/stats_screen/stats_screen.dart';
 import 'package:components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +19,7 @@ class HomeScreen extends StatelessWidget {
           foregroundColor: const Color(0xffF7F7F7),
           leadingWidth: 200,
           leading: Padding(
-            padding: const EdgeInsets.only(left: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Row(
               children: [
                 CircleAvatar(
@@ -40,50 +43,53 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 16),
         child: Column(
           children: [
             Center(
               child: Container(
                 width: 313,
-                height: 203,
+                height: 190,
                 decoration: BoxDecoration(
-                    color: const Color(0xffF6B00E),
-                    borderRadius: BorderRadius.circular(20)),
-                child: Row(
+                  color: const Color(0xffF6B00E),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Stack(
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Positioned(
-                              top: 0,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: SizedBox(
+                              width: 130,
                               child: Text(
                                 'title card'.tr(),
-                                style: TextStyle(
-                                    color: Theme.of(context).indicatorColor,
-                                    fontSize: 24),
+                                style: Theme.of(context).textTheme.labelLarge,
                               ),
                             ),
-                            Positioned(
-                              bottom: 40,
-                              child: SizedBox(
-                                width: 130,
-                                child: Text(
-                                  'sub title card'.tr(),
-                                  style: TextStyle(
-                                      color: Theme.of(context).indicatorColor),
-                                ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: SizedBox(
+                              width: 130,
+                              child: Text(
+                                'sub title card'.tr(),
+                                style: Theme.of(context).textTheme.labelSmall,
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Image.asset('assets/png/ads_banner_image.png')
+                    Positioned(
+                      right: 0,
+                      top: 8,
+                      child: Image.asset('assets/png/ads_banner_image.png'),
+                    ),
                   ],
                 ),
               ),
@@ -91,33 +97,43 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(
               height: 50,
             ),
-             Column(
+            Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CustomBusinessIconButton(
-                        image: 'assets/svg/add_ads.svg', title: 'home card label one'.tr()),
+                      image: 'assets/svg/add_ads.svg',
+                      title: 'home card label one'.tr(),
+                      onPressed: () => const AddAdsScreen(),
+                    ),
                     CustomBusinessIconButton(
-                        image: 'assets/svg/view_stats.svg',
-                        title: 'home card label two'.tr()),
+                      image: 'assets/svg/view_stats.svg',
+                      title: 'home card label two'.tr(),
+                      onPressed: () => const StatsScreen(),
+                    ),
                     CustomBusinessIconButton(
-                        image: 'assets/svg/add_ads.svg', title: 'home card label three'.tr()),
+                      image: 'assets/svg/add_ads.svg',
+                      title: 'home card label three'.tr(),
+                      onPressed: () => const MyAdsScreen(),
+                    ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CustomBusinessIconButton(
-                        image: 'assets/svg/add_ads.svg', title: 'home card label four'.tr()),
+                        image: 'assets/svg/add_ads.svg',
+                        title: 'home card label four'.tr()),
                     CustomBusinessIconButton(
                         image: 'assets/svg/view_stats.svg',
                         title: 'home card label five'.tr()),
                     CustomBusinessIconButton(
-                        image: 'assets/svg/add_ads.svg', title: 'home card label six'.tr()),
+                        image: 'assets/svg/add_ads.svg',
+                        title: 'home card label six'.tr()),
                   ],
                 ),
               ],

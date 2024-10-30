@@ -41,6 +41,7 @@ class ProfileScreen extends StatelessWidget {
                                 .get<DataLayer>()
                                 .currentBusinessInfo[0]['logo_img'],
                             firstName: businessInfo[0]['name'],
+                            lastName: '',
                             email: businessInfo[0]['email'],
                             child: const SizedBox.shrink(),
                           )),

@@ -19,11 +19,6 @@ final class CategoryState extends AddAdsState {
   CategoryState({required this.categoryValue});
 }
 
-final class LocationState extends AddAdsState {
-  final int locationValue;
-  LocationState({required this.locationValue});
-}
-
 final class AdsImageState extends AddAdsState {
   final File? image;
   AdsImageState({required this.image});

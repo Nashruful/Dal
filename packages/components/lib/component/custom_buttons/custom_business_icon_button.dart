@@ -6,9 +6,10 @@ import '../custom_text/custom_text.dart';
 
 class CustomBusinessIconButton extends StatelessWidget {
   const CustomBusinessIconButton(
-      {super.key, required this.image, required this.title});
+      {super.key, required this.image, required this.title, this.onPressed});
   final String image;
   final String title;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class CustomBusinessIconButton extends StatelessWidget {
                     offset: const Offset(0, 2))
               ]),
           child: IconButton(
-            onPressed: () {},
+            onPressed: onPressed,
             icon: SvgPicture.asset(
               image,
             ),
