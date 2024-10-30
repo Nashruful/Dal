@@ -18,6 +18,7 @@ class ProfileScreen extends StatelessWidget {
       create: (context) => ProfileBlocBloc(),
       child: Builder(builder: (context) {
         final bloc = context.read<ProfileBlocBloc>();
+        final businessInfo = getIt.get<DataLayer>().currentBusinessInfo;
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: CustomAppBar(
@@ -33,23 +34,15 @@ class ProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: BlocBuilder<ProfileBlocBloc, ProfileBlocState>(
-                          builder: (context, state) {
-                            final businessInfo =
-                                getIt.get<DataLayer>().currentBusinessInfo;
-                            ;
-                            return ProfileInfoSection(
-                              imgurl: getIt
-                                  .get<DataLayer>()
-                                  .currentBusinessInfo[0]['logo_img'],
-                              firstName: businessInfo[0]['name'],
-                              email: businessInfo[0]['email'],
-                              child: const SizedBox.shrink(),
-                            );
-                          },
-                        ),
-                      ),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: ProfileInfoSection(
+                            imgurl: getIt
+                                .get<DataLayer>()
+                                .currentBusinessInfo[0]['logo_img'],
+                            firstName: businessInfo[0]['name'],
+                            email: businessInfo[0]['email'],
+                            child: const SizedBox.shrink(),
+                          )),
                       const Divider(height: 40),
                       PlanSection(
                         plan: 'Basic'.tr(),

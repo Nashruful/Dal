@@ -22,19 +22,9 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
   };
   int langValue = 0;
 
-  String businessName = '';
-  String email = '';
-  String image = '';
-
 
   ProfileBlocBloc() : super(ProfileBlocInitial()) {
     on<ProfileBlocEvent>((event, emit) {});
-
-    //add or remove filter
-    on<UpdateFilterEvent>((event, emit) {
-      categories[event.category] = !categories[event.category]!;
-      emit(UpdatedFilterState());
-    });
 
     //change lang
     on<ChangeLangEvent>((event, emit) {
@@ -42,42 +32,5 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
 
       emit(ChangedlangState());
     });
-
-
-    // get user info
-    on<GetInfoEvent>((event, emit) async {
-      emit(LoadingState());
-      try {
-        final info = await supabase
-            .from('business')
-            .select()
-            .eq('id', supabase.auth.currentUser!.id)
-            .single();
-        businessName = info['name'];
-        email = info['email'];
-        image = info['logo_img'];
-        emit(GetInfoState(
-          name: businessName, email: email, image: image));
-      } on AuthException catch (e) {
-        emit(ErrorState(msg: e.message));
-        print(e.message);
-      } on PostgrestException catch (e) {
-        emit(ErrorState(msg: e.message));
-        print(e.message);
-      } catch (e) {
-        emit(ErrorState(msg: e.toString()));
-      }
-    });
-
-    // listen to users table
-    void getInfoRealTime() {
-      supabase
-          .from('business')
-          .stream(primaryKey: ['id']).listen((List<Map<String, dynamic>> data) {
-        add(GetInfoEvent());
-      });
-    }
-
-    getInfoRealTime();
   }
 }
