@@ -164,14 +164,14 @@ class HomeScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      CustomIconButton(
-                        icon: 'assets/svg/coffee.svg',
-                        title: 'Cafes'.tr(),
+                     CustomIconButton(
+                        icon: 'assets/svg/fashon.svg',
+                        title: 'Fashion'.tr(),
                         onPressed: () {},
                       ),
                       CustomIconButton(
-                        icon: 'assets/svg/Bakery.svg',
-                        title: 'Bakery'.tr(),
+                        icon: 'assets/svg/market.svg',
+                        title: 'Supermarkets'.tr(),
                         onPressed: () {
                           showModalBottomSheet(
                               isDismissible: true,
@@ -287,24 +287,29 @@ class HomeScreen extends StatelessWidget {
                               });
                         },
                       ),
+                      // CustomIconButton(
+                      //   icon: 'assets/svg/fashon.svg',
+                      //   title: 'Fashion'.tr(),
+                      //   onPressed: () {},
+                      // ),
+                      // CustomIconButton(
+                      //   icon: 'assets/svg/market.svg',
+                      //   title: 'Supermarkets'.tr(),
+                      //   onPressed: () {},
+                      // ),
                       CustomIconButton(
-                        icon: 'assets/svg/Breakfast.svg',
-                        title: 'Breakfast'.tr(),
-                        onPressed: () {},
-                      ),
-                      CustomIconButton(
-                        icon: 'assets/svg/Ice_creams.svg',
-                        title: 'Ice creams'.tr(),
-                        onPressed: () {},
-                      ),
-                      CustomIconButton(
-                        icon: 'assets/svg/Dinning.svg',
-                        title: 'Dinning'.tr(),
+                        icon: 'assets/svg/food.svg',
+                        title: 'Gym & Sports'.tr(),
                         onPressed: () {},
                       ),
                       CustomIconButton(
                         icon: 'assets/svg/Drinks.svg',
-                        title: 'Drinks'.tr(),
+                        title: 'Dining'.tr(),
+                        onPressed: () {},
+                      ),
+                        CustomIconButton(
+                        icon: 'assets/svg/hotel.svg',
+                        title: 'Hotels and '.tr(),
                         onPressed: () {},
                       ),
                     ],
@@ -360,13 +365,15 @@ class HomeScreen extends StatelessWidget {
                                 .allAds!
                                 .map(
                                   (e) => CustomAdsContainer(
-                                    companyLogo: e['bannerimg'] ??
-                                        "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
-                                    remainingDay: '4d',
-                                    companyName: e['title'] ?? "----",
-                                    offers:
-                                        e['offer_type'] + ' ${'off'.tr()}' ??
-                                            "----",
+                                      companyLogo: e['branch']?['business']
+                                              ?['logo_img'] ??
+                                          "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg", remainingDay: '4d',
+                                    companyName: e['branch']?['business']
+                                              ?['name'] ??
+                                          "----",
+                                      offers:
+                                          e['offer_type'] + ' ${'off'.tr()}' ??
+                                              "----",
                                     onTap: () {
                                       showModalBottomSheet(
                                           isScrollControlled: true,
@@ -375,7 +382,9 @@ class HomeScreen extends StatelessWidget {
                                             return CustomBottomSheet(
                                                remindBtnText: "Remind me",
                                               image: e['bannerimg'],
-                                              companyName: e['title'] ?? "---",
+                                            companyName:
+                                                      e['branch']?['business']
+                                              ?['name'] ?? "---",
                                               iconImage:
                                                   'assets/svg/coffee.svg',
                                               description:
@@ -387,7 +396,7 @@ class HomeScreen extends StatelessWidget {
                                                     .myReminders
                                                     .add(e);
                                               },
-                                              offerType: '40% ${'off'.tr()}',
+                                              offerType: e['offer_type']+ '${'off'.tr()}'??"----",
                                               viewLocation:
                                                   'View Location'.tr(),
                                               locationOnPressed: () {}, isReminder: true,
@@ -448,6 +457,9 @@ class HomeScreen extends StatelessWidget {
                         );
                       }
                       if (state is SuccessState) {
+                        print(getIt
+                                .get<DataLayer>()
+                                .allAds!);
                         return FadeTransitionSwitcher(
                           child: Row(
                             key:
@@ -457,10 +469,12 @@ class HomeScreen extends StatelessWidget {
                                 .allAds!
                                 .map(
                                   (e) => CustomAdsContainer(
-                                    companyLogo: e['bannerimg'] ??
-                                        "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
+                                      companyLogo: e['branch']?['business']
+                                              ['logo_img'] ??
+                                          "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
                                     remainingDay: '4d',
-                                    companyName: e['title'] ?? "----",
+                                     companyName: e['branch']?['business']?['name'] ??
+                                          "----",
                                     offers:
                                         e['offer_type'] + ' ${'off'.tr()}' ??
                                             "----",
@@ -472,7 +486,9 @@ class HomeScreen extends StatelessWidget {
                                             return CustomBottomSheet(
                                                 remindBtnText: "Remind me",
                                               image: e['bannerimg'],
-                                              companyName: e['title'] ?? "---",
+                                              companyName:
+                                                      e['branch']?['business']
+                                              ?['name'] ?? "---",
                                               iconImage:
                                                   'assets/svg/coffee.svg',
                                               description:
