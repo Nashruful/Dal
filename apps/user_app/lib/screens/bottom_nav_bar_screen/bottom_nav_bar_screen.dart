@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_app/screens/discover_screen/discover_screen.dart';
 import 'package:user_app/screens/home_screen/home_screen.dart';
+import 'package:user_app/screens/profile_screen/profile_screen.dart';
 import 'package:user_app/screens/reminder_screen/reminder_screen.dart';
 
 import 'bloc/nav_bar_bloc.dart';
@@ -19,12 +20,9 @@ class BottomNavBarScreen extends StatelessWidget {
         int index = 0;
         List navBarPages = [
           const HomeScreen(),
-         const DiscoverScreen(),
+          const DiscoverScreen(),
           ReminderScreen(),
-          const Icon(
-            Icons.person,
-            size: 150,
-          ),
+         ProfileScreen(),
         ];
         return BlocBuilder<NavBarBloc, NavBarState>(
           builder: (context, state) {
@@ -32,6 +30,24 @@ class BottomNavBarScreen extends StatelessWidget {
               index = state.index;
             }
             return Scaffold(
+              body: AnimatedSwitcher(
+                duration: Duration(milliseconds: 300),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return ScaleTransition(
+                    scale: Tween<double>(begin: 0.9, end: 1.0).animate(
+                      CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeOut,
+                      ),
+                    ),
+                    child: FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    ),
+                  );
+                },
+                child: navBarPages[index],
+              ),
               bottomNavigationBar: CustomBottomNavBar(
                 index: index,
                 icons1: 'assets/svg/home.svg',
@@ -47,102 +63,11 @@ class BottomNavBarScreen extends StatelessWidget {
                       .read<NavBarBloc>()
                       .add(BottomNavBarEvent(index: value));
                 },
-             
               ),
-                      
-              body: Center(
-                 child:  AnimatedSwitcher(
-  duration: Duration(milliseconds: 200),
-  transitionBuilder: (child, animation) {
-    return SlideTransition(
-      position: Tween<Offset>(
-        begin: Offset(1.0, 0.0),
-        end: Offset(0.0, 0.0),
-      ).animate(animation),
-      child: FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    );
-  },
-  child: navBarPages[index],
-)));
-            }
+            );
+          },
         );
-      }
-      ,),
-    );}}
-          
-        
-//               body: Center(
-//                  child:  AnimatedSwitcher(
-//   duration: Duration(milliseconds: 200),
-//   transitionBuilder: (child, animation) {
-//     return SlideTransition(
-//       position: Tween<Offset>(
-//         begin: Offset(1.0, 0.0),
-//         end: Offset(0.0, 0.0),
-//       ).animate(animation),
-//       child: FadeTransition(
-//         opacity: animation,
-//         child: child,
-//       ),
-//     );
-//   },
-//   child: navBarPages[index],
-// )
-
-
-
-
-//                
-//                  AnimatedSwitcher(
-//   duration: Duration(milliseconds: 500),
-//   transitionBuilder: (child, animation) {
-//     return SlideTransition(
-//       position: Tween<Offset>(
-//         begin: Offset(1.0, 0.0),
-//         end: Offset(0.0, 0.0),
-//       ).animate(animation),
-//       child: child,
-//     );
-//   },
-//   child: navBarPages[index],
-// )
-
-//                  AnimatedSwitcher(
-//   duration: Duration(milliseconds: 500),
-//   transitionBuilder: (child, animation) {
-//     return FadeTransition(
-//       opacity: animation,
-//       child: child,
-//     );
-//   },
-//   child: navBarPages[index],
-// )
-
-                 
-                  //AnimatedSwitcher(
-//   duration: Duration(milliseconds: 500),
-//   transitionBuilder: (child, animation) {
-//     return SlideTransition(
-//       position: Tween<Offset>(
-//         begin: Offset(0.0, 1.0),
-//         end: Offset(0.0, 0.0),
-//       ).animate(animation),
-//       child: FadeTransition(
-//         opacity: animation,
-//         child: child,
-//       ),
-//     );
-//   },
-//   child: navBarPages[index],
-// )
-//               ),
-//             );
-//           },
-//         );
-//       }),
-//     );
-//   }
-// }
+      }),
+    );
+  }
+}
