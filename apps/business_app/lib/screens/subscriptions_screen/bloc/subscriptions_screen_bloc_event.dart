@@ -1,9 +1,9 @@
 part of 'subscriptions_screen_bloc_bloc.dart';
 
 @immutable
-sealed class SubscriptionsScreenBlocEvent {}
+sealed class SubscriptionEvent {}
 
-final class TabCardEvent extends SubscriptionsScreenBlocEvent {
+final class TabCardEvent extends SubscriptionEvent {
   final int index;
 
   TabCardEvent({required this.index});
