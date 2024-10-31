@@ -105,17 +105,26 @@ class HomeScreen extends StatelessWidget {
                     CustomBusinessIconButton(
                       image: 'assets/svg/add_ads.svg',
                       title: 'home card label one'.tr(),
-                      onPressed: () => const AddAdsScreen(),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const AddAdsScreen()));
+                      },
                     ),
                     CustomBusinessIconButton(
                       image: 'assets/svg/view_stats.svg',
                       title: 'home card label two'.tr(),
-                      onPressed: () => const StatsScreen(),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const StatsScreen()));
+                      },
                     ),
                     CustomBusinessIconButton(
                       image: 'assets/svg/add_ads.svg',
                       title: 'home card label three'.tr(),
-                      onPressed: () => const MyAdsScreen(),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const MyAdsScreen()));
+                      },
                     ),
                   ],
                 ),
