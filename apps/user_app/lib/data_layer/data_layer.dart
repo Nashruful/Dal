@@ -11,12 +11,25 @@ class DataLayer {
   Map<String, int> impressions = {};
   Map<String, int> clicks = {};
   List<Map<String, dynamic>> adData = [];
+  String? userId;
+  Map<String, dynamic> categories = {
+    'Fashion': true,
+    'Grocery': true,
+    'Gym & Sports': true,
+    'Dining': true,
+    'Hotels': true,
+  };
 
   final box = GetStorage();
 
   List businessBranches = [];
   List allbusinessAds = [];
   List<Map<String, dynamic>>? adS;
+
+  DataLayer() {
+    box.write("islogin", true);
+    loadData();
+  }
 
 //call this func to refresh
   getAllAds() async {
@@ -28,24 +41,18 @@ class DataLayer {
     businessBranches = await supabase
         .from("branch")
         .select("*,business(*)"); // select branches to show them on map
-    // log("-----------------branches $businessBranches");
 
-    for (var element in allAds!) {
+    for (var element in allAds) {
       allbusinessAds.add(element);
     }
-    // print('-------ads: $allbusinessAds');
-
-    //  box.write("currentUser", currentBusinessInfo);
   }
 
   getUserInfo() async {
-    currentUserInfo = await supabase
-        .from("users")
-        .select()
-        .eq("id", supabase.auth.currentUser!.id)
-        .single();
+    userId = supabase.auth.currentUser!.id;
+    currentUserInfo =
+        await supabase.from("users").select().eq("id", userId!).single();
 
-    box.write("currentUser", currentUserInfo);
+    box.write("currentUser", userId);
   }
 
   //increment
@@ -81,5 +88,35 @@ class DataLayer {
 
   cleanClicks() {
     clicks = {};
+  }
+
+  saveCategories() {
+    box.write('categories', categories);
+  }
+
+  loadData() {
+    if (box.hasData('currentUser')) {
+      userId = box.read('currentUser');
+      getUserInfo();
+    }
+    if (box.hasData('categories')) {
+      categories = box.read('categories');
+    }
+  }
+
+  logOut() {
+    saveCategories();
+    supabase.auth.signOut();
+    //currentUserInfo = null;
+    //box.remove("currentUser");
+    //OneSignal.logout();
+  }
+
+  bool isLoggedIn() {
+    if (box.hasData("islogin")) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

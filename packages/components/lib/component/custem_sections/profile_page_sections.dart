@@ -64,7 +64,7 @@ class ProfileInfoSection extends StatelessWidget {
 
 class FilterSection extends StatelessWidget {
   final Function(String) selectFilter;
-  final Map<String, bool> categories;
+  final Map<String, dynamic> categories;
   final String text;
   final String subText;
   const FilterSection(

@@ -6,8 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:user_app/cubit/theme_cubit.dart';
 import 'package:user_app/data_layer/data_layer.dart';
-
 import 'package:user_app/screens/bottom_nav_bar_screen/bottom_nav_bar_screen.dart';
+
+import 'package:user_app/screens/onboarding_screen/onboarding_screen.dart';
 
 import 'package:user_app/services/supabase/supabase_configration.dart';
 import 'package:user_app/setup/setup.dart';
@@ -49,6 +50,7 @@ class _MainAppState extends State<MainApp> with LifecycleAware, LifecycleMixin {
       create: (context) => ThemeCubit(),
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
+          final isLogin = getIt.get<DataLayer>();
           return MaterialApp(
             navigatorObservers: [defaultLifecycleObserver],
             debugShowCheckedModeBanner: false,
@@ -65,7 +67,9 @@ class _MainAppState extends State<MainApp> with LifecycleAware, LifecycleMixin {
                     getIt.get<DataLayer>().sendAdsData;
                   }
                 },
-                child: BottomNavBarScreen()),
+                child: isLogin.isLoggedIn()
+                    ? const BottomNavBarScreen()
+                    : const OnboardingScreen()),
           );
         },
       ),

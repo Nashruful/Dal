@@ -4,8 +4,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_app/cubit/theme_cubit.dart';
+import 'package:user_app/data_layer/data_layer.dart';
+import 'package:user_app/screens/auth_screens/login_screen.dart';
 import 'package:user_app/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:user_app/screens/profile_screen/bloc/profile_bloc_bloc.dart';
+import 'package:user_app/setup/setup.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -108,7 +111,9 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       LogoutButton(
                         onPressed: () {
-                          //
+                          getIt.get<DataLayer>().logOut();
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => LoginScreen()));
                         },
                         text: 'Log out'.tr(),
                       ),
