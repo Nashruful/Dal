@@ -180,13 +180,11 @@ class LoginScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Login",
-                                  style: Theme.of(context).textTheme.bodyMedium)
-                              .tr(),
-                        ),
+                        Text("Login",
+                                style: Theme.of(context).textTheme.bodyMedium)
+                            .tr(),
                         const SizedBox(
                           height: 48,
                         ),
@@ -234,9 +232,13 @@ class LoginScreen extends StatelessWidget {
                                     builder: (context) =>
                                         const CreateAccountScreen()));
                           },
-                          child: Text("Create An Account",
-                                  style: Theme.of(context).textTheme.bodyMedium)
-                              .tr(),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text("Create An Account",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium)
+                                .tr(),
+                          ),
                         )
                       ],
                     ),

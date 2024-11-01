@@ -176,13 +176,11 @@ class CreateAccountScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Sign Up",
-                                  style: Theme.of(context).textTheme.bodyLarge)
-                              .tr(),
-                        ),
+                        Text("Sign Up",
+                                style: Theme.of(context).textTheme.bodyLarge)
+                            .tr(),
                         const SizedBox(
                           height: 48,
                         ),

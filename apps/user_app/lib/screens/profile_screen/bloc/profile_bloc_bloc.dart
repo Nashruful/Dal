@@ -20,11 +20,11 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     'Drinks': true
   };
   int langValue = 0;
-
-  String firstName = '';
-  String lastName = '';
-  String email = '';
-  String image = '';
+  String firstName = getIt.get<DataLayer>().currentUserInfo!['first_name'];
+  String lastName = getIt.get<DataLayer>().currentUserInfo!['last_name'];
+  String email = getIt.get<DataLayer>().currentUserInfo!['email'];
+  String image = getIt.get<DataLayer>().currentUserInfo!['profile_image'] ??
+      'https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg';
 
   ThemeMode themeMode = ThemeMode.system;
 
@@ -37,7 +37,6 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
       emit(UpdatedFilterState());
     });
 
-
     //change lang
     on<ChangeLangEvent>((event, emit) {
       langValue = event.value;
@@ -48,18 +47,18 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     // get user info
     on<GetInfoEvent>((event, emit) async {
       emit(LoadingState());
+      await getIt.get<DataLayer>().getUserInfo();
       try {
-        final info = await supabase
-            .from('users')
-            .select()
-            .eq('id', supabase.auth.currentUser!.id)
-            .single();
-        firstName = info['first_name'];
+        final info = getIt.get<DataLayer>().currentUserInfo;
+        firstName = info!['first_name'];
         lastName = info['last_name'];
         email = info['email'];
         image = info['profile_image'];
         emit(GetInfoState(
-            firstName: firstName, lastName: lastName, email: email, image: image));
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            image: image));
       } on AuthException catch (e) {
         emit(ErrorState(msg: e.message));
         print(e.message);
@@ -70,16 +69,5 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
         emit(ErrorState(msg: e.toString()));
       }
     });
-
-    // listen to users table
-    void getInfoRealTime() {
-      supabase
-          .from('users')
-          .stream(primaryKey: ['id']).listen((List<Map<String, dynamic>> data) {
-        add(GetInfoEvent());
-      });
-    }
-
-    getInfoRealTime();
   }
 }

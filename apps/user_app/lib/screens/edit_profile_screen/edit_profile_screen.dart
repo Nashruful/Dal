@@ -4,7 +4,9 @@ import 'package:components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/screens/edit_profile_screen/cubit/edit_profile_cubit.dart';
+import 'package:user_app/setup/setup.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
@@ -81,7 +83,7 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                     CustomTextFormField(
                       fillColor: const Color(0xffEAEAEA),
-                      hintText: '',
+                      maxLines: 1,
                       hintStyle: const TextStyle(color: Color(0xff848484)),
                       controller: cubit.firstNameController,
                     ),
@@ -97,6 +99,7 @@ class EditProfileScreen extends StatelessWidget {
                     CustomTextFormField(
                       fillColor: const Color(0xffEAEAEA),
                       hintStyle: const TextStyle(color: Color(0xff848484)),
+                      maxLines: 1,
                       controller: cubit.lastNameController,
                     ),
                     const SizedBox(
@@ -104,11 +107,13 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                     CustomElevatedButton(
                       backgroundColor: const Color(0xffA51361),
-                      onPressed: () {
+                      onPressed: () async {
                         if (formKey.currentState?.validate() == true) {
-                          cubit.changeName(cubit.firstNameController.text,
+                          await cubit.changeName(cubit.firstNameController.text,
                               cubit.lastNameController.text);
-                          Navigator.pop(context);
+                              
+                          Navigator.pop(context, true);
+                          
                         }
                       },
                       child: Text('Save'.tr(),
