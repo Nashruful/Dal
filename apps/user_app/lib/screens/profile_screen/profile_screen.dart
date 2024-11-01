@@ -41,16 +41,26 @@ class ProfileScreen extends StatelessWidget {
                               firstName: bloc.firstName,
                               lastName: bloc.lastName,
                               email: bloc.email,
-                              //
-                              child: IconButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EditProfileScreen()));
+                              }, child: IconButton(
                                   icon: Icon(Icons.edit,
                                       color: Theme.of(context).indicatorColor),
                                   iconSize: 18,
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
                                             builder: (context) =>
-                                                const EditProfileScreen()));
+                                                const EditProfileScreen()))
+                                        .then((value) async {
+                                      print(value);
+                                      if (value != null) {
+                                        bloc.add(await GetInfoEvent());
+                                        print('then');
+                                      }
+                                    });
                                   }),
                             );
                           },

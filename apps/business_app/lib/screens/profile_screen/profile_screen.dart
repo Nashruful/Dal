@@ -1,9 +1,7 @@
-import 'package:business_app/cubit/theme_cubit.dart';
 import 'package:business_app/data_layer/data_layer.dart';
 import 'package:business_app/screens/profile_screen/bloc/profile_bloc_bloc.dart';
 import 'package:business_app/screens/subscriptions_screen/subscriptions_screen.dart';
 import 'package:business_app/setup/setup.dart';
-import 'package:components/component/custom_app_bar/custom_app_bar.dart';
 import 'package:components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +15,7 @@ class ProfileScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => ProfileBlocBloc(),
       child: Builder(builder: (context) {
+        final businessInfo = getIt.get<DataLayer>().currentBusinessInfo;
         final bloc = context.read<ProfileBlocBloc>();
         final businessInfo = getIt.get<DataLayer>().currentBusinessInfo;
         return Scaffold(
@@ -43,6 +42,7 @@ class ProfileScreen extends StatelessWidget {
                             firstName: businessInfo[0]['name'],
                             lastName: '',
                             email: businessInfo[0]['email'],
+                            onPressed: () {},
                             child: const SizedBox.shrink(),
                           )),
                       const Divider(height: 40),

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/screens/home_screen/cubit/home_cubit.dart';
 import 'package:user_app/setup/setup.dart';
@@ -165,13 +166,13 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CustomIconButton(
-                        icon: 'assets/svg/coffee.svg',
-                        title: 'Cafes'.tr(),
+                        icon: 'assets/svg/Dining.svg',
+                        title: 'Dining',
                         onPressed: () {},
                       ),
                       CustomIconButton(
-                        icon: 'assets/svg/Bakery.svg',
-                        title: 'Bakery'.tr(),
+                        icon: 'assets/svg/Supermarkets.svg',
+                        title: "Supermarket",
                         onPressed: () {
                           showModalBottomSheet(
                               isDismissible: true,
@@ -212,7 +213,7 @@ class HomeScreen extends StatelessWidget {
                                                             contentPadding:
                                                                 EdgeInsets.zero,
                                                             content:
-                                                                CustomBottomSheet(
+                                                                BottomSheetForMap(
                                                               image:
                                                                   "https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/offer%20images/skrayz.png?t=2024-10-24T11%3A23%3A54.100Z",
                                                               companyName:
@@ -227,10 +228,39 @@ class HomeScreen extends StatelessWidget {
                                                               offerType:
                                                                   '40% ${'off'.tr()}',
                                                               viewLocation:
-                                                                  'View Location'
-                                                                      .tr(),
+                                                                  "Open in map",
                                                               locationOnPressed:
-                                                                  () {},
+                                                                  () async {
+                                                                final availableMaps =
+                                                                    await MapLauncher
+                                                                        .installedMaps;
+                                                                print(
+                                                                    availableMaps); // Output the available maps for debugging purposes
+
+                                                                if (availableMaps
+                                                                    .isNotEmpty) {
+                                                                  await availableMaps
+                                                                      .first
+                                                                      .showMarker(
+                                                                    coords: Coords(
+                                                                        37.759392,
+                                                                        -122.5107336),
+                                                                    title:
+                                                                        "Ocean Beach",
+                                                                  );
+                                                                } else {
+                                                                  // Handle the case where no maps are installed
+                                                                  print(
+                                                                      "no maps installed on this device.");
+                                                                  ScaffoldMessenger.of(
+                                                                          context)
+                                                                      .showSnackBar(
+                                                                    SnackBar(
+                                                                        content:
+                                                                            Text('No maps are installed on this device.')),
+                                                                  );
+                                                                }
+                                                              },
                                                             ),
                                                           ));
                                                 },
@@ -286,23 +316,18 @@ class HomeScreen extends StatelessWidget {
                         },
                       ),
                       CustomIconButton(
-                        icon: 'assets/svg/Breakfast.svg',
-                        title: 'Breakfast'.tr(),
+                        icon: 'assets/svg/Fashion.svg',
+                        title: "Fashion",
                         onPressed: () {},
                       ),
                       CustomIconButton(
-                        icon: 'assets/svg/Ice_creams.svg',
-                        title: 'Ice creams'.tr(),
+                        icon: 'assets/svg/Hotels.svg',
+                        title: "Hotels",
                         onPressed: () {},
                       ),
                       CustomIconButton(
-                        icon: 'assets/svg/Dinning.svg',
-                        title: 'Dinning'.tr(),
-                        onPressed: () {},
-                      ),
-                      CustomIconButton(
-                        icon: 'assets/svg/Drinks.svg',
-                        title: 'Drinks'.tr(),
+                        icon: 'assets/svg/Gym.svg',
+                        title: "Gym",
                         onPressed: () {},
                       ),
                     ],
@@ -351,25 +376,24 @@ class HomeScreen extends StatelessWidget {
                       if (state is SuccessState) {
                         return FadeTransitionSwitcher(
                           child: Row(
-                            key:
-                                ValueKey(getIt.get<DataLayer>().allAds!.length),
+                            key: ValueKey(getIt.get<DataLayer>().allAds.length),
                             children: getIt
                                 .get<DataLayer>()
-                                .allAds!
+                                .allAds
                                 .map(
                                   (e) => ImpressionDetector(
                                     impressedCallback: () {
-                                      getIt.get<DataLayer>().recordImpressions(e[
-                                          'id']); //add impressions to ad id each time it is viewed
+                                      getIt.get<DataLayer>().recordImpressions(e
+                                          .id!); //add impressions to ad id each time it is viewed
                                     },
                                     child: CustomAdsContainer(
-                                      companyLogo: e['bannerimg'] ??
+                                      companyLogo: e
+                                              .branch!.business!.logoImg ??
                                           "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
                                       remainingDay: '4d',
-                                      companyName: e['title'] ?? "----",
-                                      offers:
-                                          e['offer_type'] + ' ${'off'.tr()}' ??
-                                              "----",
+                                      companyName:
+                                          e.branch!.business!.name ?? "----",
+                                      offers: e.offerType! + ' ${'off'.tr()}',
                                       onTap: () {
                                         showModalBottomSheet(
                                             isScrollControlled: true,
@@ -379,29 +403,30 @@ class HomeScreen extends StatelessWidget {
                                                 impressedCallback: () {
                                                   getIt
                                                       .get<DataLayer>()
-                                                      .recordClicks(e[
-                                                          'id']); //add clicks to ad id each time it is viewed
+                                                      .recordClicks(e
+                                                          .id!); //add clicks to ad id each time it is viewed
                                                 },
                                                 child: CustomBottomSheet(
-                                                  image: e['bannerimg'],
-                                                  companyName:
-                                                      e['title'] ?? "---",
+                                                  image: e.bannerimg!,
+                                                  companyName: e.branch!
+                                                          .business!.name ??
+                                                      "---",
                                                   iconImage:
                                                       'assets/svg/coffee.svg',
                                                   description:
-                                                      e['description'] ?? "---",
+                                                      e.description ?? "---",
                                                   remainingDay: '4d',
                                                   onPressed: () {
                                                     getIt
                                                         .get<DataLayer>()
                                                         .myReminders
-                                                        .add(e);
+                                                        .add(e.toJson());
                                                   },
                                                   offerType:
                                                       '40% ${'off'.tr()}',
                                                   viewLocation:
                                                       'View Location'.tr(),
-                                                  locationOnPressed: () {},
+                                                  locationOnPressed: () {}, buttonLable: '',
                                                 ),
                                               );
                                             });
@@ -463,25 +488,24 @@ class HomeScreen extends StatelessWidget {
                       if (state is SuccessState) {
                         return FadeTransitionSwitcher(
                           child: Row(
-                            key:
-                                ValueKey(getIt.get<DataLayer>().allAds!.length),
+                            key: ValueKey(getIt.get<DataLayer>().allAds.length),
                             children: getIt
                                 .get<DataLayer>()
-                                .allAds!
+                                .allAds
                                 .map(
                                   (e) => ImpressionDetector(
                                     impressedCallback: () {
-                                      getIt.get<DataLayer>().recordImpressions(e[
-                                          'id']); //add impressions to ad id each time it is viewed
+                                      getIt.get<DataLayer>().recordImpressions(e
+                                          .id!); //add impressions to ad id each time it is viewed
                                     },
                                     child: CustomAdsContainer(
-                                      companyLogo: e['branch']?['business']?['logo_img'] ??
+                                      companyLogo: e
+                                              .branch!.business!.logoImg ??
                                           "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
                                       remainingDay: '4d',
-                                      companyName: e['title'] ?? "----",
-                                      offers:
-                                          e['offer_type'] + ' ${'off'.tr()}' ??
-                                              "----",
+                                      companyName:
+                                          e.branch!.business!.name ?? "----",
+                                      offers: e.offerType! + ' ${'off'.tr()}',
                                       onTap: () {
                                         showModalBottomSheet(
                                             isScrollControlled: true,
@@ -491,29 +515,30 @@ class HomeScreen extends StatelessWidget {
                                                 impressedCallback: () {
                                                   getIt
                                                       .get<DataLayer>()
-                                                      .recordClicks(e[
-                                                          'id']); //add clicks to ad id each time it is viewed
+                                                      .recordClicks(e
+                                                          .id!); //add clicks to ad id each time it is viewed
                                                 },
                                                 child: CustomBottomSheet(
-                                                  image: e['bannerimg'],
-                                                  companyName:
-                                                      e['title'] ?? "---",
+                                                  image: e.bannerimg!,
+                                                  companyName: e.branch!
+                                                          .business!.name ??
+                                                      "---",
                                                   iconImage:
                                                       'assets/svg/coffee.svg',
                                                   description:
-                                                      e['description'] ?? "---",
+                                                      e.description ?? "---",
                                                   remainingDay: '4d',
                                                   onPressed: () {
                                                     getIt
                                                         .get<DataLayer>()
                                                         .myReminders
-                                                        .add(e);
+                                                        .add(e.toJson());
                                                   },
                                                   offerType:
                                                       '40% ${'off'.tr()}',
                                                   viewLocation:
                                                       'View Location'.tr(),
-                                                  locationOnPressed: () {},
+                                                  locationOnPressed: () {}, buttonLable: '',
                                                 ),
                                               );
                                             });

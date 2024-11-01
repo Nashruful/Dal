@@ -1,3 +1,4 @@
+import 'package:components/component/custom_containers/custom_ads_container.dart';
 import 'package:components/component/custom_containers/reminders_ads_container.dart';
 import 'package:components/component/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:user_app/screens/reminder_screen/bloc/reminder_event.dart';
 import 'package:user_app/screens/reminder_screen/bloc/reminder_state.dart';
 import 'package:user_app/screens/reminder_screen/bloc/reminedr_bloc.dart';
+import 'package:user_app/setup/setup.dart';
 
 
 class ReminderScreen extends StatelessWidget {

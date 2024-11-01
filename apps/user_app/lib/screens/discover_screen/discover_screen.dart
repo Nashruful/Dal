@@ -14,35 +14,33 @@ class DiscoverScreen extends StatelessWidget {
       create: (context) => DiscoverBloc(),
       child: Builder(builder: (context) {
         final bloc = context.read<DiscoverBloc>();
-        const LocationSettings locationSettings = LocationSettings();
-        bloc.positionStream =
-            Geolocator.getPositionStream(locationSettings: locationSettings)
-                .listen((Position position) {
-          bloc.add(LoadScreenEvent(position: position));
-        });
+        try {
+          const LocationSettings locationSettings = LocationSettings();
+          bloc.positionStream =
+              Geolocator.getPositionStream(locationSettings: locationSettings)
+                  .listen((Position position) {
+            bloc.add(LoadScreenEvent(position: position, context: context));
+          });
+        } catch (e) {
+          bloc.add(ErrorScreenEvent(msg: e.toString()));
+        }
 
         return Scaffold(
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             floatingActionButton: BlocBuilder<DiscoverBloc, DiscoverState>(
               builder: (context, state) {
-                return Padding(
-                  padding: const EdgeInsets.only(right: 40, bottom: 10),
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: FloatingActionButton(
-                      shape: const CircleBorder(),
-                      backgroundColor: const Color(0xffA51361),
-                      onPressed: () {
-                        bloc.buttonClicked = !bloc.buttonClicked;
-                        bloc.add(LoadScreenEvent(position: bloc.positionn));
-                      },
-                      child: Icon(
-                        Icons.radar_rounded,
-                        color:
-                            Color(bloc.buttonClicked ? 0x30F7F7F7 : 0xffF7F7F7),
-                        size: 36,
-                      ),
-                    ),
+                return FloatingActionButton(
+                  shape: const CircleBorder(),
+                  backgroundColor: const Color(0xffA51361),
+                  onPressed: () {
+                    bloc.buttonClicked = !bloc.buttonClicked;
+                    bloc.add(LoadScreenEvent(
+                        position: bloc.positionn, context: context));
+                  },
+                  child: Icon(
+                    Icons.radar_rounded,
+                    color: Color(bloc.buttonClicked ? 0x30F7F7F7 : 0xffF7F7F7),
+                    size: 36,
                   ),
                 );
               },
@@ -56,6 +54,7 @@ class DiscoverScreen extends StatelessWidget {
                           onTap: (tapPosition, point) {
                             print("${point.latitude},${point.longitude}");
                           },
+                          initialZoom: 14,
                           initialCenter: LatLng(
                               bloc.positionn?.latitude ?? 24.82741851222009,
                               bloc.positionn?.longitude ?? 46.754407525179346)),
@@ -92,30 +91,6 @@ class DiscoverScreen extends StatelessWidget {
                                 ),
                               ))
                         ]),
-                        const CircleLayer(circles: [
-                          CircleMarker(
-                              color: Colors.amberAccent,
-                              point:
-                                  LatLng(31.22832604830012, 121.48968954763458),
-                              radius: 30),
-                        ]),
-                        PolylineLayer(
-                          polylines: [
-                            Polyline(
-                              strokeWidth: 3,
-                              points: [
-                                const LatLng(
-                                    31.226891523501784, 121.47566444666158),
-                                const LatLng(
-                                    31.26946183416392, 121.46971902537194),
-                                const LatLng(
-                                    31.250493360622873, 121.45279743668657),
-                              ],
-                              color: const Color(0x80FF0000),
-                              borderColor: Colors.amber,
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                     Column(children: [

@@ -18,11 +18,11 @@ class BottomNavBarScreen extends StatelessWidget {
       create: (context) => NavBarBloc(),
       child: Builder(builder: (context) {
         int index = 0;
-        List navBarPages = const [
-          HomeScreen(),
-          DiscoverScreen(),
+        List navBarPages =  [
+          const HomeScreen(),
+          const DiscoverScreen(),
           ReminderScreen(),
-          ProfileScreen(),
+          const ProfileScreen(),
         ];
         return BlocBuilder<NavBarBloc, NavBarState>(
           builder: (context, state) {

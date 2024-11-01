@@ -11,17 +11,25 @@ class CustomIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CircleAvatar(
-          backgroundColor: const Color(0xffA51361),
-          child: IconButton(onPressed: onPressed, icon: SvgPicture.asset(icon)),
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        CustomText(text: title, color: const Color(0xffA51361), fontSize: 10,)
-      ],
+    return SizedBox(
+      width: 69,
+      child: Column(
+        children: [
+          CircleAvatar(
+            backgroundColor: const Color(0xffA51361),
+            child:
+                IconButton(onPressed: onPressed, icon: SvgPicture.asset(icon)),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          CustomText(
+            text: title,
+            color: const Color(0xffA51361),
+            fontSize: 10,
+          )
+        ],
+      ),
     );
   }
 }

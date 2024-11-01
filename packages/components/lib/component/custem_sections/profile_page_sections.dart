@@ -7,15 +7,15 @@ class ProfileInfoSection extends StatelessWidget {
   final String? lastName;
   final String email;
   final Widget child;
-  final Function()? onPressed;
+  final Function() onPressed;
   const ProfileInfoSection(
       {super.key,
       required this.firstName,
       this.lastName,
       required this.email,
-      this.onPressed,
+      required this.onPressed,
       required this.imgurl, required this.child});
-//
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,9 +55,7 @@ class ProfileInfoSection extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Expanded(
-              child: child,
-            )
+            Expanded(child: child)
           ],
         )
       ],

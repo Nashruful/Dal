@@ -12,11 +12,11 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
 
   getAllAds() async {
-    if (getIt.get<DataLayer>().allAds == null) {
+    if (getIt.get<DataLayer>().allAds.isEmpty) {
       emit(LoadingState());
       try {
-        getIt.get<DataLayer>().allAds =
-            await supabase.from("ad").select('*,branch(*,business(*))');
+        await getIt.get<DataLayer>().getAllAds();
+
         print("--------------- data fetched");
         emit(SuccessState());
       } on PostgrestException catch (e) {

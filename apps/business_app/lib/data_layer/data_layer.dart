@@ -13,29 +13,36 @@ class DataLayer {
     4: 'Hotels',
   };
   final box = GetStorage();
+  String? businessId;
   List currentBusinessInfo = [];
   List businessBranches = [];
   List allbusinessAds = [];
-
+  List subscription_business = [];
 //call this func to refresh
   getBusinessInfo() async {
     currentBusinessInfo = await supabase
         .from('business')
         .select(
-            '*, branch(*,ad(*))') // Select all from business, branch, and ad
-        .eq('id',
-            'ffa9dfe6-6645-470f-96ab-659fa8ac3faf'); // change with incomming businessId
+            '*, branch(*,ad(*)), subscription_business(*)') // Select all from business, branch, and ad
+        .eq('id', businessId!); // change with incomming businessId
 
     businessBranches =
         currentBusinessInfo[0]['branch']; //save branches into a seperate list
-    //print('-------branchs $businessBranches');
+    allbusinessAds = [];
 
     businessBranches.forEach((branch) {
       List ads = branch['ad']; // Get the list of ads for the current branch
       allbusinessAds.addAll(ads);
     });
-    print('-------ads: $allbusinessAds');
 
+    subscription_business = currentBusinessInfo[0][
+        'subscription_business']; //save subscription_business into a seperate list
+
+    final latestSubscription = (subscription_business as List).isNotEmpty
+        ? (subscription_business as List)
+            .reduce((a, b) => a['created_at'].isAfter(b['created_at']) ? a : b)
+        : null;
+    print(subscription_business);
     //  box.write("currentUser", currentBusinessInfo);
   }
 }

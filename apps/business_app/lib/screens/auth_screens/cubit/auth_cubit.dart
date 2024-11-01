@@ -10,7 +10,7 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthStatee> {
   final supabase = getIt.get<DataLayer>().supabase;
   List<Map<String, dynamic>> response = [];
-
+  late final String id;
   final formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController loginController = TextEditingController();
@@ -29,8 +29,8 @@ class AuthCubit extends Cubit<AuthStatee> {
       if (response.isEmpty) {
         emit(ErrorState(msg: "Account not found."));
       } else {
+        getIt.get<DataLayer>().businessId = response[0]['id'];
         await supabase.auth.signInWithOtp(email: loginController.text);
-
         emit(SuccessState());
       }
     } on AuthException catch (e) {
@@ -45,19 +45,10 @@ class AuthCubit extends Cubit<AuthStatee> {
   verifyOTP({required String otp, required String email}) async {
     emit(LoadingState());
     try {
-     
-      await supabase.auth.verifyOTP(
-          type:
-         
-              OtpType.magiclink,
-          email: email,
-          token: otp);
-
-
-
+      await supabase.auth
+          .verifyOTP(type: OtpType.magiclink, email: email, token: otp);
 
       await getIt.get<DataLayer>().getBusinessInfo();
-
       emit(SuccessState());
     } on AuthException catch (e) {
       emit(ErrorState(msg: e.message));

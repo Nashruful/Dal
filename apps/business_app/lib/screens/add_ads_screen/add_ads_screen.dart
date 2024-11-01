@@ -8,6 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
+import 'package:multi_dropdown/multi_dropdown.dart';
 
 class AddAdsScreen extends StatelessWidget {
   const AddAdsScreen({super.key});
@@ -21,6 +22,8 @@ class AddAdsScreen extends StatelessWidget {
         final cubit = context.read<AddAdsCubit>();
         DateTime? startDate;
         DateTime? endDate;
+        final branches = getIt.get<DataLayer>().businessBranches;
+        print("-------------branches $branches");
         final branches = getIt.get<DataLayer>().businessBranches;
         print("-------------branches $branches");
         return Scaffold(
@@ -68,6 +71,8 @@ class AddAdsScreen extends StatelessWidget {
                       CustomText(
                         text: 'Ad Category'.tr(),
                         color: const Color(0xff444444),
+                        text: 'Ad Category'.tr(),
+                        color: const Color(0xff444444),
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -79,11 +84,17 @@ class AddAdsScreen extends StatelessWidget {
                           return CustomDrobDownButton(
                             value: cubit.categoryValue,
                             items: [
+                            items: [
                               DropdownMenuEntry(
                                   value: 0, label: "Markets".tr()),
                               DropdownMenuEntry(value: 1, label: "Dining".tr()),
                               DropdownMenuEntry(value: 2, label: "Gym".tr()),
+                                  value: 0, label: "Markets".tr()),
+                              DropdownMenuEntry(value: 1, label: "Dining".tr()),
+                              DropdownMenuEntry(value: 2, label: "Gym".tr()),
                               DropdownMenuEntry(
+                                  value: 3, label: "Clothes".tr()),
+                              DropdownMenuEntry(value: 4, label: "Hotels".tr()),
                                   value: 3, label: "Clothes".tr()),
                               DropdownMenuEntry(value: 4, label: "Hotels".tr()),
                             ].map((entry) {
@@ -105,6 +116,8 @@ class AddAdsScreen extends StatelessWidget {
                         height: 20,
                       ),
                       CustomText(
+                        text: 'Ad Duration'.tr(),
+                        color: const Color(0xff444444),
                         text: 'Ad Duration'.tr(),
                         color: const Color(0xff444444),
                         fontSize: 18,
@@ -295,12 +308,59 @@ class AddAdsScreen extends StatelessWidget {
                             return 'Please select a branch';
                           }
                           return null;
+
+                      MultiDropdown(
+                        controller: cubit.branchLocationController,
+                        singleSelect: false,
+                        enabled: true,
+                        maxSelections:
+                            2, // add a condition based on subscription
+                        searchEnabled: true,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        items: branches.map((branch) {
+                          return DropdownItem(
+                              label: branch['address'].toString(),
+                              value: branches.indexOf(branch));
+                        }).toList(),
+                        onSelectionChange: (selectedLocation) {
+                          cubit.selectedBranch.clear();
+                          for (var location in selectedLocation) {
+                            if (location < branches.length) {
+                              var branch = branches[location];
+                              cubit.selectedBranch.add(branch['address']);
+                              print(cubit.selectedBranch);
+                            }
+                          }
+                        },
+                        fieldDecoration: FieldDecoration(
+                            hintText: 'Select a branch',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none),
+                            backgroundColor: Color(0xffEAEAEA)),
+                        dropdownDecoration: const DropdownDecoration(
+                            backgroundColor: Color(0xffEAEAEA)),
+                        dropdownItemDecoration: const DropdownItemDecoration(
+                          backgroundColor: Color(0xffEAEAEA),
+                          selectedBackgroundColor: Color(0xffEAEAEA),
+                          selectedIcon: Icon(Icons.check_box_outlined,
+                              color: Color(0xffA51361)),
+                        ),
+                        chipDecoration: const ChipDecoration(
+                            wrap: false, backgroundColor: Color(0xff8CBFAE)),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please select a branch';
+                          }
+                          return null;
                         },
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       CustomText(
+                        text: 'Ad image'.tr(),
+                        color: const Color(0xff444444),
                         text: 'Ad image'.tr(),
                         color: const Color(0xff444444),
                         fontSize: 18,

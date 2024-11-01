@@ -2,8 +2,8 @@ import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CustomBottomSheet extends StatelessWidget {
-  const CustomBottomSheet(
+class BottomSheetForMap extends StatelessWidget {
+  const BottomSheetForMap(
       {super.key,
       required this.image,
       required this.companyName,
@@ -13,7 +13,7 @@ class CustomBottomSheet extends StatelessWidget {
       required this.offerType,
       this.onPressed,
       required this.viewLocation,
-      this.locationOnPressed, required String buttonLable});
+      this.locationOnPressed});
   final String image;
   final String companyName;
   final String offerType;
@@ -30,8 +30,7 @@ class CustomBottomSheet extends StatelessWidget {
       height: 650,
       decoration: BoxDecoration(
         color: Theme.of(context).canvasColor,
-        borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(18), topRight: Radius.circular(18)),
+        borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -101,7 +100,7 @@ class CustomBottomSheet extends StatelessWidget {
           ),
           const Spacer(),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -141,10 +140,7 @@ class CustomBottomSheet extends StatelessWidget {
                               border:
                                   Border.all(color: const Color(0xffA51361))),
                           child: SvgPicture.asset(
-                            iconImage,
-                            colorFilter: const ColorFilter.mode(
-                                Color(0xff7f7f7f7), BlendMode.srcIn),
-                            fit: BoxFit.values[6],
+                            iconImage
                           ),
                         ),
                       ],
