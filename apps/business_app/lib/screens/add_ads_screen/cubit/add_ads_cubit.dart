@@ -19,6 +19,8 @@ class AddAdsCubit extends Cubit<AddAdsState> {
       MultiSelectController();
 
   final supabase = getIt.get<DataLayer>().supabase;
+  final branches = getIt.get<DataLayer>().businessBranches;
+  Map plan = getIt.get<DataLayer>().latestSubscription;
 
   ImagePicker pick = ImagePicker();
   File? image;
@@ -62,7 +64,7 @@ class AddAdsCubit extends Cubit<AddAdsState> {
 
   String dateFormat(DateTime start, DateTime end) {
     String displayDate =
-        '${start.year}/${start.month.toString().padLeft(2, '0')}/${start.day.toString().padLeft(2, '0')} - ${end.year}/${end.month.toString().padLeft(2, '0')}/${end.day.toString().padLeft(2, '0')}';
+        '${start.day.toString().padLeft(2, '0')}/${start.month.toString().padLeft(2, '0')}/${start.year} - ${end.day.toString().padLeft(2, '0')}/${end.month.toString().padLeft(2, '0')}/${end.year}';
     return displayDate;
   }
 
@@ -98,10 +100,15 @@ class AddAdsCubit extends Cubit<AddAdsState> {
             "startdate": startDateFormat,
             "enddate": endDateFormat,
             "offer_type": addTypeController.text,
-            'clicks': null,
+            'clicks': 0,
+            'views': 0,
           });
+
+          print('ads add successfully');
         }
-      } else {}
+      } else {
+        print('failed to add');
+      }
     } on AuthException catch (e) {
       emit(ErrorState(msg: e.message));
     } on PostgrestException catch (e) {
@@ -109,5 +116,18 @@ class AddAdsCubit extends Cubit<AddAdsState> {
     } catch (e) {
       emit(ErrorState(msg: e.toString()));
     }
+  }
+
+  int getBranchType(Map plan) {
+    final int numOfAdsPerBranch;
+    if (plan['subscription_type'] == 'Enterprise') {
+      numOfAdsPerBranch = 100;
+    } else if (plan['subscription_type'] == 'Premium') {
+      numOfAdsPerBranch = 5;
+    } else {
+      //basic
+      numOfAdsPerBranch = 1;
+    }
+    return numOfAdsPerBranch;
   }
 }

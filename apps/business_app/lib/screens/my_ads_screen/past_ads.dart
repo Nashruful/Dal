@@ -13,95 +13,81 @@ class PastAdsTab extends StatelessWidget {
     final cubit = context.read<MyAdsCubit>();
     final screenWidth = MediaQuery.of(context).size.width;
     final crossAxisCount = screenWidth > 600 ? 3 : 2;
-    String getRemainingTime(String dateString) {
-      //parse targettime
-      DateTime targetDate = DateTime.parse(dateString);
-
-// Calculate the difference
-      Duration difference = targetDate.difference(DateTime.now());
-
-// Get the remaining days
-      int remainingDays = difference.inDays;
-      if (remainingDays < 0) {
-        remainingDays = 0;
-      }
-      return remainingDays.toString();
-    }
-
-//get past ads only
-    List currentAds = getIt.get<DataLayer>().allbusinessAds.where((ad) {
-      DateTime endDate = DateTime.parse(ad['enddate']);
-      return endDate.isBefore(DateTime.now());
-    }).toList();
-
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: crossAxisCount,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          childAspectRatio: 2 / 3,
-        ),
-        itemCount: currentAds.length,
-        itemBuilder: (context, index) {
-          final ad = currentAds[index];
-          return CustomAdsContainer(
-            opacity: 0.3,
-            companyName: getIt.get<DataLayer>().currentBusinessInfo[0]['name'],
-            companyLogo: ad['bannerimg'],
-            remainingDay: '${getRemainingTime(ad['enddate'])} d',
-            offers: ad['offer_type'],
-            onTap: () {
-              showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (context) {
-                    return CustomBottomSheet(
-                      image: ad['bannerimg'],
-                      companyName: getIt.get<DataLayer>().currentBusinessInfo[0]
-                              ['name'] ??
-                          "---",
-                      // iconImage: 'assets/svg/coffee.svg',
-                      description: ad['description'] ?? "---",
-                      remainingDay: getRemainingTime(ad['enddate']),
-                      onPressed: () async {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return CustemAlertDialog(
-                                  title:
-                                      'Are You Sure You Want To Delete This Ad?',
-                                  msg: 'This will permanently delete the ad.',
-                                  onPressed: () {
-                                    cubit.deleteAd(ad['id']);
-                                  },
-                                  buttonLable: 'Delete Ad');
-                            });
-                      },
-                      views: ad['views'],
-                      clicks: ad['clicks'],
-                      offerType: ad['offer_type'],
-                      viewLocation: 'location',
-                      buttonLable: 'Delete Ad',
-                      locationOnPressed: () {},
-                      button: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors().green),
-                        onPressed: () {
-                          cubit.deleteAd(ad['id']);
-                        },
-                        child: Text(
-                          'Delete Ad',
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                      ),
-                    );
-                  });
-            },
-          );
-        },
-      ),
+      child: cubit.pastAds.isEmpty
+          ? const Center(
+              child: Text("There is no past ads"),
+            )
+          : GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                childAspectRatio: 2 / 3,
+              ),
+              itemCount: cubit.pastAds.length,
+              itemBuilder: (context, index) {
+                final ad = cubit.pastAds[index];
+                return CustomAdsContainer(
+                  opacity: 0.3,
+                  companyName: getIt.get<DataLayer>().currentBusinessInfo[0]
+                      ['name'],
+                  companyLogo: ad['bannerimg'],
+                  remainingDay: '${cubit.getRemainingTime(ad['enddate'])} d',
+                  offers: ad['offer_type'],
+                  onTap: () {
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) {
+                          return CustomBottomSheet(
+                            image: ad['bannerimg'],
+                            companyName: getIt
+                                    .get<DataLayer>()
+                                    .currentBusinessInfo[0]['name'] ??
+                                "---",
+                            // iconImage: 'assets/svg/coffee.svg',
+                            description: ad['description'] ?? "---",
+                            remainingDay: cubit.getRemainingTime(ad['enddate']),
+                            onPressed: () async {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustemAlertDialog(
+                                        title:
+                                            'Are You Sure You Want To Delete This Ad?',
+                                        msg:
+                                            'This will permanently delete the ad.',
+                                        onPressed: () {
+                                          cubit.deleteAd(ad['id']);
+                                        },
+                                        buttonLable: 'Delete Ad');
+                                  });
+                            },
+                            views: ad['views'],
+                            clicks: ad['clicks'],
+                            offerType: ad['offer_type'],
+                            viewLocation: 'location',
+                            buttonLable: 'Delete Ad',
+                            locationOnPressed: () {},
+                            button: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors().green),
+                              onPressed: () {
+                                cubit.deleteAd(ad['id']);
+                              },
+                              child: Text(
+                                'Delete Ad',
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                            ),
+                          );
+                        });
+                  },
+                );
+              },
+            ),
     );
   }
 }

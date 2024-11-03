@@ -1,13 +1,10 @@
-import 'package:business_app/data_layer/data_layer.dart';
 import 'package:business_app/screens/add_ads_screen/cubit/add_ads_cubit.dart';
-import 'package:business_app/setup/setup.dart';
 import 'package:components/component/custom_text_field/custom_text_form_field.dart';
 import 'package:components/components.dart';
 import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:multi_dropdown/multi_dropdown.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
 
 class AddAdsScreen extends StatelessWidget {
@@ -18,26 +15,8 @@ class AddAdsScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => AddAdsCubit(),
       child: Builder(builder: (context) {
-        Map plan = getIt.get<DataLayer>().latestSubscription;
         final formKey = GlobalKey<FormState>();
         final cubit = context.read<AddAdsCubit>();
-        DateTime? startDate;
-        DateTime? endDate;
-        final branches = getIt.get<DataLayer>().businessBranches;
-
-        int getBranchType(Map plan) {
-          final int numOfAdsPerBranch;
-          if (plan['subscription_type'] == 'Enterprise') {
-            numOfAdsPerBranch = 100;
-          } else if (plan['subscription_type'] == 'Premium') {
-            numOfAdsPerBranch = 5;
-          } else {
-            //basic
-            numOfAdsPerBranch = 1;
-          }
-          return numOfAdsPerBranch;
-        }
-
         return Scaffold(
             appBar: AppBar(
               iconTheme: IconThemeData(color: AppColors().white1),
@@ -92,17 +71,11 @@ class AddAdsScreen extends StatelessWidget {
                           return CustomDrobDownButton(
                             value: cubit.categoryValue,
                             items: [
-                            items: [
                               DropdownMenuEntry(
                                   value: 0, label: "Markets".tr()),
                               DropdownMenuEntry(value: 1, label: "Dining".tr()),
                               DropdownMenuEntry(value: 2, label: "Gym".tr()),
-                                  value: 0, label: "Markets".tr()),
-                              DropdownMenuEntry(value: 1, label: "Dining".tr()),
-                              DropdownMenuEntry(value: 2, label: "Gym".tr()),
                               DropdownMenuEntry(
-                                  value: 3, label: "Clothes".tr()),
-                              DropdownMenuEntry(value: 4, label: "Hotels".tr()),
                                   value: 3, label: "Clothes".tr()),
                               DropdownMenuEntry(value: 4, label: "Hotels".tr()),
                             ].map((entry) {
@@ -130,8 +103,9 @@ class AddAdsScreen extends StatelessWidget {
                       BlocBuilder<AddAdsCubit, AddAdsState>(
                         builder: (context, state) {
                           final dateText =
-                              (startDate != null && endDate != null)
-                                  ? cubit.dateFormat(startDate!, endDate!)
+                              (cubit.startDate != null && cubit.endDate != null)
+                                  ? cubit.dateFormat(
+                                      cubit.startDate!, cubit.endDate!)
                                   : 'Select date range';
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -185,22 +159,30 @@ class AddAdsScreen extends StatelessWidget {
                                                   BoxDecoration(
                                                       color: AppColors().grey),
                                               onRangeSelected: (value) {
-                                                startDate = value.start;
-                                                endDate = value.end;
+                                                cubit.startDate = value.start;
+                                                cubit.endDate = value.end;
                                               },
                                             ),
-                                            CustomElevatedButton(
-                                              onPressed: () {
-                                                cubit.selectAdsRangeDate(
-                                                    startDate!, endDate!);
-                                                Navigator.pop(context);
-                                              },
-                                              backgroundColor: AppColors().pink,
-                                              child: CustomText(
-                                                text: 'Confirm button'.tr(),
-                                                color: AppColors().white1,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 24),
+                                              child: CustomElevatedButton(
+                                                onPressed: () {
+                                                  cubit.selectAdsRangeDate(
+                                                      cubit.startDate!,
+                                                      cubit.endDate!);
+                                                  Navigator.pop(context);
+                                                },
+                                                backgroundColor:
+                                                    AppColors().pink,
+                                                child: CustomText(
+                                                  text: 'Confirm button'.tr(),
+                                                  color: AppColors().white1,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                               ),
                                             )
                                           ],
@@ -252,68 +234,23 @@ class AddAdsScreen extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-
                       MultiDropdown(
                         controller: cubit.branchLocationController,
                         singleSelect: false,
                         enabled: true,
-                        maxSelections: getBranchType(plan),
+                        maxSelections: cubit.getBranchType(cubit.plan),
                         searchEnabled: true,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        items: branches.map((branch) {
+                        items: cubit.branches.map((branch) {
                           return DropdownItem(
                               label: branch['address'].toString(),
-                              value: branches.indexOf(branch));
+                              value: cubit.branches.indexOf(branch));
                         }).toList(),
                         onSelectionChange: (selectedLocation) {
                           cubit.selectedBranch.clear();
                           for (var location in selectedLocation) {
-                            if (location < branches.length) {
-                              var branch = branches[location];
-                              cubit.selectedBranch.add(branch['address']);
-                            }
-                          }
-                        },
-                        fieldDecoration: FieldDecoration(
-                            hintText: 'Select a branch',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none),
-                            backgroundColor: Theme.of(context).canvasColor),
-                        dropdownDecoration: DropdownDecoration(
-                            backgroundColor: Theme.of(context).canvasColor),
-                        dropdownItemDecoration: DropdownItemDecoration(
-                          textColor: AppColors().grey2,
-                          backgroundColor: Theme.of(context).canvasColor,
-                          selectedBackgroundColor: AppColors().white1,
-                          selectedIcon: Icon(Icons.check_box_outlined,
-                              color: AppColors().pink),
-                        ),
-                        chipDecoration: ChipDecoration(
-                            wrap: false, backgroundColor: AppColors().green),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please select a branch';
-                          }
-                          return null;
-
-                      MultiDropdown(
-                        controller: cubit.branchLocationController,
-                        singleSelect: false,
-                        enabled: true,
-                        maxSelections: getBranchType(plan),
-                        searchEnabled: true,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        items: branches.map((branch) {
-                          return DropdownItem(
-                              label: branch['address'].toString(),
-                              value: branches.indexOf(branch));
-                        }).toList(),
-                        onSelectionChange: (selectedLocation) {
-                          cubit.selectedBranch.clear();
-                          for (var location in selectedLocation) {
-                            if (location < branches.length) {
-                              var branch = branches[location];
+                            if (location < cubit.branches.length) {
+                              var branch = cubit.branches[location];
                               cubit.selectedBranch.add(branch['address']);
                             }
                           }
@@ -394,6 +331,27 @@ class AddAdsScreen extends StatelessWidget {
                         backgroundColor: AppColors().pink,
                         onPressed: () {
                           if (formKey.currentState?.validate() == true) {
+                            cubit.addTypeController;
+                            cubit.branchLocationController;
+                            cubit.categoryValue;
+                            cubit.descriptionController;
+                            if (cubit.startDate == null &&
+                                cubit.endDate == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    backgroundColor: AppColors().pink,
+                                    content:
+                                        const Text('Please select a date')),
+                              );
+                            }
+                            if (cubit.image == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    backgroundColor: AppColors().pink,
+                                    content: const Text(
+                                        'Please select an ad image')),
+                              );
+                            }
                             cubit.addAds();
                           }
                         },

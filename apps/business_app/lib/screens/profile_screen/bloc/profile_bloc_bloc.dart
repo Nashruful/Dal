@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:business_app/data_layer/data_layer.dart';
 import 'package:business_app/setup/setup.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -35,5 +36,47 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
       plan = getIt.get<DataLayer>().latestSubscription;
       emit(SuccessState());
     });
+  }
+
+  String getPlanType(Map currentPlan) {
+    final String planType;
+    if (plan['subscription_type'] == 'Basic') {
+      return 'Basic'.tr();
+    } else if (plan['subscription_type'] == 'Premium') {
+      return 'Basic'.tr();
+    } else if (plan['subscription_type'] == 'Enterprise') {
+      return 'Basic'.tr();
+    } else {
+      planType = 'No Subscriptio';
+    }
+
+    return planType;
+  }
+
+  String getPlanDesc(Map currentPlan) {
+    final String planDesc;
+    if (plan['subscription_type'] == 'Basic') {
+      planDesc = 'Basic description'.tr();
+    } else if (plan['subscription_type'] == 'Premium') {
+      planDesc = 'Premium description'.tr();
+    } else if (plan['subscription_type'] == 'Enterprise') {
+      planDesc = 'Enterprise description'.tr();
+    } else {
+      planDesc = 'No Data';
+    }
+
+    return planDesc;
+  }
+
+  int getRemainingDays(DateTime planEndDate) {
+    DateTime currentDate = DateTime.now();
+    Duration difference = planEndDate.difference(currentDate);
+
+    int days = difference.inDays;
+
+    if (days < 0) {
+      days = 0;
+    }
+    return days;
   }
 }

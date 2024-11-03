@@ -7,6 +7,21 @@ part 'my_ads_state.dart';
 
 class MyAdsCubit extends Cubit<MyAdsState> {
   MyAdsCubit() : super(MyAdsInitial());
+  String planEndDate =
+      getIt.get<DataLayer>().latestSubscription['end_date'] ?? '';
+  DateTime currentDate = DateTime.now();
+
+  //get current ads only
+  List currentAds = getIt.get<DataLayer>().allbusinessAds.where((ad) {
+    DateTime endDate = DateTime.parse(ad['enddate']);
+    return endDate.isAfter(DateTime.now());
+  }).toList();
+
+  //get past ads only
+  List pastAds = getIt.get<DataLayer>().allbusinessAds.where((ad) {
+    DateTime endDate = DateTime.parse(ad['enddate']);
+    return endDate.isBefore(DateTime.now());
+  }).toList();
 
   deleteAd(String adId) async {
     emit(LoadingAdsState());
@@ -18,5 +33,20 @@ class MyAdsCubit extends Cubit<MyAdsState> {
 
   refreshInfo() async {
     await getIt.get<DataLayer>().getBusinessInfo(); //refresh info list
+  }
+
+  String getRemainingTime(String dateString) {
+    //parse targettime
+    DateTime targetDate = DateTime.parse(dateString);
+
+// Calculate the difference
+    Duration difference = targetDate.difference(DateTime.now());
+
+// Get the remaining days
+    int remainingDays = difference.inDays;
+    if (remainingDays < 0) {
+      remainingDays = 0;
+    }
+    return remainingDays.toString();
   }
 }
