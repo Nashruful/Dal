@@ -8,19 +8,14 @@ part 'profile_bloc_event.dart';
 part 'profile_bloc_state.dart';
 
 class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
-    final supabase = getIt.get<DataLayer>().supabase;
+  final supabase = getIt.get<DataLayer>().supabase;
+  List businessInfo = getIt.get<DataLayer>().currentBusinessInfo;
+  Map plan = getIt.get<DataLayer>().latestSubscription;
 
-  //save it in storage
-  Map<String, bool> categories = {
-    'Cafe': true,
-    'Breakfast': true,
-    'Bakery': true,
-    'Ice Creams': true,
-    'Dinning': true,
-    'Drinks': true
-  };
+  String planEndDate =
+      getIt.get<DataLayer>().latestSubscription['end_date'] ?? '';
+  DateTime currentDate = DateTime.now();
   int langValue = 0;
-
 
   ProfileBlocBloc() : super(ProfileBlocInitial()) {
     on<ProfileBlocEvent>((event, emit) {});
@@ -30,6 +25,15 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
       langValue = event.value;
 
       emit(ChangedlangState());
+    });
+
+    //Refresh
+    on<RefreshScreenEvent>((event, emit) async {
+      print('refresh event');
+      await getIt.get<DataLayer>().getBusinessInfo();
+      businessInfo = getIt.get<DataLayer>().currentBusinessInfo;
+      plan = getIt.get<DataLayer>().latestSubscription;
+      emit(SuccessState());
     });
   }
 }

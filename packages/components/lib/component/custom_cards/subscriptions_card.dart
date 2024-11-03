@@ -1,3 +1,4 @@
+import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -15,7 +16,8 @@ class CustomSubscriptionsCard extends StatelessWidget {
       required this.price,
       required this.plan,
       required this.selected,
-      required this.onTap, required this.currency});
+      required this.onTap,
+      required this.currency});
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +30,10 @@ class CustomSubscriptionsCard extends StatelessWidget {
             width: 105,
             decoration: selected
                 ? BoxDecoration(
-                    color: Color(0xffF7F7F7),
+                    color: Theme.of(context).canvasColor,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                      color: Color(0xffA51361),
+                      color: AppColors().pink,
                       width: 5,
                     ),
                     boxShadow: [
@@ -45,11 +47,11 @@ class CustomSubscriptionsCard extends StatelessWidget {
                     ],
                   )
                 : BoxDecoration(
-                    color: Color(0xffF7F7F7),
+                    color: Theme.of(context).canvasColor,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: AppColors().black1.withOpacity(0.2),
                         spreadRadius: 1,
                         blurRadius: 2,
                         offset: Offset(0, 1), // changes position of shadow

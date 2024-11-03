@@ -15,10 +15,11 @@
     "subscription one month": "شهر",
     "subscription two month": "شهرين",
     "subscription three month": "٣ شهور",
+    "planTitle": "الاشتراكات",
     "SAR": "ريال",
-    "Basic": "أساسية",
-    "Standard": "قياسية",
-    "Premium": "مميز",
+    "Basic": "الخطة الأساسية",
+    "Standard": "الخطة القياسية",
+    "Premium": "الخطة المميز",
     "Basic description": "Post your ads for passing customers for a month at a single business location, with access to basic ad stats.",
     "Premium description": "Post your ads for passing customers for a month at a single business location, with access to basic ad stats.",
     "Enterprise description": "Post your ads for passing customers for a month at a single business location, with access to basic ad stats.",
@@ -72,5 +73,4 @@
     "Settings": "الاعدادات",
     "View Location": "اظهر على الخريطة",
     "Profile": "الحساب"
-
 }

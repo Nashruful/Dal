@@ -10,6 +10,13 @@ final class LoadScreenEvent extends DiscoverEvent {
   LoadScreenEvent({required this.position, required this.context});
 }
 
+final class SendNotificationEvent extends DiscoverEvent {
+  final Position? position;
+  final BuildContext context;
+
+  SendNotificationEvent({required this.position, required this.context});
+}
+
 final class ErrorScreenEvent extends DiscoverEvent {
   final String msg;
 

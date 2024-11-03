@@ -1,6 +1,5 @@
 import 'package:business_app/data_layer/data_layer.dart';
 import 'package:business_app/screens/my_ads_screen/cubit/my_ads_cubit.dart';
-import 'package:business_app/screens/my_ads_screen/current_ads.dart';
 import 'package:business_app/setup/setup.dart';
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +47,7 @@ class PastAdsTab extends StatelessWidget {
         itemBuilder: (context, index) {
           final ad = currentAds[index];
           return CustomAdsContainer(
+            opacity: 0.3,
             companyName: getIt.get<DataLayer>().currentBusinessInfo[0]['name'],
             companyLogo: ad['bannerimg'],
             remainingDay: '${getRemainingTime(ad['enddate'])} d',
@@ -62,7 +62,7 @@ class PastAdsTab extends StatelessWidget {
                       companyName: getIt.get<DataLayer>().currentBusinessInfo[0]
                               ['name'] ??
                           "---",
-                      iconImage: 'assets/svg/coffee.svg',
+                      // iconImage: 'assets/svg/coffee.svg',
                       description: ad['description'] ?? "---",
                       remainingDay: getRemainingTime(ad['enddate']),
                       onPressed: () async {
@@ -79,10 +79,23 @@ class PastAdsTab extends StatelessWidget {
                                   buttonLable: 'Delete Ad');
                             });
                       },
+                      views: ad['views'],
+                      clicks: ad['clicks'],
                       offerType: ad['offer_type'],
                       viewLocation: 'location',
                       buttonLable: 'Delete Ad',
                       locationOnPressed: () {},
+                      button: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors().green),
+                        onPressed: () {
+                          cubit.deleteAd(ad['id']);
+                        },
+                        child: Text(
+                          'Delete Ad',
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                      ),
                     );
                   });
             },

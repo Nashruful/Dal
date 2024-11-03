@@ -65,8 +65,8 @@ class ProfileScreen extends StatelessWidget {
                       BlocBuilder<ProfileBlocBloc, ProfileBlocState>(
                         builder: (context, state) {
                           return FilterSection(
-                            selectFilter: (String) {
-                              bloc.add(UpdateFilterEvent(category: String));
+                            selectFilter: (string) {
+                              bloc.add(UpdateFilterEvent(category: string));
                             },
                             categories: bloc.categories,
                             text: 'My filters'.tr(),

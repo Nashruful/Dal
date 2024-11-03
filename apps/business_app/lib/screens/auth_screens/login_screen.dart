@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -22,9 +23,10 @@ class LoginScreen extends StatelessWidget {
               showDialog(
                   context: context,
                   barrierDismissible: false,
-                  builder: (context) => const AlertDialog(
+                  builder: (context) => AlertDialog(
                       backgroundColor: Colors.transparent,
-                      content: CircularProgressIndicator()));
+                      content: Lottie.asset(
+                          height: 70, 'assets/json/loading.json')));
             }
             if (state is SuccessState) {
               Navigator.push(
@@ -38,16 +40,9 @@ class LoginScreen extends StatelessWidget {
               Navigator.pop(context);
               showDialog(
                   context: context,
-                  barrierDismissible: true,
-                  builder: (context) => AlertDialog(
-                      backgroundColor: Colors.transparent,
-                      content: SizedBox(
-                          height: 100,
-                          width: 100,
-                          child: Text(
-                            state.msg,
-                            style: TextStyle(color: Colors.red),
-                          ))));
+                  builder: (context) {
+                    return CustemErrorDialog(msg: (state.msg));
+                  });
             }
           },
           child: Scaffold(
@@ -56,136 +51,26 @@ class LoginScreen extends StatelessWidget {
               key: cubit.formKey,
               child: Stack(
                 children: [
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Transform.translate(
-                      offset: const Offset(-191, 0),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(19.74 / 360),
-                        child: Container(
-                          height: 326,
-                          width: 346.53,
-                          decoration: BoxDecoration(
-                              color: const Color(0x80F6EFDE),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Transform.translate(
-                      offset: const Offset(-40, 110),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(-32.12 / 360),
-                        child: Container(
-                          height: 249.17,
-                          width: 247.82,
-                          decoration: BoxDecoration(
-                              color: const Color(0x20D9D9D9),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Transform.translate(
-                      offset: const Offset(30, 40),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(-62.61 / 360),
-                        child: Container(
-                          height: 95.17,
-                          width: 106.34,
-                          decoration: BoxDecoration(
-                              color: const Color(0x20D9D9D9),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Transform.translate(
-                      offset: const Offset(85, -160),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(-39.05 / 360),
-                        child: Container(
-                          height: 114.87,
-                          width: 114.99,
-                          decoration: BoxDecoration(
-                              color: const Color(0x80FCECF4),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Transform.translate(
-                      offset: const Offset(-118, 0),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(-39.05 / 360),
-                        child: Container(
-                          height: 190.68,
-                          width: 169.29,
-                          decoration: BoxDecoration(
-                              color: const Color(0x20D9D9D9),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Transform.translate(
-                      offset: const Offset(-150, 120),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(-17.06 / 360),
-                        child: Container(
-                          height: 190.68,
-                          width: 189.89,
-                          decoration: BoxDecoration(
-                              color: const Color(0x80F6EFDE),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Transform.translate(
-                      offset: const Offset(120, 80),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(-45.46 / 360),
-                        child: Container(
-                          height: 190.68,
-                          width: 195.79,
-                          decoration: BoxDecoration(
-                              color: const Color(0x20D9D9D9),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
+                  CustomBackground(),
                   Align(
                     alignment: Alignment.topCenter,
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 60),
-                      child: SvgPicture.asset("assets/svg/Dal_logo.svg"),
+                      padding: const EdgeInsets.only(top: 100),
+                      child: Container(
+                          height: 100,
+                          child: SvgPicture.asset("assets/svg/Dal_logo.svg")),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Login",
-                                  style: Theme.of(context).textTheme.bodyMedium)
-                              .tr(),
-                        ),
+                        Text("Login",
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium)
+                            .tr(),
                         const SizedBox(
                           height: 48,
                         ),
@@ -203,10 +88,12 @@ class LoginScreen extends StatelessWidget {
                             return null;
                           },
                           controller: cubit.loginController,
-                          hintStyle: const TextStyle(color: Color(0x80000000)),
+                          hintStyle: TextStyle(
+                            color: AppColors().grey2,
+                          ),
                           labelText: "Email".tr(),
                           hintText: "Email hint text".tr(),
-                          fillColor: const Color(0xffEAEAEA),
+                          fillColor: Theme.of(context).canvasColor,
                           maxLines: 1,
                         ),
                         const SizedBox(
@@ -218,10 +105,10 @@ class LoginScreen extends StatelessWidget {
                                 cubit.signIn();
                               }
                             },
-                            backgroundColor: const Color(0xffA51361),
+                            backgroundColor: AppColors().pink,
                             child: Text("Login",
                                     style:
-                                        Theme.of(context).textTheme.bodyMedium)
+                                        Theme.of(context).textTheme.labelMedium)
                                 .tr()),
                       ],
                     ),

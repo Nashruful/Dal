@@ -1,28 +1,35 @@
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomBottomSheet extends StatelessWidget {
   const CustomBottomSheet(
       {super.key,
       required this.image,
       required this.companyName,
-      required this.iconImage,
+      this.iconImage,
       required this.description,
       required this.remainingDay,
       required this.offerType,
       this.onPressed,
       required this.viewLocation,
-      this.locationOnPressed, required String buttonLable});
+      this.locationOnPressed,
+      this.buttonLable,
+      required this.button,
+      this.views,
+      this.clicks});
   final String image;
   final String companyName;
   final String offerType;
-  final String iconImage;
+  final String? iconImage;
   final String description;
   final String remainingDay;
   final String viewLocation;
+  final String? buttonLable;
   final void Function()? onPressed;
   final void Function()? locationOnPressed;
+  final ElevatedButton button;
+  final int? views;
+  final int? clicks;
 
   @override
   Widget build(BuildContext context) {
@@ -70,12 +77,12 @@ class CustomBottomSheet extends StatelessWidget {
                         onPressed: locationOnPressed,
                         child: Row(
                           children: [
-                            SvgPicture.asset(
-                              'assets/svg/discover.svg',
-                              colorFilter: ColorFilter.mode(
-                                  Theme.of(context).primaryColor,
-                                  BlendMode.srcIn),
-                            ),
+                            // SvgPicture.asset(
+                            //   'assets/svg/discover.svg',
+                            //   colorFilter: ColorFilter.mode(
+                            //       Theme.of(context).primaryColor,
+                            //       BlendMode.srcIn),
+                            // ),
                             const SizedBox(
                               width: 8,
                             ),
@@ -108,47 +115,58 @@ class CustomBottomSheet extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ElevatedButton(
-                        onPressed: onPressed,
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xff8CBFAE)),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset('assets/svg/notification.svg'),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Remind me ',
-                              style: Theme.of(context).textTheme.labelSmall,
-                            ),
-                          ],
-                        )),
-                    Row(
-                      children: [
-                        SvgPicture.asset('assets/svg/clock.svg'),
-                        Text(remainingDay,
-                            style: TextStyle(color: AppColors().grey2)),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          width: 35,
-                          height: 35,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Theme.of(context).primaryColor,
-                              border:
-                                  Border.all(color: const Color(0xffA51361))),
-                          child: SvgPicture.asset(
-                            iconImage,
-                            colorFilter: const ColorFilter.mode(
-                                Color(0xff7f7f7f7), BlendMode.srcIn),
-                            fit: BoxFit.values[6],
-                          ),
-                        ),
-                      ],
-                    ),
+                    button,
+                    views == null
+                        ? Row(
+                            children: [
+                              // SvgPicture.asset('assets/svg/clock.svg'),
+                              Text(remainingDay,
+                                  style: TextStyle(color: AppColors().grey2)),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Container(
+                                width: 35,
+                                height: 35,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Theme.of(context).primaryColor,
+                                    border: Border.all(
+                                        color: const Color(0xffA51361))),
+                                // child: SvgPicture.asset(
+                                //   iconImage,
+                                //   colorFilter: const ColorFilter.mode(
+                                //       Color(0xff7f7f7f7), BlendMode.srcIn),
+                                //   fit: BoxFit.values[6],
+                                // ),
+                              ),
+                            ],
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.remove_red_eye_outlined,
+                                      color: AppColors().white1),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(views.toString())
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.ads_click,
+                                      color: AppColors().white1),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(clicks.toString())
+                                ],
+                              )
+                            ],
+                          )
                   ],
                 ),
               ],

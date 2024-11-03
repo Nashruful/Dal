@@ -1,4 +1,5 @@
 import 'package:get_storage/get_storage.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:user_app/models/all_ads_model.dart';
 
@@ -7,6 +8,15 @@ class DataLayer {
 
   Map? currentUserInfo;
   List<Ads> allAds = [];
+
+  List<Ads> nearbyBranches = [];
+
+  List<Ads> diningCategory = [];
+  List<Ads> superMarketsCategory = [];
+  List<Ads> fashionCategory = [];
+  List<Ads> hotelsCategory = [];
+  List<Ads> gymCategory = [];
+
   List<Map<String, dynamic>> myReminders = [];
   Map<String, int> impressions = {};
   Map<String, int> clicks = {};
@@ -27,7 +37,8 @@ class DataLayer {
   List<Map<String, dynamic>>? adS;
 
   DataLayer() {
-    box.write("islogin", true);
+    //box.erase();
+    //box.write("islogin", true);
     loadData();
   }
 
@@ -45,6 +56,21 @@ class DataLayer {
     for (var element in allAds) {
       allbusinessAds.add(element);
     }
+  }
+
+  String getRemainingTime(String dateString) {
+    //parse targettime
+    DateTime targetDate = DateTime.parse(dateString);
+
+// Calculate the difference
+    Duration difference = targetDate.difference(DateTime.now());
+
+// Get the remaining days
+    int remainingDays = difference.inDays;
+    if (remainingDays < 0) {
+      remainingDays = 0;
+    }
+    return remainingDays.toString();
   }
 
   getUserInfo() async {
@@ -66,20 +92,20 @@ class DataLayer {
   }
 
   sendAdsData() async {
-    // for (var adId in impressions.keys) {
-    //   adData.add({
-    //     "id": adId,
-    //     "impressions": impressions[adId],
-    //     "clicks": clicks[adId] ?? 0,
-    //   });
-    // }
+    for (var adId in impressions.keys) {
+      adData.add({
+        "id": adId,
+        "views": impressions[adId],
+        "clicks": clicks[adId] ?? 0,
+      });
+    }
 
-    // await supabase.from("ad").upsert(adData);
+    await supabase.from("ad").upsert(adData);
 
-    // //call it whenever records has been sent
-    // adData = [];
-    // cleanImpressions();
-    // cleanClicks();
+    //call it whenever records has been sent
+    adData = [];
+    cleanImpressions();
+    cleanClicks();
   }
 
   cleanImpressions() {
@@ -107,13 +133,13 @@ class DataLayer {
   logOut() {
     saveCategories();
     supabase.auth.signOut();
-    //currentUserInfo = null;
-    //box.remove("currentUser");
-    //OneSignal.logout();
+    currentUserInfo = null;
+    box.remove("currentUser");
+    OneSignal.logout();
   }
 
   bool isLoggedIn() {
-    if (box.hasData("islogin")) {
+    if (box.hasData("currentUser")) {
       return true;
     } else {
       return false;

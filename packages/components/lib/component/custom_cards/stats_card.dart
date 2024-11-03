@@ -8,10 +8,10 @@ class StatCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 110,
-      width: 110,
+      width: MediaQuery.of(context).size.width / 3.5,
       decoration: BoxDecoration(
           color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.all(Radius.circular(16))),
+          borderRadius: const BorderRadius.all(Radius.circular(16))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

@@ -13,13 +13,14 @@ class CustomDrobDownButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: const Color(0xffEAEAEA),
+        color: Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: DropdownButton<int>(
-        dropdownColor: const Color(0xffEAEAEA),
+        dropdownColor: Theme.of(context).canvasColor,
         value: value,
         hint: const Text('Select option'),
+        style: Theme.of(context).textTheme.bodyMedium,
         items: items,
         onChanged: onChanged,
         isExpanded: true,

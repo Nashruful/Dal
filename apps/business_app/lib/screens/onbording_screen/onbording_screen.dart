@@ -47,15 +47,14 @@ class OnboardingScreen extends StatelessWidget {
                   children: [
                     CustomElevatedButton(
                       onPressed: () {
-                        
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const LoginScreen()));
                       },
-                      backgroundColor: const Color(0xffA51361),
+                      backgroundColor: AppColors().pink,
                       child: Text("Login",
-                          style: Theme.of(context).textTheme.titleMedium),
+                          style: Theme.of(context).textTheme.labelMedium),
                     ),
                     const SizedBox(
                       height: 25,

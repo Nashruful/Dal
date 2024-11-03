@@ -1,4 +1,6 @@
 import 'package:business_app/cubit/theme_cubit.dart';
+import 'package:business_app/data_layer/data_layer.dart';
+import 'package:business_app/screens/bottom_nav_bar_screen/bottom_nav_bar_screen.dart';
 import 'package:business_app/screens/onbording_screen/onbording_screen.dart';
 import 'package:business_app/services/supabase/supabase_configration.dart';
 import 'package:business_app/setup/setup.dart';
@@ -41,7 +43,9 @@ class MainApp extends StatelessWidget {
               theme: state.themeData,
               darkTheme: AppThemes.darkTheme,
               themeMode: ThemeMode.system,
-              home: OnboardingScreen());
+              home: getIt.get<DataLayer>().businessId == null
+                  ? const OnboardingScreen()
+                  : const BottomNavBarScreen());
         },
       ),
     );

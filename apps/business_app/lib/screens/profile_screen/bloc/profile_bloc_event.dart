@@ -9,3 +9,5 @@ final class ChangeLangEvent extends ProfileBlocEvent {
   ChangeLangEvent({required this.value});
 }
 
+final class RefreshScreenEvent extends ProfileBlocEvent {
+}

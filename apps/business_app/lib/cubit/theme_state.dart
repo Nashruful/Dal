@@ -4,9 +4,10 @@ part of 'theme_cubit.dart';
 sealed class ThemeState {
   final ThemeData? themeData;
 
-  ThemeState({required this.themeData});
+  const ThemeState({required this.themeData});
 }
+
 // theme state
 final class ThemeInitial extends ThemeState {
-  ThemeInitial({required super.themeData});
+  const ThemeInitial({required super.themeData});
 }

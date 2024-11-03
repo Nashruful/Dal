@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:business_app/data_layer/data_layer.dart';
-import 'package:business_app/screens/bottom_nav_bar_screen/bloc/nav_bar_bloc.dart';
 import 'package:business_app/setup/setup.dart';
 import 'package:meta/meta.dart';
 
@@ -11,7 +10,7 @@ class MyAdsCubit extends Cubit<MyAdsState> {
 
   deleteAd(String adId) async {
     emit(LoadingAdsState());
-    
+
     await getIt.get<DataLayer>().supabase.from('ad').delete().eq('id', adId);
     await refreshInfo();
     emit(SuccessDeleteState());

@@ -1,3 +1,4 @@
+import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -29,6 +30,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: AppColors().grey2,
       autovalidateMode: autovalidateMode,
       validator: validator,
       controller: controller,
@@ -50,7 +52,7 @@ class CustomTextFormField extends StatelessWidget {
           hintText: hintText,
           hintStyle: hintStyle,
           labelStyle: TextStyle(
-            color: Colors.grey[600],
+            color: AppColors().grey2,
             fontWeight: FontWeight.bold,
           ),
           border: OutlineInputBorder(

@@ -6,8 +6,6 @@ import 'package:business_app/setup/setup.dart';
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ntp/ntp.dart';
-import 'package:flutter_svg/svg.dart';
 
 ///
 
@@ -55,7 +53,7 @@ class CurrentAdsTap extends StatelessWidget {
           final ad = currentAds[index];
           return CustomAdsContainer(
             companyName: getIt.get<DataLayer>().currentBusinessInfo[0]['name'],
-            companyLogo: ad['bannerimg'],
+            companyLogo: ad['bannerimg'] ?? "https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/offer%20images/DalLogo.png",
             remainingDay: '${getRemainingTime(ad['enddate'])} d',
             offers: ad['offer_type'],
             onTap: () {
@@ -89,70 +87,27 @@ class CurrentAdsTap extends StatelessWidget {
                       viewLocation: 'location',
                       buttonLable: 'Delete Ad',
                       locationOnPressed: () {},
+                      views: ad['views'],
+                      clicks: ad['clicks'],
+                      button: ElevatedButton(
+                          onPressed: () {
+                            cubit.deleteAd(ad['id']);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xff8CBFAE)),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Delete Ad',
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                            ],
+                          )),
                     );
                   });
             },
           );
         },
-      ),
-    );
-  }
-}
-
-class CustemAlertDialog extends StatelessWidget {
-  const CustemAlertDialog(
-      {super.key,
-      required this.title,
-      required this.msg,
-      required this.onPressed,
-       this.buttonLable});
-  final String title;
-  final String msg;
-  final Function() onPressed;
-  final String? buttonLable;
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      content: SizedBox(
-        height: 350,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SvgPicture.asset("assets/svg/confirm.svg"),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            Text(
-              msg,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            Column(
-              children: [
-                CustomElevatedButton(
-                  onPressed: onPressed,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  child: Text(
-                    buttonLable ?? 'Remind Me',
-                    style: TextStyle(color: Color(0xffF7F7F7), fontSize: 14),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    'Cancel',
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 14),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
       ),
     );
   }

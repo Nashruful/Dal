@@ -268,8 +268,9 @@ class PlanSection extends StatelessWidget {
                         height: 80,
                         child: CircularProgressIndicator(
                           strokeWidth: 6,
-                          value: remainDays.toDouble(),
+                          value: remainDays.toDouble() / 30,
                           color: Theme.of(context).hintColor,
+                          backgroundColor: Theme.of(context).canvasColor,
                         ),
                       ),
                       Column(

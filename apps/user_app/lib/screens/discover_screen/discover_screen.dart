@@ -22,6 +22,8 @@ class DiscoverScreen extends StatelessWidget {
               Geolocator.getPositionStream(locationSettings: locationSettings)
                   .listen((Position position) {
             bloc.add(LoadScreenEvent(position: position, context: context));
+            bloc.add(
+                SendNotificationEvent(position: position, context: context));
           });
         } catch (e) {
           bloc.add(ErrorScreenEvent(msg: e.toString()));
@@ -63,7 +65,7 @@ class DiscoverScreen extends StatelessWidget {
                       children: [
                         TileLayer(
                           urlTemplate:
-                              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                              'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
                           userAgentPackageName: 'com.example.app',
                         ),
                         MarkerLayer(markers: bloc.filteredMarkers),

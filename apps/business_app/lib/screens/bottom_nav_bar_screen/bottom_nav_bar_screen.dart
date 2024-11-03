@@ -1,5 +1,5 @@
-import 'package:business_app/screens/add_ads_screen/add_ads_screen.dart';
 import 'package:business_app/screens/home_screen/home_screen.dart';
+import 'package:business_app/screens/my_ads_screen/My_ads.dart';
 import 'package:business_app/screens/profile_screen/profile_screen.dart';
 import 'package:business_app/screens/stats_screen/stats_screen.dart';
 import 'package:components/component/custom_bottom_nav_bar/custom_bottom_nav_bar.dart';

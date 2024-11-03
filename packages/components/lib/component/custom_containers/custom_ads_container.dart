@@ -9,12 +9,14 @@ class CustomAdsContainer extends StatelessWidget {
       required this.remainingDay,
       required this.companyName,
       required this.offers,
-      this.onTap});
+      this.onTap,
+      this.opacity = 1});
   final String companyLogo;
   final String remainingDay;
   final String companyName;
   final String offers;
   final Function()? onTap;
+  final double opacity;
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +37,9 @@ class CustomAdsContainer extends StatelessWidget {
           children: [
             Image.network(
               companyLogo,
-              fit: BoxFit.fill,
-              height: 172,
+              fit: BoxFit.cover,
+              height: 230,
+              opacity: AlwaysStoppedAnimation(opacity),
             ),
 
             ///

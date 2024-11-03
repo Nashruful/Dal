@@ -1,20 +1,21 @@
+import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 
 class MyAdsTabBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
-      child: const TabBar(
+      color: AppColors().white1,
+      child:  TabBar(
         indicator: UnderlineTabIndicator(
           borderSide: BorderSide(
-            color: Color(0xffA51361),
+            color: AppColors().pink,
             width: 3.0,
           ),
           insets: EdgeInsets.symmetric(horizontal: -80.0),
         ),
-        labelColor: Color(0xffA51361),
-        unselectedLabelColor: Colors.grey,
+        labelColor:AppColors().pink,
+        unselectedLabelColor: AppColors().grey2,
         labelStyle: TextStyle(
           fontWeight: FontWeight.bold,
         ),
