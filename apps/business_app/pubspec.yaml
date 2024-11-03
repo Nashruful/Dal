@@ -40,4 +40,5 @@ flutter:
     - assets/
     - assets/svg/
     - assets/png/
+    - assets/json/
     - assets/translations/

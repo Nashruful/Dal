@@ -76,7 +76,7 @@ class AddAdsScreen extends StatelessWidget {
                               DropdownMenuEntry(value: 1, label: "Dining".tr()),
                               DropdownMenuEntry(value: 2, label: "Gym".tr()),
                               DropdownMenuEntry(
-                                  value: 3, label: "Clothes".tr()),
+                                  value: 3, label: "Fashion".tr()),
                               DropdownMenuEntry(value: 4, label: "Hotels".tr()),
                             ].map((entry) {
                               return DropdownMenuItem<int>(
@@ -241,16 +241,16 @@ class AddAdsScreen extends StatelessWidget {
                         maxSelections: cubit.getBranchType(cubit.plan),
                         searchEnabled: true,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        items: cubit.branches.map((branch) {
+                        items: cubit.selectedBranches.map((branch) {
                           return DropdownItem(
                               label: branch['address'].toString(),
-                              value: cubit.branches.indexOf(branch));
+                              value: cubit.selectedBranches.indexOf(branch));
                         }).toList(),
                         onSelectionChange: (selectedLocation) {
                           cubit.selectedBranch.clear();
                           for (var location in selectedLocation) {
-                            if (location < cubit.branches.length) {
-                              var branch = cubit.branches[location];
+                            if (location < cubit.selectedBranches.length) {
+                              var branch = cubit.selectedBranches[location];
                               cubit.selectedBranch.add(branch['address']);
                             }
                           }

@@ -29,8 +29,8 @@ class HomeScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   child: ClipOval(
-                    child: Image.asset(
-                      'assets/png/company_logo.png',
+                    child: Image.network(
+                      getIt.get<DataLayer>().currentBusinessInfo[0]['logo_img'],
                       fit: BoxFit.cover,
                       width: 60,
                       height: 60,

@@ -20,6 +20,10 @@ class AddAdsCubit extends Cubit<AddAdsState> {
 
   final supabase = getIt.get<DataLayer>().supabase;
   final branches = getIt.get<DataLayer>().businessBranches;
+  final selectedBranches =
+      getIt.get<DataLayer>().businessBranches.where((branch) {
+    return branch['selected'] == true;
+  }).toList();
   Map plan = getIt.get<DataLayer>().latestSubscription;
 
   ImagePicker pick = ImagePicker();
