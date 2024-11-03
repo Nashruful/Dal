@@ -4,7 +4,6 @@ import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:impression/impression.dart';
-import 'package:lottie/lottie.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/models/all_ads_model.dart';
@@ -106,7 +105,7 @@ class SearchScreen extends StatelessWidget {
                           ),
                         );
                       }
-                      return Lottie.asset('assets/json/searchLoading.json');
+                      return SizedBox();
                     },
                   ),
                 ),

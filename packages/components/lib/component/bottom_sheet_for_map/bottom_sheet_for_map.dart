@@ -27,7 +27,7 @@ class BottomSheetForMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 650,
+      height: 600,
       decoration: BoxDecoration(
         color: Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(18),
@@ -36,7 +36,7 @@ class BottomSheetForMap extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           Container(
-            height: 389,
+            height: 370,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
             child: ClipRRect(
@@ -45,7 +45,7 @@ class BottomSheetForMap extends StatelessWidget {
                 errorBuilder: (context, error, stackTrace) =>
                     const Icon(Icons.error),
                 image,
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -118,7 +118,7 @@ class BottomSheetForMap extends StatelessWidget {
                               width: 10,
                             ),
                             Text(
-                              'Remind me ',
+                              'Remind me',
                               style: Theme.of(context).textTheme.labelSmall,
                             ),
                           ],

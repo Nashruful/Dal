@@ -267,6 +267,10 @@ class HomeScreen extends StatelessWidget {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 24, vertical: 40),
                                         child: Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width -
+                                                48,
                                             decoration: BoxDecoration(
                                               color: AppColors().yellow,
                                               borderRadius:

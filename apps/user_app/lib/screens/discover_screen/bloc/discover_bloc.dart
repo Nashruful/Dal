@@ -97,7 +97,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
       emit(LoadingState());
       try {
         positionn = event.position;
-        areaDistance = buttonClicked ? 1000 : 500000;
+        areaDistance = buttonClicked ? 1000 : 500000000;
         filteredMarkers = getIt
             .get<DataLayer>()
             .liveAds

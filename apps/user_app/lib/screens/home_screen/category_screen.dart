@@ -80,7 +80,7 @@ class CategoryScreen extends StatelessWidget {
                                                           );
                                                         } else {
                                                           // Handle the case where no maps are installed
-                                                      
+
                                                           ScaffoldMessenger.of(
                                                                   context)
                                                               .showSnackBar(
@@ -97,8 +97,10 @@ class CategoryScreen extends StatelessWidget {
                                                           "assets/svg/$categoryIcon.svg",
                                                       description:
                                                           e.description!,
-                                                      remainingDay:
-                                                          "function??",
+                                                      remainingDay: getIt
+                                                          .get<DataLayer>()
+                                                          .getRemainingTime(
+                                                              e.enddate!),
                                                       offerType: e.offerType!,
                                                       viewLocation:
                                                           "Open in map"),

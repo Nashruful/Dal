@@ -56,8 +56,7 @@ class DiscoverScreen extends StatelessWidget {
                   return Stack(children: [
                     FlutterMap(
                       options: MapOptions(
-                          onTap: (tapPosition, point) {
-                          },
+                          onTap: (tapPosition, point) {},
                           initialZoom: 14,
                           initialCenter: LatLng(
                               bloc.positionn?.latitude ?? 24.82741851222009,
@@ -69,7 +68,6 @@ class DiscoverScreen extends StatelessWidget {
                           userAgentPackageName: 'com.example.app',
                         ),
                         MarkerLayer(markers: bloc.filteredMarkers),
-                       
                       ],
                     ),
                     Column(children: [
@@ -98,7 +96,7 @@ class DiscoverScreen extends StatelessWidget {
                                   color: AppColors().grey2,
                                 ),
                                 filled: true,
-                                fillColor: AppColors().white1,
+                                fillColor: Theme.of(context).canvasColor,
                                 suffixIcon: IconButton(
                                   onPressed: () {},
                                   icon: Icon(
