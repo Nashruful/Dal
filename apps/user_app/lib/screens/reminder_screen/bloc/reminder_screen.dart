@@ -4,6 +4,7 @@ import 'package:components/component/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:user_app/screens/reminder_screen/bloc/reminder_event.dart';
 import 'package:user_app/screens/reminder_screen/bloc/reminder_state.dart';
 import 'package:user_app/screens/reminder_screen/bloc/reminedr_bloc.dart';
@@ -28,7 +29,8 @@ class ReminderScreen extends StatelessWidget {
           body: BlocBuilder<ReminderBloc, ReminderState>(
             builder: (context, state) {
               if (state is ReminderLoading) {
-                return Center(child: CircularProgressIndicator());
+                return Center(child: Lottie.asset('assets/json/loading.json',
+                      width: 50));
               } else if (state is ReminderLoaded) {
                 return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -41,7 +43,6 @@ class ReminderScreen extends StatelessWidget {
                   itemCount: state.myReminders.length,
                   itemBuilder: (context, index) {
                     final item = state.myReminders[index];
-                    bool isReminder = true;
                     return Padding(
                       padding: const EdgeInsets.only(top: 12),
                       child: RemindersAdsContainer(
