@@ -13,7 +13,6 @@ class CustomBottomSheet extends StatelessWidget {
       this.onPressed,
       required this.viewLocation,
       this.locationOnPressed,
-      this.buttonLable,
       required this.button,
       this.views,
       this.clicks});
@@ -24,7 +23,6 @@ class CustomBottomSheet extends StatelessWidget {
   final String description;
   final String remainingDay;
   final String viewLocation;
-  final String? buttonLable;
   final void Function()? onPressed;
   final void Function()? locationOnPressed;
   final ElevatedButton button;
@@ -132,13 +130,8 @@ class CustomBottomSheet extends StatelessWidget {
                                     shape: BoxShape.circle,
                                     color: Theme.of(context).primaryColor,
                                     border: Border.all(
-                                        color: const Color(0xffA51361))),
-                                // child: SvgPicture.asset(
-                                //   iconImage,
-                                //   colorFilter: const ColorFilter.mode(
-                                //       Color(0xff7f7f7f7), BlendMode.srcIn),
-                                //   fit: BoxFit.values[6],
-                                // ),
+                                        color:AppColors().pink)),
+
                               ),
                             ],
                           )

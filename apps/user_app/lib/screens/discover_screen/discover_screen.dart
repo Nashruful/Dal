@@ -1,3 +1,4 @@
+import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -35,7 +36,7 @@ class DiscoverScreen extends StatelessWidget {
               builder: (context, state) {
                 return FloatingActionButton(
                   shape: const CircleBorder(),
-                  backgroundColor: const Color(0xffA51361),
+                  backgroundColor: AppColors().pink,
                   onPressed: () {
                     bloc.buttonClicked = !bloc.buttonClicked;
                     bloc.add(LoadScreenEvent(
@@ -56,7 +57,6 @@ class DiscoverScreen extends StatelessWidget {
                     FlutterMap(
                       options: MapOptions(
                           onTap: (tapPosition, point) {
-                            print("${point.latitude},${point.longitude}");
                           },
                           initialZoom: 14,
                           initialCenter: LatLng(
@@ -69,32 +69,7 @@ class DiscoverScreen extends StatelessWidget {
                           userAgentPackageName: 'com.example.app',
                         ),
                         MarkerLayer(markers: bloc.filteredMarkers),
-                        MarkerLayer(markers: [
-                          Marker(
-                              point: LatLng(
-                                  bloc.positionn?.latitude ?? 24.82741851222009,
-                                  bloc.positionn?.longitude ??
-                                      46.754407525179346),
-                              child: Container(
-                                height: 26,
-                                width: 26,
-                                decoration: BoxDecoration(
-                                    color: Colors.transparent,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                        color: const Color(0xffA51361),
-                                        width: 3)),
-                                child: Center(
-                                  child: Container(
-                                    width: 14,
-                                    height: 14,
-                                    decoration: const BoxDecoration(
-                                        color: Color(0xff8E1254),
-                                        shape: BoxShape.circle),
-                                  ),
-                                ),
-                              ))
-                        ]),
+                       
                       ],
                     ),
                     Column(children: [
@@ -116,20 +91,20 @@ class DiscoverScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: BorderSide.none),
                                 hintText: "Where to?",
-                                hintStyle: const TextStyle(
-                                    fontSize: 16, color: Color(0x657B7B7B)),
-                                prefixIcon: const Icon(
+                                hintStyle: TextStyle(
+                                    fontSize: 16, color: AppColors().grey2),
+                                prefixIcon: Icon(
                                   Icons.search,
-                                  color: Color(0x757B7B7B),
+                                  color: AppColors().grey2,
                                 ),
                                 filled: true,
-                                fillColor: const Color(0xffEAEAEA),
+                                fillColor: AppColors().white1,
                                 suffixIcon: IconButton(
                                   onPressed: () {},
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.format_list_bulleted_rounded,
                                     size: 24,
-                                    color: Color(0x757B7B7B),
+                                    color: AppColors().grey2,
                                   ),
                                 )),
                           ),
@@ -143,7 +118,7 @@ class DiscoverScreen extends StatelessWidget {
                 }
                 return Center(
                   child: lottie.Lottie.asset('assets/json/loading.json',
-                      width: 50),
+                      width: 30),
                 );
               },
             ));

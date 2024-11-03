@@ -12,11 +12,11 @@ class CustomIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 69,
       child: Column(
         children: [
           CircleAvatar(
-            backgroundColor: const Color(0xffA51361),
+            radius: 30,
+            backgroundColor: AppColors().pink,
             child:
                 IconButton(onPressed: onPressed, icon: SvgPicture.asset(icon)),
           ),
@@ -25,8 +25,8 @@ class CustomIconButton extends StatelessWidget {
           ),
           CustomText(
             text: title,
-            color: const Color(0xffA51361),
-            fontSize: 10,
+            color: AppColors().pink,
+            fontSize: 14,
           )
         ],
       ),

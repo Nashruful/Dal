@@ -64,5 +64,6 @@ class DataLayer {
 
   logout() {
     box.erase();
+    supabase.auth.signOut();
   }
 }

@@ -29,7 +29,7 @@ class PastAdsTab extends StatelessWidget {
     }
 
 //get past ads only
-    List currentAds = getIt.get<DataLayer>().allbusinessAds.where((ad) {
+    List liveAds = getIt.get<DataLayer>().allbusinessAds.where((ad) {
       DateTime endDate = DateTime.parse(ad['enddate']);
       return endDate.isBefore(DateTime.now());
     }).toList();
@@ -43,9 +43,9 @@ class PastAdsTab extends StatelessWidget {
           mainAxisSpacing: 16,
           childAspectRatio: 2 / 3,
         ),
-        itemCount: currentAds.length,
+        itemCount: liveAds.length,
         itemBuilder: (context, index) {
-          final ad = currentAds[index];
+          final ad = liveAds[index];
           return CustomAdsContainer(
             opacity: 0.3,
             companyName: getIt.get<DataLayer>().currentBusinessInfo[0]['name'],
@@ -62,40 +62,41 @@ class PastAdsTab extends StatelessWidget {
                       companyName: getIt.get<DataLayer>().currentBusinessInfo[0]
                               ['name'] ??
                           "---",
-                      // iconImage: 'assets/svg/coffee.svg',
                       description: ad['description'] ?? "---",
                       remainingDay: getRemainingTime(ad['enddate']),
-                      onPressed: () async {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return CustemAlertDialog(
-                                  title:
-                                      'Are You Sure You Want To Delete This Ad?',
-                                  msg: 'This will permanently delete the ad.',
-                                  onPressed: () {
-                                    cubit.deleteAd(ad['id']);
-                                  },
-                                  buttonLable: 'Delete Ad');
-                            });
+                      offerType: ad['offer_type'],
+                      viewLocation: 'location',
+                      locationOnPressed: () {
+                        //
                       },
                       views: ad['views'],
                       clicks: ad['clicks'],
-                      offerType: ad['offer_type'],
-                      viewLocation: 'location',
-                      buttonLable: 'Delete Ad',
-                      locationOnPressed: () {},
                       button: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors().green),
-                        onPressed: () {
-                          cubit.deleteAd(ad['id']);
-                        },
-                        child: Text(
-                          'Delete Ad',
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                      ),
+                          onPressed: () async {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CustemAlertDialog(
+                                      title:
+                                          'Are You Sure You Want To Delete This Ad?',
+                                      msg:
+                                          'This will permanently delete the ad.',
+                                      onPressed: () {
+                                        cubit.deleteAd(ad['id']);
+                                      },
+                                      buttonLable: 'Delete Ad');
+                                });
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors().green),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Delete Ad',
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                            ],
+                          )),
                     );
                   });
             },

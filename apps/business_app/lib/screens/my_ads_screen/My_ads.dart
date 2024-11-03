@@ -41,7 +41,7 @@ class MyAdsScreen extends StatelessWidget {
                     builder: (context) => AlertDialog(
                       backgroundColor: Colors.transparent,
                       content:
-                          Lottie.asset(height: 70, 'assets/json/loading.json'),
+                          Lottie.asset(height: 30, 'assets/json/loading.json'),
                     ),
                   );
                 }
@@ -65,7 +65,7 @@ class MyAdsScreen extends StatelessWidget {
               builder: (context, state) {
                 return const TabBarView(
                   children: [
-                    CurrentAdsTap(),
+                    CurrentAds(),
                     PastAdsTab(),
                   ],
                 );

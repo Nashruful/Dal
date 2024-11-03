@@ -38,7 +38,7 @@ class CustomAdsContainer extends StatelessWidget {
             Image.network(
               companyLogo,
               fit: BoxFit.cover,
-              height: 230,
+              height: 200,
               opacity: AlwaysStoppedAnimation(opacity),
             ),
 

@@ -110,7 +110,7 @@ class BottomSheetForMap extends StatelessWidget {
                     ElevatedButton(
                         onPressed: onPressed,
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xff8CBFAE)),
+                            backgroundColor: AppColors().green),
                         child: Row(
                           children: [
                             SvgPicture.asset('assets/svg/notification.svg'),
@@ -137,8 +137,7 @@ class BottomSheetForMap extends StatelessWidget {
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Theme.of(context).primaryColor,
-                              border:
-                                  Border.all(color: const Color(0xffA51361))),
+                              border: Border.all(color: AppColors().pink)),
                           child: SvgPicture.asset(iconImage),
                         ),
                       ],

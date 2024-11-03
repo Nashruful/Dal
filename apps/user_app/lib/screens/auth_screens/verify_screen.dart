@@ -24,10 +24,10 @@ class VerifyScreen extends StatelessWidget {
               showDialog(
                   context: context,
                   barrierDismissible: false,
-                  builder: (context) =>  AlertDialog(
+                  builder: (context) => AlertDialog(
                       backgroundColor: Colors.transparent,
                       content: Lottie.asset('assets/json/loading.json',
-                          width: 50)));
+                          width: 30)));
             }
             if (state is SuccessState) {
               Navigator.push(
@@ -39,11 +39,9 @@ class VerifyScreen extends StatelessWidget {
               Navigator.pop(context);
               showDialog(
                   context: context,
-                  barrierDismissible: true,
-                  builder: (context) => AlertDialog(
-                      backgroundColor: Colors.transparent,
-                      content: SizedBox(
-                          height: 100, width: 100, child: Text(state.msg))));
+                  builder: (context) {
+                    return CustemErrorDialog(msg: (state.msg));
+                  });
             }
           },
           child: Scaffold(
@@ -52,118 +50,7 @@ class VerifyScreen extends StatelessWidget {
               key: cubit.formKey,
               child: Stack(
                 children: [
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Transform.translate(
-                      offset: const Offset(-191, 0),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(19.74 / 360),
-                        child: Container(
-                          height: 326,
-                          width: 346.53,
-                          decoration: BoxDecoration(
-                              color: const Color(0x80F6EFDE),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Transform.translate(
-                      offset: const Offset(-40, 110),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(-32.12 / 360),
-                        child: Container(
-                          height: 249.17,
-                          width: 247.82,
-                          decoration: BoxDecoration(
-                              color: const Color(0x20D9D9D9),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Transform.translate(
-                      offset: const Offset(30, 40),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(-62.61 / 360),
-                        child: Container(
-                          height: 95.17,
-                          width: 106.34,
-                          decoration: BoxDecoration(
-                              color: const Color(0x20D9D9D9),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Transform.translate(
-                      offset: const Offset(85, -160),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(-39.05 / 360),
-                        child: Container(
-                          height: 114.87,
-                          width: 114.99,
-                          decoration: BoxDecoration(
-                              color: const Color(0x80FCECF4),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Transform.translate(
-                      offset: const Offset(-118, 0),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(-39.05 / 360),
-                        child: Container(
-                          height: 190.68,
-                          width: 169.29,
-                          decoration: BoxDecoration(
-                              color: const Color(0x20D9D9D9),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Transform.translate(
-                      offset: const Offset(-150, 120),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(-17.06 / 360),
-                        child: Container(
-                          height: 190.68,
-                          width: 189.89,
-                          decoration: BoxDecoration(
-                              color: const Color(0x80F6EFDE),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Transform.translate(
-                      offset: const Offset(120, 80),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(-45.46 / 360),
-                        child: Container(
-                          height: 190.68,
-                          width: 195.79,
-                          decoration: BoxDecoration(
-                              color: const Color(0x20D9D9D9),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
+                  CustomBackground(),
                   Align(
                     alignment: Alignment.topCenter,
                     child: Padding(
@@ -187,13 +74,11 @@ class VerifyScreen extends StatelessWidget {
                         RichText(
                             text: TextSpan(
                                 text: "Verify subtitle".tr(),
-                                style: const TextStyle(
-                                    color: Color(0xff444444), fontSize: 16),
+                                style: Theme.of(context).textTheme.bodyMedium,
                                 children: [
                               TextSpan(
                                   text: "\n$email",
-                                  style: const TextStyle(
-                                      color: Color(0xff8CBFAE), fontSize: 16))
+                                  style: TextStyle(color: AppColors().green))
                             ])),
                         const SizedBox(
                           height: 20,
@@ -217,7 +102,7 @@ class VerifyScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(
-                                      color: const Color(0xff8CBFAE), width: 2))),
+                                      color: AppColors().green, width: 2))),
                         ),
                         const SizedBox(
                           height: 45,
@@ -226,10 +111,10 @@ class VerifyScreen extends StatelessWidget {
                             onPressed: () {
                               if (cubit.formKey.currentState!.validate()) {}
                             },
-                            backgroundColor: const Color(0xffA51361),
+                            backgroundColor: AppColors().pink,
                             child: Text("Verify",
                                     style:
-                                        Theme.of(context).textTheme.bodyMedium)
+                                        Theme.of(context).textTheme.labelMedium)
                                 .tr()),
                         const SizedBox(
                           height: 20,

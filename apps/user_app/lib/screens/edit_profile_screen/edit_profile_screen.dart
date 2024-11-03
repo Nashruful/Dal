@@ -80,9 +80,9 @@ class EditProfileScreen extends StatelessWidget {
                       height: 8,
                     ),
                     CustomTextFormField(
-                      fillColor: const Color(0xffEAEAEA),
+                      fillColor: Theme.of(context).canvasColor,
                       maxLines: 1,
-                      hintStyle: const TextStyle(color: Color(0xff848484)),
+                      hintStyle: TextStyle(color: AppColors().grey2),
                       controller: cubit.firstNameController,
                     ),
                     const SizedBox(
@@ -95,27 +95,26 @@ class EditProfileScreen extends StatelessWidget {
                       height: 8,
                     ),
                     CustomTextFormField(
-                      fillColor: const Color(0xffEAEAEA),
-                      hintStyle: const TextStyle(color: Color(0xff848484)),
+                      fillColor: Theme.of(context).canvasColor,
                       maxLines: 1,
+                      hintStyle: TextStyle(color: AppColors().grey2),
                       controller: cubit.lastNameController,
                     ),
                     const SizedBox(
                       height: 100,
                     ),
                     CustomElevatedButton(
-                      backgroundColor: const Color(0xffA51361),
+                      backgroundColor: AppColors().pink,
                       onPressed: () async {
                         if (formKey.currentState?.validate() == true) {
                           await cubit.changeName(cubit.firstNameController.text,
                               cubit.lastNameController.text);
-                              
+
                           Navigator.pop(context, true);
-                          
                         }
                       },
                       child: Text('Save'.tr(),
-                          style: Theme.of(context).textTheme.bodyMedium),
+                          style: Theme.of(context).textTheme.labelMedium),
                     )
                   ],
                 ),

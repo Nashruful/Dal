@@ -93,8 +93,7 @@ class FilterSection extends StatelessWidget {
             return ChoiceChip(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                labelStyle:
-                    const TextStyle(color: Color(0xffF7F7F7), fontSize: 14),
+                labelStyle: TextStyle(color: AppColors().white1, fontSize: 14),
                 label: Text(category),
                 selected: categories[category]!,
                 onSelected: (isSelected) => selectFilter(category),

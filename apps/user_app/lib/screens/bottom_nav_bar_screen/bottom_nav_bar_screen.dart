@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_app/screens/discover_screen/discover_screen.dart';
 import 'package:user_app/screens/home_screen/home_screen.dart';
 import 'package:user_app/screens/profile_screen/profile_screen.dart';
-import 'package:user_app/screens/reminder_screen/bloc/reminder_screen.dart';
+import 'package:user_app/screens/reminder_screen/reminder_screen.dart';
 
 import 'bloc/nav_bar_bloc.dart';
 

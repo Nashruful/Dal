@@ -9,8 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 ///
 
-class CurrentAdsTap extends StatelessWidget {
-  const CurrentAdsTap({super.key});
+class CurrentAds extends StatelessWidget {
+  const CurrentAds({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class CurrentAdsTap extends StatelessWidget {
     }
 
 //get current ads only
-    List currentAds = getIt.get<DataLayer>().allbusinessAds.where((ad) {
+    List liveAds = getIt.get<DataLayer>().allbusinessAds.where((ad) {
       DateTime endDate = DateTime.parse(ad['enddate']);
       return endDate.isAfter(DateTime.now());
     }).toList();
@@ -48,12 +48,13 @@ class CurrentAdsTap extends StatelessWidget {
           mainAxisSpacing: 16,
           childAspectRatio: 2 / 3,
         ),
-        itemCount: currentAds.length,
+        itemCount: liveAds.length,
         itemBuilder: (context, index) {
-          final ad = currentAds[index];
+          final ad = liveAds[index];
           return CustomAdsContainer(
             companyName: getIt.get<DataLayer>().currentBusinessInfo[0]['name'],
-            companyLogo: ad['bannerimg'] ?? "https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/offer%20images/DalLogo.png",
+            companyLogo: ad['bannerimg'] ??
+                "https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/offer%20images/DalLogo.png",
             remainingDay: '${getRemainingTime(ad['enddate'])} d',
             offers: ad['offer_type'],
             onTap: () {
@@ -66,35 +67,33 @@ class CurrentAdsTap extends StatelessWidget {
                       companyName: getIt.get<DataLayer>().currentBusinessInfo[0]
                               ['name'] ??
                           "---",
-                      iconImage: 'assets/svg/coffee.svg',
                       description: ad['description'] ?? "---",
                       remainingDay: getRemainingTime(ad['enddate']),
-                      onPressed: () async {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return CustemAlertDialog(
-                                  title:
-                                      'Are You Sure You Want To Delete This Ad?',
-                                  msg: 'This will permanently delete the ad.',
-                                  onPressed: () {
-                                    cubit.deleteAd(ad['id']);
-                                  },
-                                  buttonLable: 'Delete Ad');
-                            });
-                      },
                       offerType: ad['offer_type'],
                       viewLocation: 'location',
-                      buttonLable: 'Delete Ad',
-                      locationOnPressed: () {},
+                      locationOnPressed: () {
+                        //
+                      },
                       views: ad['views'],
                       clicks: ad['clicks'],
                       button: ElevatedButton(
-                          onPressed: () {
-                            cubit.deleteAd(ad['id']);
+                          onPressed: () async {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CustemAlertDialog(
+                                      title:
+                                          'Are You Sure You Want To Delete This Ad?',
+                                      msg:
+                                          'This will permanently delete the ad.',
+                                      onPressed: () {
+                                        cubit.deleteAd(ad['id']);
+                                      },
+                                      buttonLable: 'Delete Ad');
+                                });
                           },
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xff8CBFAE)),
+                              backgroundColor: AppColors().green),
                           child: Row(
                             children: [
                               Text(

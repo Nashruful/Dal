@@ -28,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
           } else if (bloc.plan['subscription_type'] == 'Enterprise') {
             return 'Basic'.tr();
           } else {
-            planType = 'No Subscriptio';
+            planType = 'No Subscription';
           }
 
           return planType;
@@ -91,7 +91,6 @@ class ProfileScreen extends StatelessWidget {
                       BlocConsumer<ProfileBlocBloc, ProfileBlocState>(
                         listener: (context, state) {
                           if (state is SuccessState) {
-                            print('suceess');
                           }
                         },
                         builder: (context, state) {
