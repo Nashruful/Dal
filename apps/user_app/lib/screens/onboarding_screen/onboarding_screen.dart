@@ -38,7 +38,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 const SizedBox(
                   height: 40,
                 ),
-                SvgPicture.asset("assets/svg/36-Teenager 1.svg"),
+                SvgPicture.asset("assets/svg/onbording_guy.svg"),
                 const SizedBox(
                   height: 40,
                 ),

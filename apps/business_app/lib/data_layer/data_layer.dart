@@ -11,10 +11,10 @@ class DataLayer {
 
 //initially save categories here
   Map<int, String> categories = {
-    0: 'Markets',
+    0: 'Supermarkets',
     1: 'Dining',
     2: 'Gym',
-    3: 'Clothes',
+    3: 'Fashion',
     4: 'Hotels',
   };
 
@@ -23,6 +23,7 @@ class DataLayer {
   List businessBranches = [];
   List allbusinessAds = [];
   Map latestSubscription = {};
+  // ignore: non_constant_identifier_names
   List subscription_business = [];
 
   loadData() {
@@ -45,10 +46,10 @@ class DataLayer {
 
     allbusinessAds = []; //clear ads
 
-    businessBranches.forEach((branch) {
+    for (var branch in businessBranches) {
       List ads = branch['ad']; // Get the list of ads for for Each branch
       allbusinessAds.addAll(ads);
-    });
+    }
 
     subscription_business = currentBusinessInfo[0]['subscription_business'] ??
         []; //save subscription_business into a seperate list

@@ -3,11 +3,11 @@ import 'package:business_app/screens/payment_screen/payment_screen.dart';
 import 'package:business_app/screens/subscriptions_screen/bloc/subscriptions_screen_bloc_bloc.dart';
 import 'package:business_app/setup/setup.dart';
 import 'package:components/component/custom_app_bar/custom_app_bar.dart';
-import 'package:components/component/custom_cards/subscriptions_card.dart';
 import 'package:components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 
@@ -188,7 +188,7 @@ class SubscriptionsScreen extends StatelessWidget {
                                             planType: bloc.planType,
                                             startDate: currentDate,
                                             endDate: datePlus30Days,
-                                            PaymentFunc: () {
+                                            paymentFunc: () {
                                               bloc.add(confirmSubscription(
                                                   isFreeTrial: false,
                                                   start: currentDate,

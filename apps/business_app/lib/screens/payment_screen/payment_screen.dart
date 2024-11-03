@@ -9,12 +9,12 @@ class PaymentScreen extends StatelessWidget {
       required this.planType,
       required this.startDate,
       required this.endDate,
-      required this.PaymentFunc});
+      required this.paymentFunc});
   final double totalPrice;
   final String planType;
   final DateTime startDate;
   final DateTime endDate;
-  final Function PaymentFunc;
+  final Function paymentFunc;
   paymentConfig() {
     return PaymentConfig(
       publishableApiKey:
@@ -36,7 +36,7 @@ class PaymentScreen extends StatelessWidget {
           onPaymentResult: (PaymentResponse data) async {
 
             if (data.status.name == "paid") {
-              PaymentFunc();
+              paymentFunc();
             }
           },
         ),

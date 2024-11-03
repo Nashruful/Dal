@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:user_app/screens/auth_screens/cubit/auth_cubit.dart';
 import 'package:pinput/pinput.dart';
 import 'package:user_app/screens/bottom_nav_bar_screen/bottom_nav_bar_screen.dart';
@@ -23,9 +24,10 @@ class VerifyScreen extends StatelessWidget {
               showDialog(
                   context: context,
                   barrierDismissible: false,
-                  builder: (context) => const AlertDialog(
+                  builder: (context) =>  AlertDialog(
                       backgroundColor: Colors.transparent,
-                      content: CircularProgressIndicator()));
+                      content: Lottie.asset('assets/json/loading.json',
+                          width: 50)));
             }
             if (state is SuccessState) {
               Navigator.push(
@@ -173,6 +175,7 @@ class VerifyScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Verify title",
                                 style:
@@ -181,29 +184,23 @@ class VerifyScreen extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: RichText(
-                              text: TextSpan(
-                                  text: "Verify subtitle".tr(),
+                        RichText(
+                            text: TextSpan(
+                                text: "Verify subtitle".tr(),
+                                style: const TextStyle(
+                                    color: Color(0xff444444), fontSize: 16),
+                                children: [
+                              TextSpan(
+                                  text: "\n$email",
                                   style: const TextStyle(
-                                      color: Color(0xff444444), fontSize: 16),
-                                  children: [
-                                TextSpan(
-                                    text: "\n$email",
-                                    style: const TextStyle(
-                                        color: Color(0xff8CBFAE), fontSize: 16))
-                              ])),
-                        ),
+                                      color: Color(0xff8CBFAE), fontSize: 16))
+                            ])),
                         const SizedBox(
                           height: 20,
                         ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Confirmation code",
-                                  style: Theme.of(context).textTheme.bodyMedium)
-                              .tr(),
-                        ),
+                        Text("Confirmation code",
+                                style: Theme.of(context).textTheme.bodyMedium)
+                            .tr(),
                         const SizedBox(
                           height: 10,
                         ),
@@ -214,6 +211,13 @@ class VerifyScreen extends StatelessWidget {
                             cubit.verifyOTP(
                                 otp: cubit.otpController.text, email: email!);
                           },
+                          focusedPinTheme: PinTheme(
+                              height: 55,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(
+                                      color: const Color(0xff8CBFAE), width: 2))),
                         ),
                         const SizedBox(
                           height: 45,
@@ -230,12 +234,16 @@ class VerifyScreen extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        TextButton(
-                            onPressed: () {},
-                            child: Text("Resend OTP",
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium)
-                                .tr())
+                        Align(
+                          alignment: Alignment.center,
+                          child: TextButton(
+                              onPressed: () {},
+                              child: Text("Resend OTP",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium)
+                                  .tr()),
+                        )
                       ],
                     ),
                   ),

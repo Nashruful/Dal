@@ -4,8 +4,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_app/cubit/theme_cubit.dart';
+import 'package:user_app/data_layer/data_layer.dart';
+import 'package:user_app/screens/auth_screens/login_screen.dart';
 import 'package:user_app/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:user_app/screens/profile_screen/bloc/profile_bloc_bloc.dart';
+import 'package:user_app/setup/setup.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -35,9 +38,7 @@ class ProfileScreen extends StatelessWidget {
                         child: BlocBuilder<ProfileBlocBloc, ProfileBlocState>(
                           builder: (context, state) {
                             return ProfileInfoSection(
-                              imgurl: bloc.image == ''
-                                  ? 'https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg'
-                                  : bloc.image,
+                              imgurl: bloc.image,
                               firstName: bloc.firstName,
                               lastName: bloc.lastName,
                               email: bloc.email,
@@ -50,11 +51,9 @@ class ProfileScreen extends StatelessWidget {
                                         .push(MaterialPageRoute(
                                             builder: (context) =>
                                                 const EditProfileScreen()))
-                                        .then((value) async {
-                                      print(value);
+                                        .then((value) {
                                       if (value != null) {
-                                        bloc.add(await GetInfoEvent());
-                                        print('then');
+                                        bloc.add(GetInfoEvent());
                                       }
                                     });
                                   }),
@@ -66,8 +65,8 @@ class ProfileScreen extends StatelessWidget {
                       BlocBuilder<ProfileBlocBloc, ProfileBlocState>(
                         builder: (context, state) {
                           return FilterSection(
-                            selectFilter: (String) {
-                              bloc.add(UpdateFilterEvent(category: String));
+                            selectFilter: (string) {
+                              bloc.add(UpdateFilterEvent(category: string));
                             },
                             categories: bloc.categories,
                             text: 'My filters'.tr(),
@@ -112,7 +111,9 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       LogoutButton(
                         onPressed: () {
-                          //
+                          getIt.get<DataLayer>().logOut();
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => LoginScreen()));
                         },
                         text: 'Log out'.tr(),
                       ),

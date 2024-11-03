@@ -53,7 +53,7 @@ class CurrentAdsTap extends StatelessWidget {
           final ad = currentAds[index];
           return CustomAdsContainer(
             companyName: getIt.get<DataLayer>().currentBusinessInfo[0]['name'],
-            companyLogo: ad['bannerimg'],
+            companyLogo: ad['bannerimg'] ?? "https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/offer%20images/DalLogo.png",
             remainingDay: '${getRemainingTime(ad['enddate'])} d',
             offers: ad['offer_type'],
             onTap: () {

@@ -4,29 +4,20 @@ import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/setup/setup.dart';
-
 part 'profile_bloc_event.dart';
 part 'profile_bloc_state.dart';
 
 class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
   final supabase = getIt.get<DataLayer>().supabase;
   //save it in storage
-  Map<String, bool> categories = {
-    'Cafe': true,
-    'Breakfast': true,
-    'Bakery': true,
-    'Ice Creams': true,
-    'Dinning': true,
-    'Drinks': true
-  };
+  Map<String, dynamic> categories = getIt.get<DataLayer>().categories;
   int langValue = 0;
-
-  String firstName = '';
-  String lastName = '';
-  String email = '';
-  String image = '';
-
-  ThemeMode themeMode = ThemeMode.system;
+  String firstName =
+      getIt.get<DataLayer>().currentUserInfo!['first_name'] ?? '';
+  String lastName = getIt.get<DataLayer>().currentUserInfo!['last_name'] ?? '';
+  String email = getIt.get<DataLayer>().currentUserInfo!['email'] ?? '';
+  String image = getIt.get<DataLayer>().currentUserInfo!['profile_image'] ??
+      'https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg';
 
   ProfileBlocBloc() : super(ProfileBlocInitial()) {
     on<ProfileBlocEvent>((event, emit) {});
@@ -35,31 +26,30 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     on<UpdateFilterEvent>((event, emit) {
       categories[event.category] = !categories[event.category]!;
       emit(UpdatedFilterState());
+      getIt.get<DataLayer>().saveCategories();
     });
-
 
     //change lang
     on<ChangeLangEvent>((event, emit) {
       langValue = event.value;
-
       emit(ChangedlangState());
     });
 
     // get user info
     on<GetInfoEvent>((event, emit) async {
       emit(LoadingState());
+      await getIt.get<DataLayer>().getUserInfo();
       try {
-        final info = await supabase
-            .from('users')
-            .select()
-            .eq('id', supabase.auth.currentUser!.id)
-            .single();
-        firstName = info['first_name'];
+        final info = getIt.get<DataLayer>().currentUserInfo;
+        firstName = info!['first_name'];
         lastName = info['last_name'];
         email = info['email'];
         image = info['profile_image'];
         emit(GetInfoState(
-            firstName: firstName, lastName: lastName, email: email, image: image));
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            image: image));
       } on AuthException catch (e) {
         emit(ErrorState(msg: e.message));
         print(e.message);
@@ -70,16 +60,5 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
         emit(ErrorState(msg: e.toString()));
       }
     });
-
-    // listen to users table
-    void getInfoRealTime() {
-      supabase
-          .from('users')
-          .stream(primaryKey: ['id']).listen((List<Map<String, dynamic>> data) {
-        add(GetInfoEvent());
-      });
-    }
-
-    getInfoRealTime();
   }
 }

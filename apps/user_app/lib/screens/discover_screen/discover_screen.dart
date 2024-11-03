@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:lottie/lottie.dart' as lottie;
 import 'package:user_app/screens/discover_screen/bloc/discover_bloc.dart';
+import 'package:user_app/screens/search_screen/search_screen.dart';
 
 class DiscoverScreen extends StatelessWidget {
   const DiscoverScreen({super.key});
@@ -20,6 +22,8 @@ class DiscoverScreen extends StatelessWidget {
               Geolocator.getPositionStream(locationSettings: locationSettings)
                   .listen((Position position) {
             bloc.add(LoadScreenEvent(position: position, context: context));
+            bloc.add(
+                SendNotificationEvent(position: position, context: context));
           });
         } catch (e) {
           bloc.add(ErrorScreenEvent(msg: e.toString()));
@@ -61,7 +65,7 @@ class DiscoverScreen extends StatelessWidget {
                       children: [
                         TileLayer(
                           urlTemplate:
-                              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                              'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
                           userAgentPackageName: 'com.example.app',
                         ),
                         MarkerLayer(markers: bloc.filteredMarkers),
@@ -103,6 +107,10 @@ class DiscoverScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                           elevation: 2.5,
                           child: TextField(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const SearchScreen()));
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
@@ -133,7 +141,10 @@ class DiscoverScreen extends StatelessWidget {
                 if (state is ErrorState) {
                   return Center(child: Text(state.msg.toString()));
                 }
-                return const CircularProgressIndicator();
+                return Center(
+                  child: lottie.Lottie.asset('assets/json/loading.json',
+                      width: 50),
+                );
               },
             ));
       }),

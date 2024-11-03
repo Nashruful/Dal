@@ -1,6 +1,6 @@
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:user_app/data_layer/data_layer.dart';
@@ -102,30 +102,4 @@ class AuthCubit extends Cubit<AuthStatee> {
     }
   }
 
-  firstTimeVerifyOTP({
-    required String otp,
-    required String email,
-  }) async {
-    emit(LoadingState());
-    try {
-      final data = await supabase.auth
-          .verifyOTP(type: OtpType.signup, email: email, token: otp);
-
-      await supabase
-          .from("users")
-          .insert({"email": email, "external_id": data.user?.id});
-
-      OneSignal.login(supabase.auth.currentUser!.id);
-
-      await getIt.get<DataLayer>().getUserInfo();
-
-      emit(SuccessState());
-    } on AuthException catch (e) {
-      emit(ErrorState(msg: e.message));
-    } on PostgrestException catch (e) {
-      emit(ErrorState(msg: e.message));
-    } catch (e) {
-      emit(ErrorState(msg: e.toString()));
-    }
-  }
 }

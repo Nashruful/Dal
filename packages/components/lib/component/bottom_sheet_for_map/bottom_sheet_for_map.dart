@@ -100,7 +100,7 @@ class BottomSheetForMap extends StatelessWidget {
           ),
           const Spacer(),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -129,7 +129,7 @@ class BottomSheetForMap extends StatelessWidget {
                         Text(remainingDay,
                             style: TextStyle(color: AppColors().grey2)),
                         const SizedBox(
-                          width: 20,
+                          width: 5,
                         ),
                         Container(
                           width: 35,
@@ -139,9 +139,7 @@ class BottomSheetForMap extends StatelessWidget {
                               color: Theme.of(context).primaryColor,
                               border:
                                   Border.all(color: const Color(0xffA51361))),
-                          child: SvgPicture.asset(
-                            iconImage
-                          ),
+                          child: SvgPicture.asset(iconImage),
                         ),
                       ],
                     ),
