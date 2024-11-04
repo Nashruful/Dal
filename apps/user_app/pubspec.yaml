@@ -52,6 +52,13 @@ flutter:
     - assets/translations/
 
 flutter_native_splash:
+  android: true
+  ios: true
+  web: false 
+   
   color: "#A51361"
-  image: assets/png/Dal_logo.png
+  image: "assets/png/Dal_logo.png"
   android_12:
+    color: "#A51361"
+    image: "assets/png/Dal_logo.png"
+
