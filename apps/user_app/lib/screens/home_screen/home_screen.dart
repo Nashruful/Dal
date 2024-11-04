@@ -130,7 +130,7 @@ class HomeScreen extends StatelessWidget {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -217,7 +217,7 @@ class HomeScreen extends StatelessWidget {
                         'Around you'.tr(),
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Tooltip(
                         message: 'View Offers Available Within 1 Km',
                         child: Icon(
@@ -264,7 +264,7 @@ class HomeScreen extends StatelessWidget {
                                       .isEmpty
                                   ? [
                                       Padding(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             horizontal: 24, vertical: 40),
                                         child: Container(
                                             width: MediaQuery.of(context)
@@ -310,9 +310,10 @@ class HomeScreen extends StatelessWidget {
                                             companyName:
                                                 e.branch!.business!.name ??
                                                     "----",
-                                            offers:
-                                                '${e.offerType!} ${'off'.tr()}',
+                                            offers: '${e.offerType!}',
                                             onTap: () {
+                                              getIt.get<DataLayer>().recordClicks(
+                                                  e.id!); //add clicks to ad id each time it is viewed
                                               String currentLogo =
                                                   e.category!.toString();
                                               showModalBottomSheet(
@@ -322,56 +323,46 @@ class HomeScreen extends StatelessWidget {
                                                     return BlocProvider(
                                                       create: (context) =>
                                                           HomeCubit(),
-                                                      child: BlocBuilder<
-                                                          HomeCubit, HomeState>(
-                                                        builder:
-                                                            (context, state) {
-                                                          return ImpressionDetector(
-                                                            impressedCallback:
-                                                                () {
-                                                              getIt
-                                                                  .get<
-                                                                      DataLayer>()
-                                                                  .recordClicks(
-                                                                      e.id!); //add clicks to ad id each time it is viewed
-                                                            },
-                                                            child: BlocBuilder<
-                                                                HomeCubit,
-                                                                HomeState>(
-                                                              builder: (context,
-                                                                  state) {
-                                                                return CustomBottomSheet(
-                                                                    image: e
-                                                                        .bannerimg!,
-                                                                    companyName: e
-                                                                            .branch!
-                                                                            .business!
-                                                                            .name ??
-                                                                        "---",
-                                                                    iconImage:
-                                                                        'assets/svg/$currentLogo.svg',
-                                                                    description:
-                                                                        e.description ??
-                                                                            "---",
-                                                                    remainingDay:
-                                                                        "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
-                                                                    offerType: e
-                                                                        .offerType!,
-                                                                    viewLocation:
-                                                                        'View Location'
-                                                                            .tr(),
-                                                                    locationOnPressed:
-                                                                        () {
-                                                                      //
-                                                                    },
-                                                                    button: cubit
-                                                                        .returnButton(
-                                                                            e));
+                                                      child: Builder(
+                                                          builder: (context) {
+                                                        return BlocBuilder<
+                                                            HomeCubit,
+                                                            HomeState>(
+                                                          builder:
+                                                              (context, state) {
+                                                            return CustomBottomSheet(
+                                                              image:
+                                                                  e.bannerimg!,
+                                                              companyName: e
+                                                                      .branch!
+                                                                      .business!
+                                                                      .name ??
+                                                                  "---",
+                                                              iconImage:
+                                                                  'assets/svg/$currentLogo.svg',
+                                                              description:
+                                                                  e.description ??
+                                                                      "---",
+                                                              remainingDay:
+                                                                  "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
+                                                              offerType:
+                                                                  e.offerType!,
+                                                              viewLocation:
+                                                                  'View Location'
+                                                                      .tr(),
+                                                              locationOnPressed:
+                                                                  () {
+                                                                //
                                                               },
-                                                            ),
-                                                          );
-                                                        },
-                                                      ),
+                                                              button: cubit
+                                                                  .returnButton(
+                                                                      e),
+                                                              buttonLable:
+                                                                  'Remind me',
+                                                            );
+                                                          },
+                                                        );
+                                                      }),
                                                     );
                                                   });
                                             },
@@ -392,7 +383,9 @@ class HomeScreen extends StatelessWidget {
                 ),
 
                 //===============Latest
-
+                const SizedBox(
+                  height: 40,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Text(
@@ -414,7 +407,13 @@ class HomeScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 ShimmerContainer(height: 200, width: 160),
+                                SizedBox(
+                                  width: 20,
+                                ),
                                 ShimmerContainer(height: 200, width: 160),
+                                SizedBox(
+                                  width: 20,
+                                ),
                                 ShimmerContainer(height: 200, width: 160),
                                 SizedBox(
                                   width: 20,
@@ -445,8 +444,10 @@ class HomeScreen extends StatelessWidget {
                                             "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
                                         companyName:
                                             e.branch!.business!.name ?? "----",
-                                        offers: '${e.offerType!} ${'off'.tr()}',
+                                        offers: '${e.offerType!}',
                                         onTap: () {
+                                          getIt.get<DataLayer>().recordClicks(e
+                                              .id!); //add clicks to ad id each time it is viewed
                                           String currentLogo =
                                               e.category!.toString();
                                           showModalBottomSheet(
@@ -454,33 +455,25 @@ class HomeScreen extends StatelessWidget {
                                               context: context,
                                               builder: (context) {
                                                 //
-                                                return ImpressionDetector(
-                                                  impressedCallback: () {
-                                                    getIt
-                                                        .get<DataLayer>()
-                                                        .recordClicks(e
-                                                            .id!); //add clicks to ad id each time it is viewed
+                                                return CustomBottomSheet(
+                                                  image: e.bannerimg!,
+                                                  companyName: e.branch!
+                                                          .business!.name ??
+                                                      "---",
+                                                  iconImage:
+                                                      'assets/svg/$currentLogo.svg',
+                                                  description:
+                                                      e.description ?? "---",
+                                                  remainingDay:
+                                                      "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
+                                                  offerType: e.offerType!,
+                                                  viewLocation:
+                                                      'View Location'.tr(),
+                                                  locationOnPressed: () {
+                                                    //
                                                   },
-                                                  child: CustomBottomSheet(
-                                                      image: e.bannerimg!,
-                                                      companyName: e.branch!
-                                                              .business!.name ??
-                                                          "---",
-                                                      iconImage:
-                                                          'assets/svg/$currentLogo.svg',
-                                                      description:
-                                                          e.description ??
-                                                              "---",
-                                                      remainingDay:
-                                                          "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
-                                                      offerType: e.offerType!,
-                                                      viewLocation:
-                                                          'View Location'.tr(),
-                                                      locationOnPressed: () {
-                                                        //
-                                                      },
-                                                      button: cubit
-                                                          .returnButton(e)),
+                                                  button: cubit.returnButton(e),
+                                                  buttonLable: '',
                                                 );
                                               });
                                         },

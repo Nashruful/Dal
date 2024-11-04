@@ -60,14 +60,28 @@ class _MainAppState extends State<MainApp> with LifecycleAware, LifecycleMixin {
             themeMode: ThemeMode.system,
             home: LifecycleWrapper(
                 onLifecycleEvent: (LifecycleEvent event) async {
-                  if (event == LifecycleEvent.inactive) {
+                  if (event == LifecycleEvent.invisible) {
                     //when user stop using app
+                    await getIt
+                        .get<DataLayer>()
+                        .getAllAds(); //update live ads list
                     for (var adId in getIt.get<DataLayer>().impressions.keys) {
-                      await getIt.get<DataLayer>().supabase.from("ad").update({
-                        "views": getIt.get<DataLayer>().impressions[adId],
-                        "clicks": getIt.get<DataLayer>().clicks[adId] ?? 0,
-                      }).eq('id', adId);
+                      print('clicks in list');
+                      print(getIt.get<DataLayer>().clicks[adId]);
+
+                      await getIt
+                          .get<DataLayer>()
+                          .supabase
+                          .rpc('increment_ad_views', params: {
+                        'ad_id': adId,
+                        'increment_views_by':
+                            getIt.get<DataLayer>().impressions[adId],
+                        'increment_clicks_by':
+                            getIt.get<DataLayer>().clicks[adId] ?? 0
+                      });
                     }
+                    getIt.get<DataLayer>().impressions = {}; //clear map
+                    getIt.get<DataLayer>().clicks = {}; //clear map
                   }
                 },
                 child: isLogin.isLoggedIn()
