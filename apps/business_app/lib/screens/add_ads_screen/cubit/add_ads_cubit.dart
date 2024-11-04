@@ -45,9 +45,12 @@ class AddAdsCubit extends Cubit<AddAdsState> {
 
   Future<void> uploadImage(XFile imageFile) async {
     try {
-      getUrl = await supabase.storage
+      await supabase.storage
           .from('offer images')
-          .getPublicUrl(imageFile.name);
+          .upload(imageFile.name, image!);
+
+      getUrl =
+          supabase.storage.from('offer images').getPublicUrl(imageFile.name);
       emit(AdsImageState(image: image!));
     } catch (e) {
       emit(ErrorState(msg: 'Image upload failed'));

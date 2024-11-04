@@ -31,6 +31,7 @@ class DataLayer {
       businessId = box.read('BusinessID');
       getBusinessInfo();
     }
+    box.read('language');
   }
 
 //call this func to refresh
@@ -40,7 +41,6 @@ class DataLayer {
         .select(
             '*, branch(*,ad(*)), subscription_business(*)') // Select all from business, branch, and ad
         .eq('id', businessId!); // change with incomming businessId
-
     businessBranches =
         currentBusinessInfo[0]['branch']; //save branches into a seperate list
 
@@ -50,14 +50,21 @@ class DataLayer {
       List ads = branch['ad']; // Get the list of ads for for Each branch
       allbusinessAds.addAll(ads);
     }
+    // subscription_business = currentBusinessInfo[0]['subscription_business'] ??
+    //     [];
+    subscription_business = currentBusinessInfo[0]['subscription_business'];
+    // subscription_business = [];
+    // subscription_business.isNotEmpty
+    //     ? latestSubscription =
+    //         subscription_business.last //save last sub subscription plan
+    //     : null;
 
-    subscription_business = currentBusinessInfo[0]['subscription_business'] ??
-        []; //save subscription_business into a seperate list
-
-    subscription_business != []
-        ? latestSubscription =
-            subscription_business.last //save last sub subscription plan
-        : null;
+    if (subscription_business.isNotEmpty) {
+      latestSubscription = subscription_business.last;
+    } else {
+      latestSubscription = {};
+      //null;
+    }
 
     box.write("BusinessID", businessId); // save on login or refresh
   }

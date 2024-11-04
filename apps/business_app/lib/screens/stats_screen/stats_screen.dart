@@ -11,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class StatsScreen extends StatelessWidget {
   const StatsScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -22,8 +21,8 @@ class StatsScreen extends StatelessWidget {
             final cubit = context.read<StatisticsCubit>();
             return Scaffold(
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              appBar: const CustomAppBar(
-                  title: 'Statistics', automaticallyImplyLeading: true),
+              appBar: CustomAppBar(
+                  title: 'Statistics'.tr(), automaticallyImplyLeading: true),
               body: RefreshIndicator(
                 color: Theme.of(context).primaryColor,
                 onRefresh: () => cubit.refreshScreen(),
@@ -62,7 +61,7 @@ class StatsScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            'Top 5 Branches By Ad Clicks',
+                            'Top 5 Branches By Ad Clicks'.tr(),
                             style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ),
@@ -81,7 +80,7 @@ class StatsScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            'Monthly Ad Performance',
+                            'Monthly Ad Performance'.tr(),
                             style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ),

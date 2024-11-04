@@ -8,11 +8,12 @@ class CustemAlertDialog extends StatelessWidget {
       required this.title,
       required this.msg,
       required this.onPressed,
-      this.buttonLable});
+      this.buttonLable, required this.cancelLable});
   final String title;
   final String msg;
   final Function() onPressed;
   final String? buttonLable;
+  final String cancelLable;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -48,7 +49,7 @@ class CustemAlertDialog extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    'Cancel',
+                    cancelLable,
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 14),
                   ),

@@ -19,12 +19,13 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
   int langValue = 0;
 
   ProfileBlocBloc() : super(ProfileBlocInitial()) {
+    langValue = getIt.get<DataLayer>().box.read('language') ?? 0;
     on<ProfileBlocEvent>((event, emit) {});
 
     //change language
     on<ChangeLangEvent>((event, emit) {
       langValue = event.value;
-
+      getIt.get<DataLayer>().box.write('language', langValue);
       emit(ChangedlangState());
     });
 
@@ -34,6 +35,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
       await getIt.get<DataLayer>().getBusinessInfo();
       businessInfo = getIt.get<DataLayer>().currentBusinessInfo;
       plan = getIt.get<DataLayer>().latestSubscription;
+      print(plan);
       emit(SuccessState());
     });
   }

@@ -2,6 +2,7 @@ import 'package:business_app/screens/add_ads_screen/add_ads_screen.dart';
 import 'package:business_app/screens/my_ads_screen/cubit/my_ads_cubit.dart';
 import 'package:components/component/custom_app_bar/custom_app_bar.dart';
 import 'package:components/components.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -22,7 +23,7 @@ class MyAdsScreen extends StatelessWidget {
           child: Scaffold(
             appBar: CustomAppBar(
               height: 100,
-              title: "My Ads",
+              title: "My Ads".tr(),
               bottom: MyAdsTabBar(),
               automaticallyImplyLeading: false,
             ),
