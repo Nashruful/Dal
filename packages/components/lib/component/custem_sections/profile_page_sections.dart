@@ -165,13 +165,11 @@ class LanguageSection extends StatelessWidget {
       required this.changeLang,
       required this.value,
       required this.text,
-      required this.hintlabel,
       required this.label1,
       required this.label2});
   final Function(int?) changeLang;
   final int value;
   final String text;
-  final String hintlabel;
   final String label1;
   final String label2;
 
@@ -191,13 +189,9 @@ class LanguageSection extends StatelessWidget {
             items: [
               DropdownMenuEntry(
                 value: 0,
-                label: hintlabel,
-              ),
-              DropdownMenuEntry(
-                value: 1,
                 label: label1,
               ),
-              DropdownMenuEntry(value: 2, label: label2),
+              DropdownMenuEntry(value: 1, label: label2),
             ].map((entry) {
               return DropdownMenuItem<int>(
                 value: entry.value,
