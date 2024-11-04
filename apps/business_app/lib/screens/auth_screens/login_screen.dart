@@ -5,6 +5,7 @@ import 'package:components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 
@@ -26,7 +27,7 @@ class LoginScreen extends StatelessWidget {
                   builder: (context) => AlertDialog(
                       backgroundColor: Colors.transparent,
                       content: Lottie.asset(
-                          height: 70, 'assets/json/loading.json')));
+                          height: 30, 'assets/json/loading.json')));
             }
             if (state is SuccessState) {
               Navigator.push(
@@ -51,12 +52,12 @@ class LoginScreen extends StatelessWidget {
               key: cubit.formKey,
               child: Stack(
                 children: [
-                  CustomBackground(),
+                  const CustomBackground(),
                   Align(
                     alignment: Alignment.topCenter,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 100),
-                      child: Container(
+                      child: SizedBox(
                           height: 100,
                           child: SvgPicture.asset("assets/svg/Dal_logo.svg")),
                     ),

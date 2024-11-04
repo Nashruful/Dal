@@ -8,7 +8,7 @@ final class SubscriptionsScreenBlocInitial extends SubscriptionState {}
 final class TabedCardState extends SubscriptionState {
 }
 
-final class loadingState extends SubscriptionState {
+final class LoadingState extends SubscriptionState {
 }
 
 final class SubscriptionConfirmedState extends SubscriptionState {

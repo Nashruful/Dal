@@ -23,23 +23,18 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     final XFile? imageFile = await pick.pickImage(source: ImageSource.gallery);
     if (imageFile != null) {
       final File image = File(imageFile.path);
-
-      final uploadImage = await supabase.storage
+      await supabase.storage
           .from('user profile images')
           .upload('images/${imageFile.name}', image);
 
-      print('Image uploaded successfully: $uploadImage');
       final getUrl = await supabase.storage
           .from('user profile images')
           .getPublicUrl('images/${imageFile.name}');
-      print(getUrl);
       // add image to users table
       await supabase.from('users').update({'profile_image': getUrl}).eq(
           'id', supabase.auth.currentUser!.id);
       emit(AdsImageState(image: image));
-    } else {
-      print('No image selected');
-    }
+    } else {}
   }
 
   Future<void> changeName(String firstName, String lastName) async {
@@ -52,10 +47,8 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       emit(SuccessState());
     } on AuthException catch (e) {
       emit(ErrorState(msg: e.message));
-      print(e.message);
     } on PostgrestException catch (e) {
       emit(ErrorState(msg: e.message));
-      print(e.message);
     } catch (e) {
       emit(ErrorState(msg: e.toString()));
     }

@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
+import 'package:multi_dropdown/multi_dropdown.dart';
 
 class SubscriptionsScreen extends StatelessWidget {
   const SubscriptionsScreen({super.key});
@@ -30,7 +31,7 @@ class SubscriptionsScreen extends StatelessWidget {
                 title: 'Subscription Plan', automaticallyImplyLeading: true),
             body: BlocListener<SubscriptionBloc, SubscriptionState>(
               listener: (BuildContext context, state) {
-                if (state is loadingState) {
+                if (state is LoadingState) {
                   Navigator.pop(context);
                   showDialog(
                       context: context,
@@ -38,7 +39,7 @@ class SubscriptionsScreen extends StatelessWidget {
                       builder: (context) => AlertDialog(
                           backgroundColor: Colors.transparent,
                           content: Lottie.asset(
-                              height: 70, 'assets/json/loading.json')));
+                              height: 30, 'assets/json/loading.json')));
                 }
                 if (state is SubscriptionConfirmedState) {
                   Navigator.pop(context);

@@ -18,10 +18,11 @@ class MyAdsScreen extends StatelessWidget {
       create: (context) => MyAdsCubit(),
       child: Builder(builder: (context) {
         final cubit = context.read<MyAdsCubit>();
+        final cubit = context.read<MyAdsCubit>();
         return DefaultTabController(
           length: 2,
           child: Scaffold(
-            appBar: CustomAppBar(
+            appBar: const CustomAppBar(
               height: 100,
               title: "My Ads".tr(),
               bottom: MyAdsTabBar(),
@@ -36,7 +37,7 @@ class MyAdsScreen extends StatelessWidget {
                     builder: (context) => AlertDialog(
                       backgroundColor: Colors.transparent,
                       content:
-                          Lottie.asset(height: 70, 'assets/json/loading.json'),
+                          Lottie.asset(height: 30, 'assets/json/loading.json'),
                     ),
                   );
                 }
@@ -69,6 +70,9 @@ class MyAdsScreen extends StatelessWidget {
             floatingActionButton: (cubit.planEndDate.isEmpty ||
                     DateTime.tryParse(cubit.planEndDate)
                             ?.isBefore(cubit.currentDate) ==
+            floatingActionButton: (cubit.planEndDate.isEmpty ||
+                    DateTime.tryParse(cubit.planEndDate)
+                            ?.isBefore(cubit.currentDate) ==
                         true)
                 ? null // Do not show the button
                 : FloatingActionButton(
@@ -80,6 +84,7 @@ class MyAdsScreen extends StatelessWidget {
                       );
                     },
                     backgroundColor: AppColors().pink,
+                    shape: const CircleBorder(),
                     shape: const CircleBorder(),
                     child: Icon(
                       Icons.add,

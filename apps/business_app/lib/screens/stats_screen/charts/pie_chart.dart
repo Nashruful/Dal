@@ -11,40 +11,40 @@ class ChartIndicators extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        getTopBranches.length > 0
+        getTopBranches.isNotEmpty
             ? ChartIndicator(
                 address: getTopBranches[0]['address'],
                 backgroundColor: Theme.of(context).primaryColor,
               )
-            : SizedBox(),
+            : const SizedBox(),
         getTopBranches.length > 1
             ? ChartIndicator(
                 address: getTopBranches[1]['address'],
                 backgroundColor:
                     Theme.of(context).primaryColor.withOpacity(0.8),
               )
-            : SizedBox(),
+            : const SizedBox(),
         getTopBranches.length > 2
             ? ChartIndicator(
                 address: getTopBranches[2]['address'],
                 backgroundColor:
                     Theme.of(context).primaryColor.withOpacity(0.6),
               )
-            : SizedBox(),
+            : const SizedBox(),
         getTopBranches.length > 3
             ? ChartIndicator(
                 address: getTopBranches[3]['address'],
                 backgroundColor:
                     Theme.of(context).primaryColor.withOpacity(0.4),
               )
-            : SizedBox(),
+            : const SizedBox(),
         getTopBranches.length > 4
             ? ChartIndicator(
                 address: getTopBranches[4]['address'],
                 backgroundColor:
                     Theme.of(context).primaryColor.withOpacity(0.2),
               )
-            : SizedBox()
+            : const SizedBox()
       ],
     );
   }
@@ -58,7 +58,7 @@ class ChartIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 200,
       child: Row(
         children: [

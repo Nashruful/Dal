@@ -17,7 +17,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
   String lastName = getIt.get<DataLayer>().currentUserInfo!['last_name'] ?? '';
   String email = getIt.get<DataLayer>().currentUserInfo!['email'] ?? '';
   String image = getIt.get<DataLayer>().currentUserInfo!['profile_image'] ??
-      'https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg';
+      'https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/user%20profile%20images/images/defualt_profile_img.png?t=2024-11-03T13%3A11%3A13.024Z';
 
   ProfileBlocBloc() : super(ProfileBlocInitial()) {
     on<ProfileBlocEvent>((event, emit) {});
@@ -52,10 +52,8 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
             image: image));
       } on AuthException catch (e) {
         emit(ErrorState(msg: e.message));
-        print(e.message);
       } on PostgrestException catch (e) {
         emit(ErrorState(msg: e.message));
-        print(e.message);
       } catch (e) {
         emit(ErrorState(msg: e.toString()));
       }

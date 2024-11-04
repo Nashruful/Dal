@@ -10,7 +10,7 @@ class MyPainter extends CustomPainter {
       // Path number 1
   
 
-      paint.color = Color(0xffF6EFDE);
+      paint.color = const Color(0xffF6EFDE);
       path = Path();
       path.lineTo(-0.36, -0.01);
       path.cubicTo(-0.36, -0.01, size.width * 0.64, -0.01, size.width * 0.64, -0.01);

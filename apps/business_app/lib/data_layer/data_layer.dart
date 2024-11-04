@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DataLayer {
   DataLayer() {
+    //box.erase();
     loadData();
   }
 
@@ -71,5 +72,6 @@ class DataLayer {
 
   logout() {
     box.erase();
+    supabase.auth.signOut();
   }
 }

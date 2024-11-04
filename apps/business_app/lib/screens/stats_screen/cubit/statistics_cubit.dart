@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:business_app/data_layer/data_layer.dart';
 import 'package:business_app/setup/setup.dart';
+// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 
 part 'statistics_state.dart';

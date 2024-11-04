@@ -110,6 +110,9 @@ class AddAdsCubit extends Cubit<AddAdsState> {
             'clicks': 0,
             'views': 0,
           });
+          await supabase
+              .from("branch")
+              .update({"selected": true}).eq("id", branchId);
 
           print('ads add successfully');
         }
@@ -117,7 +120,9 @@ class AddAdsCubit extends Cubit<AddAdsState> {
         print('failed to add');
       }
     } on AuthException catch (e) {
-      emit(ErrorState(msg: e.message));
+      if (!isClosed) {
+        emit(ErrorState(msg: e.message));
+      }
     } on PostgrestException catch (e) {
       emit(ErrorState(msg: e.message));
     } catch (e) {

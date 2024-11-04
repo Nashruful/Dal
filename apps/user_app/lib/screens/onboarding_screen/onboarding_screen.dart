@@ -32,7 +32,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -48,7 +48,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Text("Onboarding title",
                             style: Theme.of(context).textTheme.headlineLarge)
                         .tr(),
-                    SizedBox(
+                    const SizedBox(
                       height: 9,
                     ),
                     Text("Onbording subtitle".tr(),
@@ -67,9 +67,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             MaterialPageRoute(
                                 builder: (context) => const LoginScreen()));
                       },
-                      backgroundColor: const Color(0xffA51361),
+                      backgroundColor: AppColors().pink,
                       child: Text("Login",
-                              style: Theme.of(context).textTheme.titleMedium)
+                              style: Theme.of(context).textTheme.labelMedium)
                           .tr(),
                     ),
                     const SizedBox(
@@ -77,7 +77,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     TextButton(
                         onPressed: () {
-                          print(EasyLocalization.of(context)!.currentLocale);
                           Navigator.push(
                               context,
                               MaterialPageRoute(

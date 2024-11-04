@@ -69,7 +69,7 @@ class StatsScreen extends StatelessWidget {
                           getTopBranches: cubit.getTopBranches(),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
+                          padding: const EdgeInsets.symmetric(vertical: 20),
                           child: PiesChart(
                             topBranches: cubit.getTopBranches(),
                             totalClicks:

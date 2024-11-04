@@ -27,7 +27,7 @@ class BottomSheetForMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 650,
+      height: 600,
       decoration: BoxDecoration(
         color: Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(18),
@@ -36,7 +36,7 @@ class BottomSheetForMap extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           Container(
-            height: 389,
+            height: 370,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
             child: ClipRRect(
@@ -45,7 +45,7 @@ class BottomSheetForMap extends StatelessWidget {
                 errorBuilder: (context, error, stackTrace) =>
                     const Icon(Icons.error),
                 image,
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -110,7 +110,7 @@ class BottomSheetForMap extends StatelessWidget {
                     ElevatedButton(
                         onPressed: onPressed,
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xff8CBFAE)),
+                            backgroundColor: AppColors().green),
                         child: Row(
                           children: [
                             SvgPicture.asset('assets/svg/notification.svg'),
@@ -118,7 +118,7 @@ class BottomSheetForMap extends StatelessWidget {
                               width: 10,
                             ),
                             Text(
-                              'Remind me ',
+                              'Remind me',
                               style: Theme.of(context).textTheme.labelSmall,
                             ),
                           ],
@@ -137,8 +137,7 @@ class BottomSheetForMap extends StatelessWidget {
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Theme.of(context).primaryColor,
-                              border:
-                                  Border.all(color: const Color(0xffA51361))),
+                              border: Border.all(color: AppColors().pink)),
                           child: SvgPicture.asset(iconImage),
                         ),
                       ],

@@ -1,6 +1,7 @@
 import 'package:business_app/screens/auth_screens/login_screen.dart';
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_svg/svg.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -20,7 +21,7 @@ class OnboardingScreen extends StatelessWidget {
                 const SizedBox(
                   height: 40,
                 ),
-                Container(
+                SizedBox(
                     height: MediaQuery.of(context).size.height / 3,
                     child: SvgPicture.asset("assets/svg/onboarding_lady.svg")),
                 const SizedBox(
@@ -33,7 +34,7 @@ class OnboardingScreen extends StatelessWidget {
                       Text(" Catch Eyes, Get Noticed!",
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.headlineLarge),
-                      SizedBox(
+                      const SizedBox(
                         height: 9,
                       ),
                       Text(

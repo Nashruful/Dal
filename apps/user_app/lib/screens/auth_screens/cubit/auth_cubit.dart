@@ -20,7 +20,6 @@ class AuthCubit extends Cubit<AuthStatee> {
   signUp() async {
     emit(LoadingState());
     try {
-      print("------------------ Start");
       response = await supabase
           .from("users")
           .select('email')
@@ -44,7 +43,6 @@ class AuthCubit extends Cubit<AuthStatee> {
 
   signIn() async {
     emit(LoadingState());
-    print("------------ Start");
     try {
       response = await supabase
           .from("users")
@@ -93,10 +91,8 @@ class AuthCubit extends Cubit<AuthStatee> {
       emit(SuccessState());
     } on AuthException catch (e) {
       emit(ErrorState(msg: e.message));
-      print(e.message);
     } on PostgrestException catch (e) {
       emit(ErrorState(msg: e.message));
-      print(e.message);
     } catch (e) {
       emit(ErrorState(msg: e.toString()));
     }

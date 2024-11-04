@@ -1,3 +1,5 @@
+import 'package:user_app/models/all_ads_model.dart';
+
 class ReminderState {
   const ReminderState();
 }
@@ -5,7 +7,7 @@ class ReminderState {
 class ReminderLoading extends ReminderState {}
 
 class ReminderLoaded extends ReminderState {
-  final   List<Map<String, dynamic>> myReminders;
+  final   List<Ads> myReminders;
 
   ReminderLoaded({required this.myReminders});
 }

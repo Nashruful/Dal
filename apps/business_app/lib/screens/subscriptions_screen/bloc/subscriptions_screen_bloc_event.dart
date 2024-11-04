@@ -9,10 +9,10 @@ final class TabCardEvent extends SubscriptionEvent {
   TabCardEvent({required this.index});
 }
 
-final class confirmSubscription extends SubscriptionEvent {
+final class ConfirmSubscription extends SubscriptionEvent {
   final DateTime start;
   final DateTime end;
   final bool isFreeTrial;
 
-  confirmSubscription({required this.isFreeTrial,required this.start, required this.end});
+  ConfirmSubscription({required this.isFreeTrial,required this.start, required this.end});
 }

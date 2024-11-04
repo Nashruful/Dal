@@ -1,5 +1,6 @@
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CustomBottomSheet extends StatelessWidget {
   const CustomBottomSheet(
@@ -13,10 +14,10 @@ class CustomBottomSheet extends StatelessWidget {
       this.onPressed,
       required this.viewLocation,
       this.locationOnPressed,
-      this.buttonLable,
       required this.button,
       this.views,
-      this.clicks});
+      this.clicks,
+      required String buttonLable});
   final String image;
   final String companyName;
   final String offerType;
@@ -24,7 +25,6 @@ class CustomBottomSheet extends StatelessWidget {
   final String description;
   final String remainingDay;
   final String viewLocation;
-  final String? buttonLable;
   final void Function()? onPressed;
   final void Function()? locationOnPressed;
   final ElevatedButton button;
@@ -77,12 +77,12 @@ class CustomBottomSheet extends StatelessWidget {
                         onPressed: locationOnPressed,
                         child: Row(
                           children: [
-                            // SvgPicture.asset(
-                            //   'assets/svg/discover.svg',
-                            //   colorFilter: ColorFilter.mode(
-                            //       Theme.of(context).primaryColor,
-                            //       BlendMode.srcIn),
-                            // ),
+                            SvgPicture.asset(
+                              'assets/svg/discover.svg',
+                              colorFilter: ColorFilter.mode(
+                                  Theme.of(context).primaryColor,
+                                  BlendMode.srcIn),
+                            ),
                             const SizedBox(
                               width: 8,
                             ),
@@ -119,7 +119,7 @@ class CustomBottomSheet extends StatelessWidget {
                     views == null
                         ? Row(
                             children: [
-                              // SvgPicture.asset('assets/svg/clock.svg'),
+                              SvgPicture.asset('assets/svg/clock.svg'),
                               Text(remainingDay,
                                   style: TextStyle(color: AppColors().grey2)),
                               const SizedBox(
@@ -131,14 +131,9 @@ class CustomBottomSheet extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Theme.of(context).primaryColor,
-                                    border: Border.all(
-                                        color: const Color(0xffA51361))),
-                                // child: SvgPicture.asset(
-                                //   iconImage,
-                                //   colorFilter: const ColorFilter.mode(
-                                //       Color(0xff7f7f7f7), BlendMode.srcIn),
-                                //   fit: BoxFit.values[6],
-                                // ),
+                                    border:
+                                        Border.all(color: AppColors().pink)),
+                                child: SvgPicture.asset(iconImage!),
                               ),
                             ],
                           )

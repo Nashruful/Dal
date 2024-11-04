@@ -1,5 +1,3 @@
-///////
-///
 import 'package:business_app/data_layer/data_layer.dart';
 import 'package:business_app/screens/my_ads_screen/cubit/my_ads_cubit.dart';
 import 'package:business_app/setup/setup.dart';
@@ -30,9 +28,9 @@ class CurrentAdsTap extends StatelessWidget {
                 mainAxisSpacing: 16,
                 childAspectRatio: 2 / 3,
               ),
-              itemCount:  cubit.currentAds.length,
+              itemCount: cubit.currentAds.length,
               itemBuilder: (context, index) {
-                final ad =  cubit.currentAds[index];
+                final ad = cubit.currentAds[index];
                 return CustomAdsContainer(
                   companyName: getIt.get<DataLayer>().currentBusinessInfo[0]
                       ['name'],
@@ -59,14 +57,16 @@ class CurrentAdsTap extends StatelessWidget {
                                   context: context,
                                   builder: (context) {
                                     return CustemAlertDialog(
-                                        title:
-                                            'Are You Sure You Want To Delete This Ad?',
-                                        msg:
-                                            'This will permanently delete the ad.',
-                                        onPressed: () {
-                                          cubit.deleteAd(ad['id']);
-                                        },
-                                        buttonLable: 'Delete Ad', cancelLable: 'Cancel Button'.tr(),);
+                                      title:
+                                          'Are You Sure You Want To Delete This Ad?',
+                                      msg:
+                                          'This will permanently delete the ad.',
+                                      onPressed: () {
+                                        cubit.deleteAd(ad['id']);
+                                      },
+                                      buttonLable: 'Delete Ad',
+                                      cancelLable: 'Cancel Button'.tr(),
+                                    );
                                   });
                             },
                             offerType: ad['offer_type'],

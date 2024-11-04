@@ -2,13 +2,10 @@ import 'package:components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:user_app/data_layer/data_layer.dart';
-import 'package:user_app/screens/customSnackbar/customSnackbar.dart';
 import 'package:user_app/screens/home_screen/category_screen.dart';
 import 'package:user_app/screens/home_screen/cubit/home_cubit.dart';
 import 'package:user_app/setup/setup.dart';
-import 'package:dio/dio.dart';
 import 'package:impression/impression.dart';
 
 //
@@ -25,8 +22,8 @@ class HomeScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBar(
-            backgroundColor: Theme.of(context).primaryColor,
-            leadingWidth: 200,
+            backgroundColor: AppColors().pink,
+            leadingWidth: 300,
             leading: Padding(
               padding: const EdgeInsets.only(left: 20, bottom: 10),
               child: Row(
@@ -45,95 +42,70 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text(
-                    "Hello!".tr(),
-                    style: Theme.of(context).textTheme.labelLarge,
+                  Row(
+                    children: [
+                      Text(
+                        "Hello".tr(),
+                        style:
+                            TextStyle(fontSize: 24, color: AppColors().white1),
+                      ),
+                      // Text(
+                      //   ' ${getIt.get<DataLayer>().currentUserInfo!['first_name'] ?? ''}!',
+                      //   style:
+                      //       TextStyle(fontSize: 24, color: AppColors().white1),
+                      // ),
+                    ],
                   )
                 ],
               ),
             ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: IconButton(
-                    onPressed: () {
-                      //go to notifications?
-                    },
-                    icon: SvgPicture.asset('assets/svg/notification.svg')),
-              ),
-              TextButton(
-                  onPressed: () async {
-                    final dio = Dio();
-                    try {
-                      await dio.post(
-                        "https://api.onesignal.com/api/v1/notifications",
-                        data: {
-                          "app_id": "ebdec5c2-30a4-447d-9577-a1c13b6d553e",
-                          "contents": {
-                            "en": "Check out Burger's king offer nearby!",
-                            "ar": "لا يطوفك عرض Burger king!"
-                          },
-                          "include_external_user_ids": [
-                            getIt.get<DataLayer>().supabase.auth.currentUser!.id
-                          ], // Correct field name
-                        },
-                        options: Options(headers: {
-                          "Authorization":
-                              "Bearer ZGU5ZmExOTEtNmFiZC00ZTUxLTgyMGYtNjc4MDJlYjUyNmM4",
-                          'Content-Type':
-                              'application/json', // Ensure correct casing
-                        }),
-                      );
-                    } on DioException catch (e) {
-                      if (e.response != null) {}
-                    } catch (e) {
-                      null;
-                    }
-                  },
-                  child: const Text(
-                    "Send notification test",
-                    style: TextStyle(
-                        color: Colors.red, fontWeight: FontWeight.w900),
-                  ))
-            ],
           ),
           body: RefreshIndicator(
             onRefresh: () => cubit.refreshPage(),
             child: ListView(
               children: [
+                //====================Hero Element
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
                   child: Container(
-                    width: 370,
-                    height: 157,
+                    width: double.infinity,
+                    height: 180,
                     decoration: BoxDecoration(
-                      color: const Color(0xffF6B00E),
+                      color: AppColors().yellow,
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Stack(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'title card'.tr(),
-                                  style: Theme.of(context).textTheme.labelLarge,
+                                child: SizedBox(
+                                  width: 150,
+                                  child: Text(
+                                    'title card'.tr(),
+                                    style: TextStyle(
+                                        color: AppColors().white1,
+                                        fontSize: 24),
+                                  ),
                                 ),
+                              ),
+                              const SizedBox(
+                                width: 8,
                               ),
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: SizedBox(
-                                  width: 130,
+                                  width: 150,
                                   child: Text(
                                     'sub title card'.tr(),
                                     style:
-                                        Theme.of(context).textTheme.labelSmall,
+                                        Theme.of(context).textTheme.labelMedium,
                                   ),
                                 ),
                               ),
@@ -142,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         Positioned(
                           right: 0,
-                          top: 8,
+                          bottom: 0,
                           child: Image.asset(
                             'assets/png/29-Influencer 1.png',
                           ),
@@ -151,100 +123,115 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+
+                //====================Filters Section
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CustomIconButton(
-                          icon: 'assets/svg/Dining.svg',
-                          title: 'Dining',
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CategoryScreen(
-                                        categoryList: getIt
-                                            .get<DataLayer>()
-                                            .diningCategory)));
-                          },
-                        ),
-                        CustomIconButton(
-                          icon: 'assets/svg/Supermarkets.svg',
-                          title: "Supermarket",
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CategoryScreen(
-                                        categoryList: getIt
-                                            .get<DataLayer>()
-                                            .superMarketsCategory)));
-                          },
-                        ),
-                        CustomIconButton(
-                          icon: 'assets/svg/Fashion.svg',
-                          title: "Fashion",
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CategoryScreen(
-                                        categoryList: getIt
-                                            .get<DataLayer>()
-                                            .fashionCategory)));
-                          },
-                        ),
-                        CustomIconButton(
-                          icon: 'assets/svg/Hotels.svg',
-                          title: "Hotels",
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CategoryScreen(
-                                        categoryList: getIt
-                                            .get<DataLayer>()
-                                            .hotelsCategory)));
-                          },
-                        ),
-                        CustomIconButton(
-                          icon: 'assets/svg/Gym.svg',
-                          title: "Gym",
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CategoryScreen(
-                                        categoryList: getIt
-                                            .get<DataLayer>()
-                                            .gymCategory)));
-                          },
-                        ),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomIconButton(
+                            icon: 'assets/svg/Dining.svg',
+                            title: 'Dining',
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CategoryScreen(
+                                          categoryList: getIt
+                                              .get<DataLayer>()
+                                              .diningCategory)));
+                            },
+                          ),
+                          CustomIconButton(
+                            icon: 'assets/svg/Supermarkets.svg',
+                            title: "Market",
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CategoryScreen(
+                                          categoryList: getIt
+                                              .get<DataLayer>()
+                                              .superMarketsCategory)));
+                            },
+                          ),
+                          CustomIconButton(
+                            icon: 'assets/svg/Fashion.svg',
+                            title: "Fashion",
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CategoryScreen(
+                                          categoryList: getIt
+                                              .get<DataLayer>()
+                                              .fashionCategory)));
+                            },
+                          ),
+                          CustomIconButton(
+                            icon: 'assets/svg/Hotels.svg',
+                            title: "Hotels",
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CategoryScreen(
+                                          categoryList: getIt
+                                              .get<DataLayer>()
+                                              .hotelsCategory)));
+                            },
+                          ),
+                          CustomIconButton(
+                            icon: 'assets/svg/Gym.svg',
+                            title: "Gym",
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CategoryScreen(
+                                          categoryList: getIt
+                                              .get<DataLayer>()
+                                              .gymCategory)));
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 24,
                 ),
+
+                //===================Around you secrion
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'Around you'.tr(),
-                    style: Theme.of(context).textTheme.headlineSmall,
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Around you'.tr(),
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      const Spacer(),
+                      Tooltip(
+                        message: 'View Offers Available Within 1 Km',
+                        child: Icon(
+                          Icons.info,
+                          color: Theme.of(context).textTheme.bodyMedium!.color,
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 const SizedBox(
                   height: 16,
                 ),
                 SizedBox(
-                  height: 250,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: BlocBuilder<HomeCubit, HomeState>(
@@ -273,10 +260,163 @@ class HomeScreen extends StatelessWidget {
                           return FadeTransitionSwitcher(
                             child: Row(
                               key: ValueKey(
-                                  getIt.get<DataLayer>().allAds.length),
+                                  getIt.get<DataLayer>().liveAds.length),
+                              children: getIt
+                                      .get<DataLayer>()
+                                      .nearbyBranches
+                                      .isEmpty
+                                  ? [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 24, vertical: 40),
+                                        child: Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width -
+                                                48,
+                                            decoration: BoxDecoration(
+                                              color: AppColors().yellow,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                    'Nothing Around You At The Moment...\nTry Somewhere Else',
+                                                    style: TextStyle(
+                                                        color: AppColors()
+                                                            .black1)),
+                                              ),
+                                            )),
+                                      )
+                                    ]
+                                  : getIt
+                                      .get<DataLayer>()
+                                      .nearbyBranches
+                                      .map(
+                                        (e) => ImpressionDetector(
+                                          impressedCallback: () {
+                                            getIt
+                                                .get<DataLayer>()
+                                                .recordImpressions(e
+                                                    .id!); //add impressions to ad id each time it is viewed
+                                          },
+                                          child: CustomAdsContainer(
+                                            companyLogo: e.branch!.business!
+                                                    .logoImg ??
+                                                "https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/user%20profile%20images/images/defualt_profile_img.png?t=2024-11-03T13%3A11%3A13.024Z",
+                                            remainingDay:
+                                                "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
+                                            companyName:
+                                                e.branch!.business!.name ??
+                                                    "----",
+                                            offers:
+                                                '${e.offerType!} ${'off'.tr()}',
+                                            onTap: () {
+                                              String currentLogo =
+                                                  e.category!.toString();
+                                              showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return ImpressionDetector(
+                                                      impressedCallback: () {
+                                                        getIt
+                                                            .get<DataLayer>()
+                                                            .recordClicks(e
+                                                                .id!); //add clicks to ad id each time it is viewed
+                                                      },
+                                                      child: CustomBottomSheet(
+                                                        image: e.bannerimg!,
+                                                        companyName: e
+                                                                .branch!
+                                                                .business!
+                                                                .name ??
+                                                            "---",
+                                                        iconImage:
+                                                            'assets/svg/$currentLogo.svg',
+                                                        description:
+                                                            e.description ??
+                                                                "---",
+                                                        remainingDay:
+                                                            "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
+                                                        offerType: e.offerType!,
+                                                        viewLocation:
+                                                            'View Location'
+                                                                .tr(),
+                                                        locationOnPressed: () {
+                                                          //
+                                                        },
+                                                        button: cubit
+                                                            .returnButton(e),
+                                                        buttonLable:
+                                                            'Remind me',
+                                                      ),
+                                                    );
+                                                  });
+                                            },
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                            ),
+                          );
+                        }
+                        return const SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: Text("error fetching data.."));
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+
+                //===============Latest
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(
+                    'Latest Offers'.tr(),
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                SizedBox(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: BlocBuilder<HomeCubit, HomeState>(
+                      builder: (context, state) {
+                        if (state is LoadingState) {
+                          return const FadeTransitionSwitcher(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ShimmerContainer(height: 200, width: 160),
+                                ShimmerContainer(height: 200, width: 160),
+                                ShimmerContainer(height: 200, width: 160),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                        if (state is SuccessState) {
+                          return FadeTransitionSwitcher(
+                            child: Row(
+                              key: ValueKey(
+                                  getIt.get<DataLayer>().liveAds.length),
                               children: getIt
                                   .get<DataLayer>()
-                                  .nearbyBranches
+                                  .liveAds
                                   .map(
                                     (e) => ImpressionDetector(
                                       impressedCallback: () {
@@ -286,17 +426,20 @@ class HomeScreen extends StatelessWidget {
                                       child: CustomAdsContainer(
                                         companyLogo: e
                                                 .branch!.business!.logoImg ??
-                                            "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
+                                            "https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/user%20profile%20images/images/defualt_profile_img.png?t=2024-11-03T13%3A11%3A13.024Z",
                                         remainingDay:
                                             "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
                                         companyName:
                                             e.branch!.business!.name ?? "----",
                                         offers: '${e.offerType!} ${'off'.tr()}',
                                         onTap: () {
+                                          String currentLogo =
+                                              e.category!.toString();
                                           showModalBottomSheet(
                                               isScrollControlled: true,
                                               context: context,
                                               builder: (context) {
+                                                //
                                                 return ImpressionDetector(
                                                   impressedCallback: () {
                                                     getIt
@@ -310,43 +453,20 @@ class HomeScreen extends StatelessWidget {
                                                             .business!.name ??
                                                         "---",
                                                     iconImage:
-                                                        'assets/svg/coffee.svg',
+                                                        'assets/svg/$currentLogo.svg',
                                                     description:
                                                         e.description ?? "---",
-                                                    remainingDay: getIt
-                                                        .get<DataLayer>()
-                                                        .getRemainingTime(
-                                                            e.enddate!),
-                                                    onPressed: () {
-                                                      try {
-                                                        getIt
-                                                            .get<DataLayer>()
-                                                            .myReminders
-                                                            .add(e.toJson());
-                                                        CustomSnackbar.show(
-                                                          context,
-                                                          message:
-                                                              'Reminder added successfully!',
-                                                          isSuccess: true,
-                                                        );
-                                                      } catch (error) {
-                                                        CustomSnackbar.show(
-                                                          context,
-                                                          message:
-                                                              'Failed to add reminder!',
-                                                          isSuccess: false,
-                                                        );
-                                                      }
-                                                    },
-                                                    offerType:
-                                                        '40% ${'off'.tr()}',
+                                                    remainingDay:
+                                                        "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
+                                                    offerType: e.offerType!,
                                                     viewLocation:
                                                         'View Location'.tr(),
-                                                    locationOnPressed: () {},
-                                                    button: ElevatedButton(
-                                                        onPressed: () {},
-                                                        child: Text(
-                                                            "EMPTY-- change this")),
+                                                    locationOnPressed: () {
+                                                      //
+                                                    },
+                                                    button:
+                                                        cubit.returnButton(e),
+                                                    buttonLable: '',
                                                   ),
                                                 );
                                               });
@@ -367,121 +487,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 12,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'Top'.tr(),
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                ),
-                const SizedBox(
                   height: 16,
-                ),
-                SizedBox(
-                  height: 250,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: BlocBuilder<HomeCubit, HomeState>(
-                      builder: (context, state) {
-                        if (state is LoadingState) {
-                          return const FadeTransitionSwitcher(
-                            child: Row(
-                              children: [
-                                ShimmerContainer(height: 230, width: 160),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                ShimmerContainer(height: 230, width: 160),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                ShimmerContainer(height: 230, width: 160),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                        if (state is SuccessState) {
-                          return FadeTransitionSwitcher(
-                            child: Row(
-                              key: ValueKey(
-                                  getIt.get<DataLayer>().allAds.length),
-                              children: getIt
-                                  .get<DataLayer>()
-                                  .allAds
-                                  .map(
-                                    (e) => ImpressionDetector(
-                                      impressedCallback: () {
-                                        getIt.get<DataLayer>().recordImpressions(
-                                            e.id!); //add impressions to ad id each time it is viewed
-                                      },
-                                      child: CustomAdsContainer(
-                                        companyLogo: e
-                                                .branch!.business!.logoImg ??
-                                            "https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg",
-                                        remainingDay:
-                                            "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
-                                        companyName:
-                                            e.branch!.business!.name ?? "----",
-                                        offers: '${e.offerType!} ${'off'.tr()}',
-                                        onTap: () {
-                                          String currentLogo =
-                                              e.category!.toString();
-                                          showModalBottomSheet(
-                                              isScrollControlled: true,
-                                              context: context,
-                                              builder: (context) {
-                                                return ImpressionDetector(
-                                                  impressedCallback: () {
-                                                    getIt
-                                                        .get<DataLayer>()
-                                                        .recordClicks(e
-                                                            .id!); //add clicks to ad id each time it is viewed
-                                                  },
-                                                  // child: CustomBottomSheet(
-                                                  //   image: e.bannerimg!,
-                                                  //   companyName: e.branch!
-                                                  //           .business!.name ??
-                                                  //       "---",
-                                                  //   iconImage:
-                                                  //       'assets/svg/$currentLogo.svg',
-                                                  //   description:
-                                                  //       e.description ?? "---",
-                                                  //   remainingDay:
-                                                  //       "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
-                                                  //   onPressed: () {
-                                                  //     getIt
-                                                  //         .get<DataLayer>()
-                                                  //         .myReminders
-                                                  //         .add(e.toJson());
-                                                  //   },
-                                                  //   offerType:
-                                                  //       '40% ${'off'.tr()}',
-                                                  //   viewLocation:
-                                                  //       'View Location'.tr(),
-                                                  //   locationOnPressed: () {}, button: ElevatedButton(onPressed: (){}, child: Te),
-                                                  // ),
-                                                );
-                                              });
-                                        },
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                          );
-                        }
-                        return const SizedBox(
-                            height: 100,
-                            width: 100,
-                            child: Text("error fetching data.."));
-                      },
-                    ),
-                  ),
                 ),
               ],
             ),

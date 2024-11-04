@@ -1,0 +1,18 @@
+{
+  "configurations" : [
+    {
+      "id" : "DC360A5E-4AFB-4040-80B4-8A50F1436D97",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+
+  ],
+  "version" : 1
+}

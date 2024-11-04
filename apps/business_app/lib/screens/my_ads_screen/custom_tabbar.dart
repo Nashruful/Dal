@@ -15,9 +15,11 @@ class MyAdsTabBar extends StatelessWidget implements PreferredSizeWidget {
             width: 3.0,
           ),
           insets: const EdgeInsets.symmetric(horizontal: -80.0),
+          insets: const EdgeInsets.symmetric(horizontal: -80.0),
         ),
         labelColor: AppColors().pink,
         unselectedLabelColor: AppColors().grey2,
+        labelStyle: const TextStyle(
         labelStyle: const TextStyle(
           fontWeight: FontWeight.bold,
         ),

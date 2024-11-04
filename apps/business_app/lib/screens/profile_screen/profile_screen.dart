@@ -66,6 +66,7 @@ class ProfileScreen extends StatelessWidget {
                             remainDays: bloc.planEndDate == ''
                                 ? 0
                                 : bloc.getRemainingDays(
+                                : bloc.getRemainingDays(
                                     DateTime.parse(bloc.planEndDate)),
                             onPressed: bloc.planEndDate == '' ||
                                     DateTime.parse(bloc.planEndDate)
@@ -95,7 +96,7 @@ class ProfileScreen extends StatelessWidget {
                       BlocBuilder<ThemeCubit, ThemeState>(
                         builder: (context, state) {
                           return AppearanceSection(
-                            onChanged: (bool) {
+                            onChanged: (_) {
                               context.read<ThemeCubit>().toggleTheme();
                             },
                             isOn: context.read<ThemeCubit>().DarkModeOn,
@@ -111,10 +112,10 @@ class ProfileScreen extends StatelessWidget {
                           return LanguageSection(
                             changeLang: (int? value) {
                               switch (value) {
-                                case 0:
+                                case 1:
                                   context.setLocale(const Locale('en'));
                                   break;
-                                case 1:
+                                case 2:
                                   context.setLocale(const Locale('ar'));
                                   break;
                               }
