@@ -33,6 +33,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     //change lang
     on<ChangeLangEvent>((event, emit) {
       langValue = event.value;
+      
       getIt.get<DataLayer>().box.write('language', langValue);
       emit(ChangedlangState());
     });

@@ -89,6 +89,7 @@ class ProfileScreen extends StatelessWidget {
                         },
                       ),
                       const Divider(height: 40),
+                      // language
                       BlocBuilder<ProfileBlocBloc, ProfileBlocState>(
                         builder: (context, state) {
                           return LanguageSection(

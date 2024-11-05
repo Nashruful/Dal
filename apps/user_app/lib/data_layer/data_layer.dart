@@ -44,7 +44,6 @@ class DataLayer {
     //box.erase();
     //box.write("islogin", true);
     loadData();
-    print(categories);
   }
 
 //call this func to refresh
@@ -58,11 +57,12 @@ class DataLayer {
         .from("branch")
         .select("*,business(*)"); // select branches to show them on map
 
+        
     liveAds = allAds.where((ad) {
       DateTime startDate = DateTime.parse(ad.startdate!);
       DateTime endDate = DateTime.parse(ad.enddate!);
       DateTime now = DateTime.now();
-      return now.isAfter(startDate) && now.isBefore(endDate);
+      return now.isAfter(startDate) && now.isBefore(endDate); // --- get ads that are between the start and end dates
     }).toList();
 
     // for (var element in allAds) {

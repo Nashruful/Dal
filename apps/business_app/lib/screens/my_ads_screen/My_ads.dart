@@ -21,7 +21,7 @@ class MyAdsScreen extends StatelessWidget {
         return DefaultTabController(
           length: 2,
           child: Scaffold(
-            appBar:  CustomAppBar(
+            appBar: CustomAppBar(
               height: 100,
               title: "My Ads".tr(),
               bottom: MyAdsTabBar(),
@@ -43,8 +43,11 @@ class MyAdsScreen extends StatelessWidget {
                 if (state is SuccessDeleteState) {
                   Navigator.pop(context);
                   Navigator.pop(context);
+                  cubit.refreshInfo();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Deleted Ad Successfully')),
+                    SnackBar(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        content: Text('Deleted Ad Successfully')),
                   );
                 }
                 if (state is AdErrorState) {
@@ -77,9 +80,9 @@ class MyAdsScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const AddAdsScreen()),
-                      ).then((value){
-                        if(value != null ){
-                          cubit.refreshCurrentAds;
+                      ).then((value) {
+                        if (value != null) {
+                          cubit.refreshInfo();
                         }
                       });
                     },

@@ -29,7 +29,6 @@ class AddAdsScreen extends StatelessWidget {
             body: BlocListener<AddAdsCubit, AddAdsState>(
               listener: (context, state) {
                 if (state is LoadingState) {
-                  Navigator.pop(context);
                   showDialog(
                       context: context,
                       barrierDismissible: false,
@@ -39,12 +38,15 @@ class AddAdsScreen extends StatelessWidget {
                               height: 30, 'assets/json/loading.json')));
                 }
                 if (state is SuccessState) {
+                  Navigator.pop(context, true);
+                  Navigator.pop(context, true);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       backgroundColor: Theme.of(context).primaryColor,
                       content: const Text('Successfully Added your ad!')));
                 }
                 if (state is ErrorState) {
                   Navigator.pop(context);
+
                   showDialog(
                       context: context,
                       builder: (context) {
@@ -390,7 +392,6 @@ class AddAdsScreen extends StatelessWidget {
                                 );
                               }
                               await cubit.addAds();
-                              Navigator.pop(context, true);
                               // ScaffoldMessenger.of(context).showSnackBar(
                               //     SnackBar(
                               //         backgroundColor:
