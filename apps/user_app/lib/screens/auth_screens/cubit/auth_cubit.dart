@@ -98,4 +98,19 @@ class AuthCubit extends Cubit<AuthStatee> {
     }
   }
 
+  resendOtp({String? email}) async {
+    emit(LoadingState());
+    try {
+      await supabase.auth.signInWithOtp(
+          email: loginController.text.isEmpty ? email : loginController.text);
+
+      emit(ReSendOtpSuccessState());
+    } on AuthException catch (e) {
+      emit(ErrorState(msg: e.message));
+    } on PostgrestException catch (e) {
+      emit(ErrorState(msg: e.message));
+    } catch (e) {
+      emit(ErrorState(msg: e.toString()));
+    }
+  }
 }

@@ -26,8 +26,8 @@ class VerifyScreen extends StatelessWidget {
                   barrierDismissible: false,
                   builder: (context) => AlertDialog(
                       backgroundColor: Colors.transparent,
-                      content: Lottie.asset('assets/json/loading.json',
-                          width: 30)));
+                      content:
+                          Lottie.asset('assets/json/loading.json', width: 30)));
             }
             if (state is SuccessState) {
               Navigator.push(
@@ -42,6 +42,9 @@ class VerifyScreen extends StatelessWidget {
                   builder: (context) {
                     return CustemErrorDialog(msg: (state.msg));
                   });
+            }
+            if (state is ReSendOtpSuccessState) {
+              Navigator.pop(context);
             }
           },
           child: Scaffold(
@@ -122,7 +125,9 @@ class VerifyScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.center,
                           child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                cubit.resendOtp(email: email);
+                              },
                               child: Text("Resend OTP",
                                       style: Theme.of(context)
                                           .textTheme

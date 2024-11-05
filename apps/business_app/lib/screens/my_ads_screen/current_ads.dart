@@ -57,16 +57,14 @@ class CurrentAdsTap extends StatelessWidget {
                                   context: context,
                                   builder: (context) {
                                     return CustemAlertDialog(
-                                      title:
-                                          'Are You Sure You Want To Delete This Ad?',
-                                      msg:
-                                          'This will permanently delete the ad.',
-                                      onPressed: () {
-                                        cubit.deleteAd(ad['id']);
-                                      },
-                                      buttonLable: 'Delete Ad',
-                                      cancelLable: 'Cancel Button'.tr(),
-                                    );
+                                        title:
+                                            'Are You Sure You Want To Delete This Ad?',
+                                        msg:
+                                            'This will permanently delete the ad.',
+                                        onPressed: () {
+                                          cubit.deleteAd(ad['id']);
+                                        },
+                                        buttonLable: 'Delete Ad', cancelLable: 'Cancel Button'.tr(),);
                                   });
                             },
                             offerType: ad['offer_type'],

@@ -22,7 +22,7 @@ class MyAdsScreen extends StatelessWidget {
         return DefaultTabController(
           length: 2,
           child: Scaffold(
-            appBar: const CustomAppBar(
+            appBar:  CustomAppBar(
               height: 100,
               title: "My Ads".tr(),
               bottom: MyAdsTabBar(),

@@ -9,6 +9,8 @@ final class LoadingState extends AuthStatee {}
 
 final class SuccessState extends AuthStatee {}
 
+final class ReSendOtpSuccessState extends AuthStatee {}
+
 final class ErrorState extends AuthStatee {
   final String msg;
   ErrorState({required this.msg});

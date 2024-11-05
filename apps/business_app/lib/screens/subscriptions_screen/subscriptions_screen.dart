@@ -494,7 +494,7 @@ class SubscriptionsScreen extends StatelessWidget {
                                                                                 'By confirming, your free ${bloc.planType} subscription will begin on ${currentDate.day}/${currentDate.month}/${currentDate.year} and last until ${datePlus30Days.day}/${datePlus30Days.month}/${datePlus30Days.year}.',
                                                                             onPressed:
                                                                                 () {
-                                                                              bloc.add(confirmSubscription(isFreeTrial: true, start: currentDate, end: datePlus30Days));
+                                                                              bloc.add(ConfirmSubscription(isFreeTrial: true, start: currentDate, end: datePlus30Days));
                                                                             },
                                                                             buttonLable:
                                                                                 'Confirm button'.tr(),

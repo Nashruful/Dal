@@ -35,7 +35,7 @@ class PaymentConfirmationScreen extends StatelessWidget {
                   startDate: currentDate,
                   endDate: datePlus30Days,
                   paymentFunc: () {
-                    bloc.add(confirmSubscription(
+                    bloc.add(ConfirmSubscription(
                         isFreeTrial: false,
                         start: currentDate,
                         end: datePlus30Days));

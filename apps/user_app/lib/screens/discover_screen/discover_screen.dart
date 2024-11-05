@@ -18,15 +18,13 @@ class DiscoverScreen extends StatelessWidget {
       child: Builder(builder: (context) {
         final bloc = context.read<DiscoverBloc>();
         try {
-          const LocationSettings locationSettings = LocationSettings(
+          LocationSettings locationSettings = const LocationSettings(
               distanceFilter: 100, accuracy: LocationAccuracy.high);
           bloc.positionStream =
               Geolocator.getPositionStream(locationSettings: locationSettings)
                   .listen((Position position) {
-            // ignore: use_build_context_synchronously
             bloc.add(LoadScreenEvent(position: position, context: context));
             bloc.add(
-                // ignore: use_build_context_synchronously
                 SendNotificationEvent(position: position, context: context));
           });
         } catch (e) {
@@ -140,7 +138,7 @@ class DiscoverScreen extends StatelessWidget {
                                 ),
                                 CustomText(
                                     text: "Where to?",
-                                    color: AppColors().grey,
+                                    color: AppColors().black1,
                                     fontSize: 16)
                               ],
                             ),

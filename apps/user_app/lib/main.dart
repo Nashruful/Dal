@@ -13,21 +13,19 @@ import 'package:user_app/setup/setup.dart';
 import 'package:lifecycle/lifecycle.dart';
 import 'package:flutter_background/flutter_background.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await SupabaseConfigration.connectSupabase();
   await setup();
 
-  await FlutterBackground.initialize(
-    androidConfig: const FlutterBackgroundAndroidConfig(
-      notificationTitle: "App is running in the background",
-      notificationText: "Location tracking is active",
-      notificationIcon: AndroidResource(name: 'ic_launcher', defType: 'mipmap'),
-    ),
-  );
+  // await FlutterBackground.initialize(
+  //   androidConfig: const FlutterBackgroundAndroidConfig(
+  //     notificationTitle: "App is running in the background",
+  //     notificationText: "Location tracking is active",
+  //     notificationIcon: AndroidResource(name: 'ic_launcher', defType: 'mipmap'),
+  //   ),
+  // );
 
   runApp(
     DevicePreview(
@@ -45,7 +43,6 @@ void main() async {
 
   OneSignal.Notifications.requestPermission(true);
 }
-
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -75,13 +72,26 @@ class _MainAppState extends State<MainApp> with LifecycleAware, LifecycleMixin {
                 onLifecycleEvent: (LifecycleEvent event) async {
                   if (event == LifecycleEvent.invisible) {
                     //when user stop using app
-                    print(event);
+                    await getIt
+                        .get<DataLayer>()
+                        .getAllAds(); //update live ads list
                     for (var adId in getIt.get<DataLayer>().impressions.keys) {
-                      await getIt.get<DataLayer>().supabase.from("ad").update({
-                        "views": getIt.get<DataLayer>().impressions[adId],
-                        "clicks": getIt.get<DataLayer>().clicks[adId] ?? 0,
-                      }).eq('id', adId);
+                      print('clicks in list');
+                      print(getIt.get<DataLayer>().clicks[adId]);
+
+                      await getIt
+                          .get<DataLayer>()
+                          .supabase
+                          .rpc('increment_ad_views', params: {
+                        'ad_id': adId,
+                        'increment_views_by':
+                            getIt.get<DataLayer>().impressions[adId],
+                        'increment_clicks_by':
+                            getIt.get<DataLayer>().clicks[adId] ?? 0
+                      });
                     }
+                    getIt.get<DataLayer>().impressions = {}; //clear map
+                    getIt.get<DataLayer>().clicks = {}; //clear map
                   }
                 },
                 child: isLogin.isLoggedIn()
