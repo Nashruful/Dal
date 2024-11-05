@@ -105,7 +105,6 @@ class ProfileScreen extends StatelessWidget {
                             },
                             value: bloc.langValue,
                             text: 'Language'.tr(),
-                            hintlabel: 'Select a language'.tr(),
                             label1: 'English'.tr(),
                             label2: 'Arabic'.tr(),
                           );

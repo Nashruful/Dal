@@ -20,6 +20,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
       'https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/user%20profile%20images/images/defualt_profile_img.png?t=2024-11-03T13%3A11%3A13.024Z';
 
   ProfileBlocBloc() : super(ProfileBlocInitial()) {
+    langValue = getIt.get<DataLayer>().box.read('language') ?? 0;
     on<ProfileBlocEvent>((event, emit) {});
 
     //add or remove filter
@@ -32,6 +33,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     //change lang
     on<ChangeLangEvent>((event, emit) {
       langValue = event.value;
+      getIt.get<DataLayer>().box.write('language', langValue);
       emit(ChangedlangState());
     });
 

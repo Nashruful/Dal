@@ -329,7 +329,7 @@ class AddAdsScreen extends StatelessWidget {
                       // ---------------- button --------------
                       CustomElevatedButton(
                         backgroundColor: AppColors().pink,
-                        onPressed: () {
+                        onPressed: () async{
                           if (formKey.currentState?.validate() == true) {
                             cubit.addTypeController;
                             cubit.branchLocationController;
@@ -352,12 +352,12 @@ class AddAdsScreen extends StatelessWidget {
                                         'Please select an ad image')),
                               );
                             }
-                            cubit.addAds();
-                            
+                            await cubit.addAds();
+                            Navigator.pop(context, true);
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 backgroundColor: Theme.of(context).primaryColor,
                                 content: const Text(
-                                    'Successefully Added your ad!')));
+                                    'Successfully Added your ad!')));
                           }
                         },
                         child: Text(

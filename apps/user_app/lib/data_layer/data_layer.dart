@@ -59,8 +59,10 @@ class DataLayer {
         .select("*,business(*)"); // select branches to show them on map
 
     liveAds = allAds.where((ad) {
+      DateTime startDate = DateTime.parse(ad.startdate!);
       DateTime endDate = DateTime.parse(ad.enddate!);
-      return endDate.isAfter(DateTime.now());
+      DateTime now = DateTime.now();
+      return now.isAfter(startDate) && now.isBefore(endDate);
     }).toList();
 
     // for (var element in allAds) {
