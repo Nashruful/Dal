@@ -77,6 +77,7 @@ class AddAdsCubit extends Cubit<AddAdsState> {
 
   // add ads method
   Future<void> addAds() async {
+    emit(LoadingState());
     try {
       // format date as in supabase
       final String startDateFormat = startDate!.toIso8601String();
@@ -119,6 +120,7 @@ class AddAdsCubit extends Cubit<AddAdsState> {
       } else {
         print('failed to add');
       }
+      emit(SuccessState());
     } on AuthException catch (e) {
       if (!isClosed) {
         emit(ErrorState(msg: e.message));

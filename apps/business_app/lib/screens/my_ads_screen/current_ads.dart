@@ -52,21 +52,6 @@ class CurrentAdsTap extends StatelessWidget {
                             iconImage: 'assets/svg/coffee.svg',
                             description: ad['description'] ?? "---",
                             remainingDay: cubit.getRemainingTime(ad['enddate']),
-                            onPressed: () async {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return CustemAlertDialog(
-                                        title:
-                                            'Are You Sure You Want To Delete This Ad?',
-                                        msg:
-                                            'This will permanently delete the ad.',
-                                        onPressed: () {
-                                          cubit.deleteAd(ad['id']);
-                                        },
-                                        buttonLable: 'Delete Ad', cancelLable: 'Cancel Button'.tr(),);
-                                  });
-                            },
                             offerType: ad['offer_type'],
                             viewLocation: 'View Location'.tr(),
                             buttonLable: 'Delete Ad'.tr(),
@@ -75,7 +60,21 @@ class CurrentAdsTap extends StatelessWidget {
                             clicks: ad['clicks'],
                             button: ElevatedButton(
                                 onPressed: () {
-                                  cubit.deleteAd(ad['id']);
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return CustemAlertDialog(
+                                          title:
+                                              'Are You Sure You Want To Delete This Ad?',
+                                          msg:
+                                              'This will permanently delete the ad.',
+                                          onPressed: () {
+                                            cubit.deleteAd(ad['id']);
+                                          },
+                                          buttonLable: 'Confirm',
+                                          cancelLable: 'Cancel Button'.tr(),
+                                        );
+                                      });
                                 },
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xff8CBFAE)),

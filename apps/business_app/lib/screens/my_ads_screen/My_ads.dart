@@ -18,7 +18,6 @@ class MyAdsScreen extends StatelessWidget {
       create: (context) => MyAdsCubit(),
       child: Builder(builder: (context) {
         final cubit = context.read<MyAdsCubit>();
-        final cubit = context.read<MyAdsCubit>();
         return DefaultTabController(
           length: 2,
           child: Scaffold(
@@ -70,9 +69,6 @@ class MyAdsScreen extends StatelessWidget {
             floatingActionButton: (cubit.planEndDate.isEmpty ||
                     DateTime.tryParse(cubit.planEndDate)
                             ?.isBefore(cubit.currentDate) ==
-            floatingActionButton: (cubit.planEndDate.isEmpty ||
-                    DateTime.tryParse(cubit.planEndDate)
-                            ?.isBefore(cubit.currentDate) ==
                         true)
                 ? null // Do not show the button
                 : FloatingActionButton(
@@ -81,10 +77,13 @@ class MyAdsScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const AddAdsScreen()),
-                      );
+                      ).then((value){
+                        if(value != null ){
+                          cubit.refreshCurrentAds;
+                        }
+                      });
                     },
                     backgroundColor: AppColors().pink,
-                    shape: const CircleBorder(),
                     shape: const CircleBorder(),
                     child: Icon(
                       Icons.add,

@@ -11,6 +11,7 @@ class MyAdsCubit extends Cubit<MyAdsState> {
   String planEndDate =
       getIt.get<DataLayer>().latestSubscription['end_date'] ?? '';
   DateTime currentDate = DateTime.now();
+  List refreshCurrentAds =[];
 
   //get current ads only
   List currentAds = getIt.get<DataLayer>().allbusinessAds.where((ad) {
@@ -34,6 +35,7 @@ class MyAdsCubit extends Cubit<MyAdsState> {
 
   refreshInfo() async {
     await getIt.get<DataLayer>().getBusinessInfo(); //refresh info list
+    refreshCurrentAds = currentAds;
   }
 
   String getRemainingTime(String dateString) {
