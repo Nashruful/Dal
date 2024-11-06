@@ -223,10 +223,10 @@ We welcome contributions! If you have ideas or bug fixes, please submit a pull r
 
 Dal empowers local businesses to effectively advertise to consumers nearby. With its proximity-based ads, it drives community engagement and supports local economies. We’re excited to see businesses thrive using Dal!
 
----
-Team Members
-Abdulaziz Alruwaily
-Amjad Elahi
-Linda Almakramy
-Nouf Alqahtani
+### Team Members
+
+- [Abdulaziz Alruwaily](https://github.com/Nashruful)
+- [Amjad Elahi](https://github.com/Amjad-elahi)
+- [Linda Almakramy](https://github.com/lindamakk)
+- [Nouf Alqahtani](https://github.com/noufAlqahtani1)
 
