@@ -65,9 +65,6 @@ class DataLayer {
       return now.isAfter(startDate) && now.isBefore(endDate); // --- get ads that are between the start and end dates
     }).toList();
 
-    // for (var element in allAds) {
-    //   allbusinessAds.add(element);
-    // }
   }
 
   String getRemainingTime(String dateString) {

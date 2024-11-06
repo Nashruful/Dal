@@ -1,5 +1,5 @@
 import 'package:business_app/data_layer/data_layer.dart';
-import 'package:business_app/payment/payment_confirmation_screen.dart';
+import 'package:business_app/screens/payment_screen/payment_confirmation_screen.dart';
 import 'package:business_app/screens/subscriptions_screen/bloc/subscriptions_screen_bloc_bloc.dart';
 import 'package:business_app/setup/setup.dart';
 import 'package:components/component/custom_app_bar/custom_app_bar.dart';
@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
-import 'package:multi_dropdown/multi_dropdown.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
 
 class SubscriptionsScreen extends StatelessWidget {
@@ -30,9 +29,8 @@ class SubscriptionsScreen extends StatelessWidget {
             appBar: const CustomAppBar(
                 title: 'Subscription Plan', automaticallyImplyLeading: true),
             body: BlocListener<SubscriptionBloc, SubscriptionState>(
-              listener: (BuildContext context, state) {
-                if (state is LoadingState) {
-                  Navigator.pop(context);
+              listener: (context, state) {
+                if (state is LoadingSubscriptionState) {
                   showDialog(
                       context: context,
                       barrierDismissible: false,
@@ -46,7 +44,11 @@ class SubscriptionsScreen extends StatelessWidget {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       backgroundColor: Theme.of(context).primaryColor,
-                      content: const Text('Successefully Activatied Plan')));
+                      content: const Text('Successfully Activated Plan')));
+                }
+                if (state is ConfirmedState) {
+                  Navigator.pop(context);
+                  Navigator.pop(context, true);
                 }
                 if (state is SubscriptionErrorState) {
                   Navigator.pop(context);
@@ -102,7 +104,7 @@ class SubscriptionsScreen extends StatelessWidget {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       CustomSubscriptionsCard(
-                                        duration: 'subscription one month'.tr(),
+                                        duration: 'Basic subscription'.tr(),
                                         price: 100,
                                         plan: 'Basic'.tr(),
                                         selected: bloc.selectedPlan[0]!,
@@ -112,8 +114,7 @@ class SubscriptionsScreen extends StatelessWidget {
                                         currency: 'SAR'.tr(),
                                       ),
                                       CustomSubscriptionsCard(
-                                          duration:
-                                              'subscription two month'.tr(),
+                                          duration: 'Premium Subscription'.tr(),
                                           price: 250,
                                           plan: 'Premium'.tr(),
                                           selected: bloc.selectedPlan[1]!,
@@ -123,7 +124,7 @@ class SubscriptionsScreen extends StatelessWidget {
                                           currency: 'SAR'.tr()),
                                       CustomSubscriptionsCard(
                                           duration:
-                                              'subscription three month'.tr(),
+                                              'Enterprise subscription'.tr(),
                                           price: 500,
                                           plan: 'Enterprise'.tr(),
                                           selected: bloc.selectedPlan[2]!,
@@ -182,10 +183,10 @@ class SubscriptionsScreen extends StatelessWidget {
                                               bloc.planType == 'Basic'
                                                   ? 'Select exactly one branch'
                                                   : bloc.planType == 'Premium'
-                                                      ? 'select at most 5 branches'
+                                                      ? 'Select at most 5 branches'
                                                       : bloc.planType ==
                                                               'Enterprise'
-                                                          ? 'select unlimited branches'
+                                                          ? 'Select unlimited branches'
                                                           : '',
                                               style: Theme.of(context)
                                                   .textTheme
@@ -274,17 +275,20 @@ class SubscriptionsScreen extends StatelessWidget {
                                                   if (formKey.currentState
                                                           ?.validate() ==
                                                       true) {
-                                                    print("object");
                                                     bloc.basicPlanController;
                                                     bloc.enterpriseController;
                                                     bloc.standardPlanController;
                                                     Navigator.of(context).push(
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                const PaymentConfirmationScreen()));
-                                                    bloc.getBranchType();
-                                                  } else {
-                                                    print("error");
+                                                                PaymentConfirmationScreen(
+                                                                  price: bloc
+                                                                      .planPrice,
+                                                                  type: bloc
+                                                                      .planType,
+                                                                  branch: bloc
+                                                                      .selectedBranch,
+                                                                )));
                                                   }
                                                 },
                                                 backgroundColor:
@@ -494,7 +498,7 @@ class SubscriptionsScreen extends StatelessWidget {
                                                                                 'By confirming, your free ${bloc.planType} subscription will begin on ${currentDate.day}/${currentDate.month}/${currentDate.year} and last until ${datePlus30Days.day}/${datePlus30Days.month}/${datePlus30Days.year}.',
                                                                             onPressed:
                                                                                 () {
-                                                                              bloc.add(ConfirmSubscription(isFreeTrial: true, start: currentDate, end: datePlus30Days));
+                                                                              bloc.add(ConfirmSubscription(isFreeTrial: true, start: currentDate, end: datePlus30Days, price: 0, planType: 'Basic', selectedBranch: bloc.selectedBranch));
                                                                             },
                                                                             buttonLable:
                                                                                 'Confirm button'.tr(),

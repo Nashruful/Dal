@@ -6,8 +6,9 @@ import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/setup/setup.dart';
 part 'profile_bloc_event.dart';
 part 'profile_bloc_state.dart';
-
+//
 class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
+  
   final supabase = getIt.get<DataLayer>().supabase;
   //save it in storage
   Map<String, dynamic> categories = getIt.get<DataLayer>().categories;

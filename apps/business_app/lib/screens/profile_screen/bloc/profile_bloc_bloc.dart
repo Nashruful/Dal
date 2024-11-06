@@ -33,11 +33,10 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
 
     //Refresh
     on<RefreshScreenEvent>((event, emit) async {
-      print('refresh event');
       await getIt.get<DataLayer>().getBusinessInfo();
       businessInfo = getIt.get<DataLayer>().currentBusinessInfo;
       plan = getIt.get<DataLayer>().latestSubscription;
-      print(plan);
+      planEndDate = getIt.get<DataLayer>().latestSubscription['end_date'] ?? '';
       emit(SuccessState());
     });
   }
@@ -45,55 +44,13 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
   String getPlanType(Map currentPlan) {
     final String planType;
     if (plan['subscription_type'] == 'Basic') {
-      return 'Basic'.tr();
+      return 'Basic';
     } else if (plan['subscription_type'] == 'Premium') {
-      return 'Basic'.tr();
+      return 'Premium';
     } else if (plan['subscription_type'] == 'Enterprise') {
-      return 'Basic'.tr();
+      return 'Enterprise';
     } else {
-      planType = 'No Subscriptio';
-    }
-
-    return planType;
-  }
-
-  String getPlanDesc(Map currentPlan) {
-    final String planDesc;
-    if (plan['subscription_type'] == 'Basic') {
-      planDesc = 'Basic description'.tr();
-    } else if (plan['subscription_type'] == 'Premium') {
-      planDesc = 'Premium description'.tr();
-    } else if (plan['subscription_type'] == 'Enterprise') {
-      planDesc = 'Enterprise description'.tr();
-    } else {
-      planDesc = 'No Data';
-    }
-
-    return planDesc;
-  }
-
-  int getRemainingDays(DateTime planEndDate) {
-    DateTime currentDate = DateTime.now();
-    Duration difference = planEndDate.difference(currentDate);
-
-    int days = difference.inDays;
-
-    if (days < 0) {
-      days = 0;
-    }
-    return days;
-  }
-
-  String getPlanType(Map currentPlan) {
-    final String planType;
-    if (plan['subscription_type'] == 'Basic') {
-      return 'Basic'.tr();
-    } else if (plan['subscription_type'] == 'Premium') {
-      return 'Basic'.tr();
-    } else if (plan['subscription_type'] == 'Enterprise') {
-      return 'Basic'.tr();
-    } else {
-      planType = 'No Subscriptio';
+      planType = 'No Subscription';
     }
 
     return planType;

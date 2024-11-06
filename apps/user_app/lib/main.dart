@@ -76,8 +76,6 @@ class _MainAppState extends State<MainApp> with LifecycleAware, LifecycleMixin {
                         .get<DataLayer>()
                         .getAllAds(); //update live ads list
                     for (var adId in getIt.get<DataLayer>().impressions.keys) {
-                      print('clicks in list');
-                      print(getIt.get<DataLayer>().clicks[adId]);
 
                       await getIt
                           .get<DataLayer>()

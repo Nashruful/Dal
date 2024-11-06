@@ -392,12 +392,6 @@ class AddAdsScreen extends StatelessWidget {
                                 );
                               }
                               await cubit.addAds();
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //     SnackBar(
-                              //         backgroundColor:
-                              //             Theme.of(context).primaryColor,
-                              //         content: const Text(
-                              //             'Successefully Added your ad!')));
                             }
                           },
                           child: Text(

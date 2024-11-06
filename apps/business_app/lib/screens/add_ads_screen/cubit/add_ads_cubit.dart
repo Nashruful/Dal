@@ -115,11 +115,8 @@ class AddAdsCubit extends Cubit<AddAdsState> {
               .from("branch")
               .update({"selected": true}).eq("id", branchId);
 
-          print('ads add successfully');
         }
-      } else {
-        print('failed to add');
-      }
+      } 
       getIt.get<DataLayer>().getBusinessInfo();
       emit(SuccessState());
     } on AuthException catch (e) {

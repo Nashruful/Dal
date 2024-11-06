@@ -9,7 +9,7 @@ import 'package:user_app/screens/auth_screens/login_screen.dart';
 import 'package:user_app/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:user_app/screens/profile_screen/bloc/profile_bloc_bloc.dart';
 import 'package:user_app/setup/setup.dart';
-
+//
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 

@@ -51,7 +51,6 @@ class PastAdsTab extends StatelessWidget {
                                         .get<DataLayer>()
                                         .currentBusinessInfo[0]['name'] ??
                                     "---",
-                                // iconImage: 'assets/svg/coffee.svg',
                                 description: ad['description'] ?? "---",
                                 remainingDay:
                                     cubit.getRemainingTime(ad['enddate']),
