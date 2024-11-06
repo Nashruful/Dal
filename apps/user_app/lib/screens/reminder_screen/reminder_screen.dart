@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:impression/impression.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/screens/home_screen/cubit/home_cubit.dart';
 import 'package:user_app/setup/setup.dart';
@@ -72,7 +73,31 @@ class ReminderScreen extends StatelessWidget {
                                               offerType: item.offerType!,
                                               viewLocation:
                                                   'View Location'.tr(),
-                                              locationOnPressed: () {
+                                              locationOnPressed: () async {
+                                                final availableMaps =
+                                                    await MapLauncher
+                                                        .installedMaps;
+
+                                                if (availableMaps.isNotEmpty) {
+                                                  await availableMaps.first
+                                                      .showMarker(
+                                                    coords: Coords(
+                                                        item.branch!.latitude!,
+                                                        item.branch!
+                                                            .longitude!),
+                                                    title: item.branch!
+                                                        .business!.name!,
+                                                  );
+                                                } else {
+                                                  // Handle the case where no maps are installed
+
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    const SnackBar(
+                                                        content: Text(
+                                                            'No maps are installed on this device.')),
+                                                  );
+                                                }
                                                 //
                                               },
                                               button: context

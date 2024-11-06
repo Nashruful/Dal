@@ -24,7 +24,7 @@ class CategoryScreen extends StatelessWidget {
             ? Stack(
                 children: [
                   FlutterMap(
-                    options: MapOptions(
+                    options: MapOptions(initialZoom: 11.8,
                         initialCenter: LatLng(categoryList[0].branch!.latitude!,
                             categoryList[0].branch!.longitude!)),
                     children: [
@@ -150,7 +150,7 @@ class CategoryScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Something went wrong.."),
+                    const Text("No data available for this category.."),
                     const SizedBox(
                       height: 20,
                     ),

@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:lottie/lottie.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
 
 class AddAdsScreen extends StatelessWidget {

@@ -25,6 +25,7 @@ class MyAdsScreen extends StatelessWidget {
               height: 100,
               title: "My Ads".tr(),
               bottom: const MyAdsTabBar(),
+              bottom: const MyAdsTabBar(),
               automaticallyImplyLeading: false,
             ),
             body: BlocConsumer<MyAdsCubit, MyAdsState>(

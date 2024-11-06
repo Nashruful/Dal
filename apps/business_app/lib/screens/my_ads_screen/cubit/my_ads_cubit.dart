@@ -6,11 +6,13 @@ import 'package:meta/meta.dart';
 
 part 'my_ads_state.dart';
 //
+//
 class MyAdsCubit extends Cubit<MyAdsState> {
   MyAdsCubit() : super(MyAdsInitial());
   String planEndDate =
       getIt.get<DataLayer>().latestSubscription['end_date'] ?? '';
   DateTime currentDate = DateTime.now();
+  List refreshCurrentAds =[];
 
   //get current ads only
   List currentAds = getIt.get<DataLayer>().allbusinessAds.where((ad) {

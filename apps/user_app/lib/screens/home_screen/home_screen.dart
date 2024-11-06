@@ -434,7 +434,8 @@ class HomeScreen extends StatelessWidget {
                                               context: context,
                                               builder: (context) {
                                                 return CustomBottomSheet(
-                                                  image: e.bannerimg!,
+                                                  image: e.bannerimg ??
+                                                      "https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/offer%20images/DalLogo.png",
                                                   companyName: e.branch!
                                                           .business!.name ??
                                                       "---",

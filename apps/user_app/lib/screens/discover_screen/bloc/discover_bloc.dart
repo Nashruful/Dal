@@ -21,7 +21,6 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
   double areaDistance = 1000;
 
   Position? positionn;
-  StreamSubscription<Position>? positionStream;
   List<Marker> filteredMarkers = [];
 
   final dio = Dio();
@@ -31,7 +30,6 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
       emit(ErrorState(msg: event.msg));
     });
 
-    
     on<SendNotificationEvent>((event, emit) async {
       try {
         final Map storedTimes =
@@ -46,8 +44,10 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
             location.branch!.latitude!,
             location.branch!.longitude!,
           );
+          final currentCategory = location.category!.toString();
 
-          if (distance <= 1000) {
+          if (distance <= 1000 &&
+              getIt.get<DataLayer>().categories[currentCategory] == true) {
             String branchId = location.branch!.id!; // store branches ID
             DateTime now = DateTime.now();
             DateTime? lastNotificationTime =
@@ -62,12 +62,17 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
                     "app_id": "ebdec5c2-30a4-447d-9577-a1c13b6d553e",
                     "contents": {
                       "en":
-                          "Check out ${location.branch!.business!.name!} offer nearby!",
-                      "ar": "لا يطوفك عرض ${location.branch!.business!.name!}!"
+                          "Check out ${location.branch!.business!.name!} offer nearby! 📣",
+                      "ar":
+                          "لا يطوفك عرض ${location.branch!.business!.name!}! 📣"
                     },
                     "include_external_user_ids": [
                       getIt.get<DataLayer>().supabase.auth.currentUser!.id
                     ],
+                    "data": {
+                      "page": "/offer_details",
+                      "offer_id": location.id!.toString(),
+                    },
                   },
                   options: Options(headers: {
                     "Authorization":
@@ -99,7 +104,6 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
     });
     on<LoadScreenEvent>((event, emit) async {
       emit(LoadingState());
-      print(event.position?.latitude);
       try {
         positionn = event.position;
         areaDistance = buttonClicked ? 1000 : 500000000;
@@ -305,7 +309,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
   }
   @override
   Future<void> close() {
-    positionStream?.cancel();
+    getIt.get<DataLayer>().locationBgStream();
     return super.close();
   }
 }

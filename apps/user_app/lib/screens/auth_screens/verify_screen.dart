@@ -45,6 +45,7 @@ class VerifyScreen extends StatelessWidget {
             }
             if (state is ReSendOtpSuccessState) {
               Navigator.pop(context);
+              cubit.otpController.clear();
             }
           },
           child: Scaffold(
