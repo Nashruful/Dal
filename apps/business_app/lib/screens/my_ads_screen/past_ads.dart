@@ -54,37 +54,31 @@ class PastAdsTab extends StatelessWidget {
                                 description: ad['description'] ?? "---",
                                 remainingDay:
                                     cubit.getRemainingTime(ad['enddate']),
-                                onPressed: () async {
-                                  showDialog(
+                                
+                                views: ad['views'],
+                                clicks: ad['clicks'],
+                                offerType: ad['offer_type'],
+                                button: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors().green),
+                                  onPressed: () {showDialog(
                                       context: context,
                                       builder: (context) {
                                         return CustemAlertDialog(
                                           title:
-                                              'Are You Sure You Want To Delete This Ad?',
+                                              'Delete Ads title'.tr(),
                                           msg:
-                                              'This will permanently delete the ad.',
+                                              'Delete Ads subtitle'.tr(),
                                           onPressed: () {
                                             cubit.deleteAd(ad['id']);
                                           },
-                                          buttonLable: 'Delete Ad'.tr(),
+                                          buttonLable: 'Confirm button'.tr(),
                                           cancelLable: 'Cancel Button'.tr(),
                                         );
                                       });
-                                },
-                                views: ad['views'],
-                                clicks: ad['clicks'],
-                                offerType: ad['offer_type'],
-                                viewLocation: 'location',
-                                buttonLable: 'Delete Ad',
-                                locationOnPressed: () {},
-                                button: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColors().green),
-                                  onPressed: () {
-                                    cubit.deleteAd(ad['id']);
                                   },
                                   child: Text(
-                                    'Delete Ad',
+                                    'Delete Ad'.tr(),
                                     style:
                                         Theme.of(context).textTheme.labelSmall,
                                   ),

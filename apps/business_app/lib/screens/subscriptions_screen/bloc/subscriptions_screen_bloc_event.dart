@@ -17,5 +17,13 @@ final class ConfirmSubscription extends SubscriptionEvent {
   final String planType;
   final List selectedBranch;
 
-  ConfirmSubscription({required this.isFreeTrial,required this.start, required this.end, required this.price, required this.planType, required this.selectedBranch});
+  ConfirmSubscription(
+      {required this.isFreeTrial,
+      required this.start,
+      required this.end,
+      required this.price,
+      required this.planType,
+      required this.selectedBranch});
 }
+
+final class ErrorEvent extends SubscriptionEvent {}

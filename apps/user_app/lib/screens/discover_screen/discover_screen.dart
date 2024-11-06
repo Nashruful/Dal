@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:components/components.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -142,7 +143,7 @@ class DiscoverScreen extends StatelessWidget {
                                   width: 12,
                                 ),
                                 CustomText(
-                                    text: "Where to?",
+                                    text: "Where to?".tr(),
                                     color: AppColors().black1,
                                     fontSize: 16)
                               ],

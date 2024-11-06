@@ -25,7 +25,6 @@ class MyAdsScreen extends StatelessWidget {
               height: 100,
               title: "My Ads".tr(),
               bottom: const MyAdsTabBar(),
-              bottom: const MyAdsTabBar(),
               automaticallyImplyLeading: false,
             ),
             body: BlocConsumer<MyAdsCubit, MyAdsState>(
@@ -48,7 +47,7 @@ class MyAdsScreen extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                         backgroundColor: Theme.of(context).primaryColor,
-                        content: Text('Deleted Ad Successfully')),
+                        content: Text('Deleted Ad Successfully'.tr())),
                   );
                 }
                 if (state is AdErrorState) {

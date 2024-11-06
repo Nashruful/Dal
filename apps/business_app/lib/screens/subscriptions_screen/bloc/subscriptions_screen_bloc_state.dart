@@ -18,4 +18,7 @@ final class ErrorState extends SubscriptionState {
   ErrorState({required this.msg});
 }
 
-final class SubscriptionErrorState extends SubscriptionState {}
+final class SubscriptionErrorState extends SubscriptionState {
+  final String msg;
+  SubscriptionErrorState({required this.msg});
+}

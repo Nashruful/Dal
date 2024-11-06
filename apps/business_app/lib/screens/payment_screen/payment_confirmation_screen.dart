@@ -2,6 +2,7 @@ import 'package:business_app/screens/payment_screen/payment_screen.dart';
 import 'package:business_app/screens/subscriptions_screen/bloc/subscriptions_screen_bloc_bloc.dart';
 import 'package:components/component/custom_app_bar/custom_app_bar.dart';
 import 'package:components/component/custom_dialog/custom_erroe_msg.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -25,8 +26,9 @@ class PaymentConfirmationScreen extends StatelessWidget {
         DateTime currentDate = DateTime.now();
         DateTime datePlus30Days = currentDate.add(const Duration(days: 30));
         return Scaffold(
-          appBar: const CustomAppBar(
-              title: "Payment Confirmation", automaticallyImplyLeading: true),
+          appBar: CustomAppBar(
+              title: "Payment Confirmation".tr(),
+              automaticallyImplyLeading: true),
           body: BlocConsumer<SubscriptionBloc, SubscriptionState>(
             listener: (context, state) {
               if (state is LoadingSubscriptionState) {
@@ -43,7 +45,7 @@ class PaymentConfirmationScreen extends StatelessWidget {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Theme.of(context).primaryColor,
-                    content: const Text('Successfully Activated Plan')));
+                    content: Text('Successfully Activated Plan'.tr())));
               }
               if (state is ConfirmedState) {
                 Navigator.pop(context);
@@ -66,7 +68,15 @@ class PaymentConfirmationScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        "By confirming your payment, your ${bloc.planType} subscription will begin on ${currentDate.day}/${currentDate.month}/${currentDate.year} and last until ${datePlus30Days.day}/${datePlus30Days.month}/${datePlus30Days.year}.",
+                        "payment confirmation message".tr(namedArgs: {
+                          'planType': bloc.planType,
+                          'currentDay': currentDate.day.toString(),
+                          'currentMonth': currentDate.month.toString(),
+                          'currentYear': currentDate.year.toString(),
+                          'endDay': datePlus30Days.day.toString(),
+                          'endMonth': datePlus30Days.month.toString(),
+                          "endYear": datePlus30Days.year.toString()
+                        }),
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       const SizedBox(
@@ -85,6 +95,9 @@ class PaymentConfirmationScreen extends StatelessWidget {
                               price: price,
                               planType: type,
                               selectedBranch: branch));
+                        },
+                        errorFunc: () {
+                          bloc.add(ErrorEvent());
                         },
                       )
                     ],

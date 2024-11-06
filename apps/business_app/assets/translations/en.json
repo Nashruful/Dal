@@ -78,5 +78,21 @@
     "home card subtitle 1": "See how many clicks and views your ads are generating.",
     "home card subtitle 2": "Post your ads and get them in front of local audiences!",
     "Activated Your Free Trial?": "Activated Your Free Trial?",
-    "Cancel Button": "Cancel"
+    "Cancel Button": "Cancel",
+    "Delete Ads title":"Are You Sure You Want To Delete This Ad?",
+    "Delete Ads subtitle":"This will permanently delete the ad",
+    "Select a branch":"Select a branch",
+    "Select exactly one branch":"Select exactly one branch",
+    "Select at most 5 branches":"Select at most 5 branches",
+    "Select unlimited branches":"Select unlimited branches",
+    "Please select a branch":"Please select a branch",
+    "No Data":"No Data",
+    "No Subscription":"No Subscription",
+    "Payment Confirmation":"Payment Confirmation",
+    "Successfully Activated Plan":"Successfully Activated Plan",
+    "payment confirmation message": "By confirming your payment, your {planType} subscription will begin on {currentDay}/{currentMonth}/{currentYear} and last until {endDay}/{endMonth}/{endYear}.",
+    "Successfully Added your ad!":"Successfully Added your ad!",
+    "Please select a date":"Please select a date",
+    "Please select an ad image":"Please select an ad image",
+    "Deleted Ad Successfully":"Deleted Ad Successfully"
 }

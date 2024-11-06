@@ -19,10 +19,10 @@
     "SAR": "ريال",
     "Basic": "الخطة الأساسية",
     "Premium": "الخطة القياسية",
-    "Enterprise": "الخطة المميز",
+    "Enterprise": "الخطة المميزة",
     "Basic description": "انشر إعلاناتك للعملاء لمدة شهر في فرع واحد فقط، مع إمكانية الوصول إلى إحصائيات الإعلانات الأساسية",
     "Premium description": "انشر إعلاناتك للعملاء لمدة شهر في خمسة فروع فقط، مع إمكانية الوصول إلى إحصائيات الإعلانات الأساسية",
-    "Enterprise description":  "انشر إعلاناتك للعملاء لمدة شهر لعدد لا محدود من الفروع ، مع إمكانية الوصول إلى إحصائيات الإعلانات الأساسية",
+    "Enterprise description": "انشر إعلاناتك للعملاء لمدة شهر لعدد لا محدود من الفروع ، مع إمكانية الوصول إلى إحصائيات الإعلانات الأساسية",
     "free Trial button": "اشتراك مجاني",
     "choose Plan button": "اختر خطتك",
     "title card": "لاتفوت الفرصة",
@@ -78,5 +78,24 @@
     "home card subtitle 1": "شاهد عدد النقرات والمشاهدات التي تولدها إعلاناتك",
     "home card subtitle 2": "انشر إعلاناتك واعرضها على العملاء المستهدفين!",
     "Activated Your Free Trial?": "هل تريد تفعيل خطتك المجانية؟",
-    "Cancel Button": "الغاء"
+    "Cancel Button": "الغاء",
+    "Delete Ads title": "هل تريد فعلا حذف هذا الإعلان؟",
+    "Delete Ads subtitle": "سيتم حذف الإعلان بشكل دائم",
+    "Select a branch": "اختر الفرع",
+    "Select exactly one branch": "اختر فرع واحد فقط",
+    "Select at most 5 branches": "اختر خمسة فروع فقط",
+    "Select unlimited branches": "اختر عدد لامحدود من الفروع",
+    "Please select a branch": "فضلا اختر الفرع",
+    "No Data": "لا توجد بيانات",
+    "No Subscription": "لا توجد اي اشتراكات",
+    "Payment Confirmation": "بوابة الدفع الإلكترونية ",
+    "Successfully Activated Plan": "تم تفعيل الخطة بنجاح ",
+    "payment confirmation message": "بإتمام الدفع، سيبدأ اشتراك {planType} في {currentDay}/{currentMonth}/{currentYear} وسيستمر حتى {endDay}/{endMonth}/{endYear}.",
+    "Successfully Added your ad!":"تم اضافه الإعلان بنجاح",
+    "Please select a date":"فضلا اختر التاريخ",
+    "Please select an ad image":"Pفضلا اختر الصورة",
+    "Deleted Ad Successfully":"تم حذف الإعلان بنجاح"
+
+
+
 }

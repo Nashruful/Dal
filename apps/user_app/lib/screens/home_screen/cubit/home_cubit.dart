@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:components/component/theme/colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:meta/meta.dart';
@@ -35,7 +36,7 @@ class HomeCubit extends Cubit<HomeState> {
                 Icons.notifications_none_rounded,
                 color: AppColors().white1,
               ),
-              Text('Remind me',
+              Text('Remind me'.tr(),
                   style: TextStyle(
                     color: AppColors().white1,
                   )),
@@ -58,7 +59,7 @@ class HomeCubit extends Cubit<HomeState> {
               const SizedBox(
                 width: 10,
               ),
-              Text('Remove reminder',
+              Text('Remove reminder'.tr(),
                   style: TextStyle(
                     color: AppColors().white1,
                   )),
@@ -100,7 +101,7 @@ class HomeCubit extends Cubit<HomeState> {
             getIt.get<DataLayer>().diningCategory.add(element);
 
             break;
-          case "Supermarkets":
+          case "Grocery":
             getIt.get<DataLayer>().superMarketsCategory.add(element);
             break;
           case "Fashion":
@@ -152,7 +153,7 @@ class HomeCubit extends Cubit<HomeState> {
               getIt.get<DataLayer>().diningCategory.add(element);
 
               break;
-            case "Supermarkets":
+            case "Grocery":
               getIt.get<DataLayer>().superMarketsCategory.add(element);
               break;
             case "Fashion":

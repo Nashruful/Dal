@@ -262,22 +262,24 @@ class HomeScreen extends StatelessWidget {
                                       backgroundColor: AppColors().yellow,
                                       child: IconButton(
                                           onPressed: () {
-                                            planEndDate == '' ||
-                                                    DateTime.parse(planEndDate)
-                                                        .isBefore(currentDate)
-                                                ? () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const SubscriptionsScreen(),
-                                                      ),
-                                                    );
-                                                  }
-                                                : Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const AddAdsScreen()));
+                                            if (planEndDate == '' ||
+                                                DateTime.parse(planEndDate)
+                                                    .isBefore(currentDate)) {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const SubscriptionsScreen(),
+                                                ),
+                                              );
+                                            } else {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const AddAdsScreen(),
+                                                ),
+                                              );
+                                            }
                                           },
                                           icon: Icon(
                                             Icons.arrow_forward_ios_rounded,

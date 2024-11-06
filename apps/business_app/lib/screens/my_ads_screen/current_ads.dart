@@ -55,9 +55,6 @@ class CurrentAdsTap extends StatelessWidget {
                                 remainingDay:
                                     cubit.getRemainingTime(ad['enddate']),
                                 offerType: ad['offer_type'],
-                                viewLocation: 'View Location'.tr(),
-                                buttonLable: 'Delete Ad'.tr(),
-                                locationOnPressed: () {},
                                 views: ad['views'],
                                 clicks: ad['clicks'],
                                 button: ElevatedButton(
@@ -66,15 +63,14 @@ class CurrentAdsTap extends StatelessWidget {
                                           context: context,
                                           builder: (context) {
                                             return CustemAlertDialog(
-                                              title:
-                                                  'Are You Sure You Want To Delete This Ad?',
-                                              msg:
-                                                  'This will permanently delete the ad.',
+                                              title: 'Delete Ads title'.tr(),
+                                              msg: 'Delete Ads subtitle'.tr(),
                                               onPressed: () {
                                                 cubit.deleteAd(ad['id']);
                                                 Navigator.pop(context, true);
                                               },
-                                              buttonLable: 'Confirm',
+                                              buttonLable:
+                                                  'Confirm button'.tr(),
                                               cancelLable: 'Cancel Button'.tr(),
                                             );
                                           });
@@ -85,7 +81,7 @@ class CurrentAdsTap extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Text(
-                                          'Delete Ad',
+                                          'Delete Ad'.tr(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelMedium,

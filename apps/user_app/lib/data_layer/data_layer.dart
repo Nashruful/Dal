@@ -36,7 +36,7 @@ class DataLayer {
   List<Map<String, dynamic>> adData = [];
   String? userId;
   Map<String, dynamic> categories = {
-    'Supermarkets': true,
+    'Grocery': true,
     'Dining': true,
     'Gym': true,
     'Fashion': true,
@@ -61,10 +61,8 @@ class DataLayer {
     }
 
     liveAds = allAds.where((ad) {
-      DateTime startDate = DateTime.parse(ad.enddate!);
       DateTime endDate = DateTime.parse(ad.enddate!);
-      DateTime now = DateTime.now();
-      return now.isAfter(startDate) && now.isBefore(endDate);
+      return endDate.isAfter(DateTime.now());
     }).toList();
   }
 
@@ -111,9 +109,6 @@ class DataLayer {
     positionStream =
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position? position) async {
-      print(position == null
-          ? 'Unknown'
-          : '${position.latitude.toString()}, ${position.longitude.toString()}');
       final Map storedTimes = box.read('lastNotificationTimes') ?? {};
       lastNotificationTimes =
           storedTimes.map((key, value) => MapEntry(key, DateTime.parse(value)));
@@ -159,8 +154,7 @@ class DataLayer {
 
               lastNotificationTimes[branchId] =
                   now; // Update the last notification time
-            } on DioException catch (e) {
-              print(e.response!.data);
+            } on DioException catch (_) {
             } catch (e) {}
           }
         }

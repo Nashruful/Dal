@@ -12,7 +12,7 @@ part 'subscriptions_screen_bloc_state.dart';
 
 class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
   int selectedCardIndex = 0;
-  String planDesc = '';
+  String planDesc = 'Basic description'.tr();
   MultiSelectController<int>? basicPlanController = MultiSelectController();
   MultiSelectController<int>? standardPlanController = MultiSelectController();
   MultiSelectController<int>? enterpriseController = MultiSelectController();
@@ -24,7 +24,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     1: false,
     2: false,
   };
-  String planType = 'Basic';
+  String planType = 'Basic'.tr();
   double planPrice = 100;
   SubscriptionBloc() : super(SubscriptionsScreenBlocInitial()) {
     on<SubscriptionEvent>((event, emit) {});
@@ -35,40 +35,30 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
 
       // Inverse
       for (int i = 0; i < selectedPlan.length; i++) {
-
         if (i != event.index) {
-
           selectedPlan[i] = false;
         }
       }
       //change desc
       if (event.index == 0) {
-
         planDesc = 'Basic description'.tr();
-        planType = 'Basic';
+        planType = 'Basic'.tr();
         planPrice = 100;
-
       } else if (event.index == 1) {
-
         planDesc = 'Premium description'.tr();
-        planType = 'Premium';
+        planType = 'Premium'.tr();
         planPrice = 250;
-
       } else if (event.index == 2) {
-
         planDesc = 'Enterprise description'.tr();
-        planType = 'Enterprise';
+        planType = 'Enterprise'.tr();
         planPrice = 500;
-
       }
-
 
       emit(TabbedCardState());
     });
 
     on<ConfirmSubscription>((event, emit) async {
       emit(LoadingSubscriptionState());
-
 
       try {
         await getIt
@@ -83,7 +73,6 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
             })
             .select()
             .single();
-
 
         if (event.selectedBranch.isNotEmpty) {
           final branchIds = getIt
@@ -120,6 +109,10 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       } catch (e) {
         emit(ErrorState(msg: e.toString()));
       }
+    });
+
+    on<ErrorEvent>((event, emit) async {
+      emit(ErrorState(msg: 'Payment Failed'));
     });
   }
 

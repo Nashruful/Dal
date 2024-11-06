@@ -12,7 +12,7 @@ class DataLayer {
 
 //initially save categories here
   Map<int, String> categories = {
-    0: 'Supermarkets',
+    0: 'Grocery',
     1: 'Dining',
     2: 'Gym',
     3: 'Fashion',

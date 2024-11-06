@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:business_app/data_layer/data_layer.dart';
 import 'package:business_app/setup/setup.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
@@ -50,7 +49,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     } else if (plan['subscription_type'] == 'Enterprise') {
       return 'Enterprise';
     } else {
-      planType = 'No Subscription';
+      planType = 'No Subscription'.tr();
     }
 
     return planType;
@@ -65,7 +64,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     } else if (plan['subscription_type'] == 'Enterprise') {
       planDesc = 'Enterprise description'.tr();
     } else {
-      planDesc = 'No Data';
+      planDesc = 'No Data'.tr();
     }
 
     return planDesc;
