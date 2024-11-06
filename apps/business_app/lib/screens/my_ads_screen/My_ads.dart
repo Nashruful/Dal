@@ -44,7 +44,9 @@ class MyAdsScreen extends StatelessWidget {
                   Navigator.pop(context);
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Deleted Ad Successfully')),
+                    SnackBar(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        content: Text('Deleted Ad Successfully'.tr())),
                   );
                 }
                 if (state is AdErrorState) {

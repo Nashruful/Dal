@@ -1,6 +1,7 @@
 import 'package:components/component/custom_app_bar/custom_app_bar.dart';
 import 'package:components/component/custom_cards/searchAds_card.dart';
 import 'package:components/components.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:impression/impression.dart';
@@ -20,8 +21,8 @@ class SearchScreen extends StatelessWidget {
       child: Builder(builder: (context) {
         final bloc = context.read<SearchBloc>();
         return Scaffold(
-          appBar: const CustomAppBar(
-              title: "Search", automaticallyImplyLeading: true),
+          appBar: CustomAppBar(
+              title: "Search".tr(), automaticallyImplyLeading: true),
           body: SafeArea(
             child: Column(
               children: [
@@ -35,7 +36,7 @@ class SearchScreen extends StatelessWidget {
                       bloc.add(SearchAdsEvent());
                     },
                     decoration: InputDecoration(
-                      hintText: "Which ads are you interested in?",
+                      hintText: "Search hint text".tr(),
                       hintStyle: TextStyle(color: AppColors().grey2),
                       labelStyle: TextStyle(
                         color: Colors.grey[600],
@@ -75,7 +76,7 @@ class SearchScreen extends StatelessWidget {
                                     offerType: ad.offerType ?? '----',
                                     companyLogo: ad.bannerimg ??
                                         'https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg',
-                                    viewLocation: 'Open in map',
+                                    viewLocation: 'View Location'.tr(),
                                     locationOnPressed: () async {
                                       final availableMaps =
                                           await MapLauncher.installedMaps;
@@ -93,7 +94,8 @@ class SearchScreen extends StatelessWidget {
                                             .showSnackBar(
                                           SnackBar(
                                               content: Text(
-                                                  'No maps are installed on this device.')),
+                                                  'No maps are installed on this device.'
+                                                      .tr())),
                                         );
                                       }
                                     },

@@ -41,7 +41,7 @@ class AddAdsScreen extends StatelessWidget {
                 if (state is SuccessState) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       backgroundColor: Theme.of(context).primaryColor,
-                      content: const Text('Successfully Added your ad!')));
+                      content:  Text('Successfully Added your ad!'.tr())));
                 }
                 if (state is ErrorState) {
                   Navigator.pop(context);
@@ -378,15 +378,15 @@ class AddAdsScreen extends StatelessWidget {
                                   SnackBar(
                                       backgroundColor: AppColors().pink,
                                       content:
-                                          const Text('Please select a date')),
+                                           Text('Please select a date'.tr())),
                                 );
                               }
                               if (cubit.image == null) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                       backgroundColor: AppColors().pink,
-                                      content: const Text(
-                                          'Please select an ad image')),
+                                      content: Text(
+                                          'Please select an ad image'.tr())),
                                 );
                               }
                               await cubit.addAds();

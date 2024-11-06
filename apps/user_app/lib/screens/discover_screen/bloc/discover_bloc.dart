@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:components/components.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -156,9 +157,9 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
 
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
-                                            const SnackBar(
+                                             SnackBar(
                                                 content: Text(
-                                                    'No maps are installed on this device.')),
+                                                    'No maps are installed on this device.'.tr())),
                                           );
                                         }
                                       },
@@ -171,7 +172,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
                                           .get<DataLayer>()
                                           .getRemainingTime(location.enddate!),
                                       offerType: location.offerType!,
-                                      viewLocation: "Open in map"),
+                                      viewLocation: "View Location".tr()),
                                 ));
                       },
                       child: Badge(
@@ -249,9 +250,9 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
 
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
-                                            const SnackBar(
+                                             SnackBar(
                                                 content: Text(
-                                                    'No maps are installed on this device.')),
+                                                    'No maps are installed on this device.'.tr())),
                                           );
                                         }
                                       },
@@ -264,7 +265,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
                                           .get<DataLayer>()
                                           .getRemainingTime(location.enddate!),
                                       offerType: location.offerType!,
-                                      viewLocation: "Open in map"),
+                                      viewLocation: "View Location".tr()),
                                 ));
                       },
                       child: Badge(

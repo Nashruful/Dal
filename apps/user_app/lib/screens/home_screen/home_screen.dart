@@ -2,6 +2,8 @@ import 'package:components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/screens/home_screen/category_screen.dart';
 import 'package:user_app/screens/home_screen/cubit/home_cubit.dart';
@@ -96,12 +98,12 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(
-                                width: 8,
+                                width: 10,
                               ),
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: SizedBox(
-                                  width: 150,
+                                  width: 120,
                                   child: Text(
                                     'sub title card'.tr(),
                                     style:
@@ -136,7 +138,7 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           CustomIconButton(
                             icon: 'assets/svg/Dining.svg',
-                            title: 'Dining',
+                            title: 'Dining'.tr(),
                             onPressed: () {
                               Navigator.push(
                                   context,
@@ -149,7 +151,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           CustomIconButton(
                             icon: 'assets/svg/Supermarkets.svg',
-                            title: "Market",
+                            title: "Grocery".tr(),
                             onPressed: () {
                               Navigator.push(
                                   context,
@@ -162,7 +164,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           CustomIconButton(
                             icon: 'assets/svg/Fashion.svg',
-                            title: "Fashion",
+                            title: "Fashion".tr(),
                             onPressed: () {
                               Navigator.push(
                                   context,
@@ -175,7 +177,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           CustomIconButton(
                             icon: 'assets/svg/Hotels.svg',
-                            title: "Hotels",
+                            title: "Hotels".tr(),
                             onPressed: () {
                               Navigator.push(
                                   context,
@@ -188,7 +190,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           CustomIconButton(
                             icon: 'assets/svg/Gym.svg',
-                            title: "Gym",
+                            title: "Gym".tr(),
                             onPressed: () {
                               Navigator.push(
                                   context,
@@ -219,7 +221,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const Spacer(),
                       Tooltip(
-                        message: 'View Offers Available Within 1 Km',
+                        message: 'TooltipInfo'.tr(),
                         child: Icon(
                           Icons.info,
                           color: Theme.of(context).textTheme.bodyMedium!.color,
@@ -261,98 +263,150 @@ class HomeScreen extends StatelessWidget {
                             child: Row(
                               key: ValueKey(
                                   getIt.get<DataLayer>().liveAds.length),
-                              children: getIt
-                                      .get<DataLayer>()
-                                      .nearbyBranches
-                                      .isEmpty
-                                  ? [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 24, vertical: 40),
-                                        child: Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width -
-                                                48,
-                                            decoration: BoxDecoration(
-                                              color: AppColors().yellow,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                    'Nothing Around You At The Moment...\nTry Somewhere Else',
-                                                    style: TextStyle(
-                                                        color: AppColors()
-                                                            .black1)),
+                              children:
+                                  getIt.get<DataLayer>().nearbyBranches.isEmpty
+                                      ? [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 24, vertical: 40),
+                                            child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    48,
+                                                decoration: BoxDecoration(
+                                                  color: AppColors().yellow,
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                      'place holder'.tr(),
+                                                      style: TextStyle(
+                                                          color: AppColors()
+                                                              .black1)),
+                                                )),
+                                          )
+                                        ]
+                                      : getIt
+                                          .get<DataLayer>()
+                                          .nearbyBranches
+                                          .map(
+                                            (e) => ImpressionDetector(
+                                              impressedCallback: () {
+                                                getIt
+                                                    .get<DataLayer>()
+                                                    .recordImpressions(e
+                                                        .id!); //add impressions to ad id each time it is viewed
+                                              },
+                                              child: CustomAdsContainer(
+                                                companyLogo: e.branch!.business!
+                                                        .logoImg ??
+                                                    "https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/user%20profile%20images/images/defualt_profile_img.png?t=2024-11-03T13%3A11%3A13.024Z",
+                                                remainingDay:
+                                                    "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
+                                                companyName:
+                                                    e.branch!.business!.name ??
+                                                        "----",
+                                                offers:
+                                                    '${e.offerType!} ${'off'.tr()}',
+                                                onTap: () {
+                                                  getIt
+                                                      .get<DataLayer>()
+                                                      .recordClicks(e.id!);
+                                                  String currentLogo =
+                                                      e.category!.toString();
+                                                  showModalBottomSheet(
+                                                      isScrollControlled: true,
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return BlocProvider(
+                                                          create: (context) =>
+                                                              HomeCubit(),
+                                                          child:
+                                                              CustomBottomSheet(
+                                                            image: e.bannerimg!,
+                                                            companyName: e
+                                                                    .branch!
+                                                                    .business!
+                                                                    .name ??
+                                                                "---",
+                                                            iconImage:
+                                                                'assets/svg/$currentLogo.svg',
+                                                            description:
+                                                                e.description ??
+                                                                    "---",
+                                                            remainingDay:
+                                                                "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
+                                                            offerType:
+                                                                e.offerType!,
+                                                            textButton:
+                                                                TextButton(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      final availableMaps =
+                                                                          await MapLauncher
+                                                                              .installedMaps;
+
+                                                                      if (availableMaps
+                                                                          .isNotEmpty) {
+                                                                        await availableMaps
+                                                                            .first
+                                                                            .showMarker(
+                                                                          coords: Coords(
+                                                                              e.branch!.latitude!,
+                                                                              e.branch!.longitude!),
+                                                                          title: e
+                                                                              .branch!
+                                                                              .business!
+                                                                              .name!,
+                                                                        );
+                                                                      } else {
+                                                                        // Handle the case where no maps are installed
+
+                                                                        ScaffoldMessenger.of(context)
+                                                                            .showSnackBar(
+                                                                           SnackBar(
+                                                                              content: Text('No maps are installed on this device.'.tr())),
+                                                                        );
+                                                                      }
+                                                                      //
+                                                                    },
+                                                                    child: Row(
+                                                                      children: [
+                                                                        SvgPicture
+                                                                            .asset(
+                                                                          'assets/svg/discover.svg',
+                                                                          colorFilter: ColorFilter.mode(
+                                                                              Theme.of(context).primaryColor,
+                                                                              BlendMode.srcIn),
+                                                                        ),
+                                                                        const SizedBox(
+                                                                          width:
+                                                                              8,
+                                                                        ),
+                                                                        Text(
+                                                                          'View Location'
+                                                                              .tr(),
+                                                                          style: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodySmall,
+                                                                        ),
+                                                                      ],
+                                                                    )),
+                                                            button: cubit
+                                                                .returnButton(
+                                                                    e),
+                                                          ),
+                                                        );
+                                                      });
+                                                },
                                               ),
-                                            )),
-                                      )
-                                    ]
-                                  : getIt
-                                      .get<DataLayer>()
-                                      .nearbyBranches
-                                      .map(
-                                        (e) => ImpressionDetector(
-                                          impressedCallback: () {
-                                            getIt
-                                                .get<DataLayer>()
-                                                .recordImpressions(e
-                                                    .id!); //add impressions to ad id each time it is viewed
-                                          },
-                                          child: CustomAdsContainer(
-                                            companyLogo: e.branch!.business!
-                                                    .logoImg ??
-                                                "https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/user%20profile%20images/images/defualt_profile_img.png?t=2024-11-03T13%3A11%3A13.024Z",
-                                            remainingDay:
-                                                "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
-                                            companyName:
-                                                e.branch!.business!.name ??
-                                                    "----",
-                                            offers:
-                                                '${e.offerType!} ${'off'.tr()}',
-                                            onTap: () {
-                                              getIt
-                                                  .get<DataLayer>()
-                                                  .recordClicks(e.id!);
-                                              String currentLogo =
-                                                  e.category!.toString();
-                                              showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return CustomBottomSheet(
-                                                      image: e.bannerimg!,
-                                                      companyName: e.branch!
-                                                              .business!.name ??
-                                                          "---",
-                                                      iconImage:
-                                                          'assets/svg/$currentLogo.svg',
-                                                      description:
-                                                          e.description ??
-                                                              "---",
-                                                      remainingDay:
-                                                          "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
-                                                      offerType: e.offerType!,
-                                                      viewLocation:
-                                                          'View Location'.tr(),
-                                                      locationOnPressed: () {
-                                                        //
-                                                      },
-                                                      button:
-                                                          cubit.returnButton(e),
-                                                      buttonLable: 'Remind me',
-                                                    );
-                                                  });
-                                            },
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
+                                            ),
+                                          )
+                                          .toList(),
                             ),
                           );
                         }
@@ -367,9 +421,7 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-
                 //===============Latest
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Text(
@@ -446,13 +498,65 @@ class HomeScreen extends StatelessWidget {
                                                   remainingDay:
                                                       "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
                                                   offerType: e.offerType!,
-                                                  viewLocation:
-                                                      'View Location'.tr(),
-                                                  locationOnPressed: () {
-                                                    //
-                                                  },
+                                                  textButton: TextButton(
+                                                      onPressed: () async {
+                                                        final availableMaps =
+                                                            await MapLauncher
+                                                                .installedMaps;
+
+                                                        if (availableMaps
+                                                            .isNotEmpty) {
+                                                          await availableMaps
+                                                              .first
+                                                              .showMarker(
+                                                            coords: Coords(
+                                                                e.branch!
+                                                                    .latitude!,
+                                                                e.branch!
+                                                                    .longitude!),
+                                                            title: e
+                                                                .branch!
+                                                                .business!
+                                                                .name!,
+                                                          );
+                                                        } else {
+                                                          // Handle the case where no maps are installed
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                             SnackBar(
+                                                                content: Text(
+                                                                    'No maps are installed on this device.'.tr())),
+                                                          );
+                                                        }
+                                                        //
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          SvgPicture.asset(
+                                                            'assets/svg/discover.svg',
+                                                            colorFilter:
+                                                                ColorFilter.mode(
+                                                                    Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                    BlendMode
+                                                                        .srcIn),
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 8,
+                                                          ),
+                                                          Text(
+                                                            'View Location'
+                                                                .tr(),
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodySmall,
+                                                          ),
+                                                        ],
+                                                      )),
                                                   button: cubit.returnButton(e),
-                                                  buttonLable: '',
                                                 );
                                               });
                                         },

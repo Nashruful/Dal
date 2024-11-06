@@ -49,7 +49,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     } else if (plan['subscription_type'] == 'Enterprise') {
       return 'Enterprise';
     } else {
-      planType = 'No Subscription';
+      planType = 'No Subscription'.tr();
     }
 
     return planType;
@@ -64,7 +64,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     } else if (plan['subscription_type'] == 'Enterprise') {
       planDesc = 'Enterprise description'.tr();
     } else {
-      planDesc = 'No Data';
+      planDesc = 'No Data'.tr();
     }
 
     return planDesc;

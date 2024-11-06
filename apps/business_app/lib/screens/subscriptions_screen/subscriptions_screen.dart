@@ -26,8 +26,8 @@ class SubscriptionsScreen extends StatelessWidget {
           final GlobalKey<FormState> formKey = GlobalKey<FormState>();
           return Scaffold(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            appBar: const CustomAppBar(
-                title: 'Subscription Plan', automaticallyImplyLeading: true),
+            appBar: CustomAppBar(
+                title: 'planTitle'.tr(), automaticallyImplyLeading: true),
             body: BlocListener<SubscriptionBloc, SubscriptionState>(
               listener: (context, state) {
                 if (state is LoadingSubscriptionState) {
@@ -44,18 +44,18 @@ class SubscriptionsScreen extends StatelessWidget {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       backgroundColor: Theme.of(context).primaryColor,
-                      content: const Text('Successfully Activated Plan')));
+                      content:  Text('Successfully Activated Plan'.tr())));
                 }
                 if (state is ConfirmedState) {
                   Navigator.pop(context);
                   Navigator.pop(context, true);
                 }
-                if (state is SubscriptionErrorState) {
+                if (state is ErrorState) {
                   Navigator.pop(context);
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return const CustemErrorDialog(msg: '');
+                        return CustemErrorDialog(msg: state.msg);
                       });
                 }
               },
@@ -182,11 +182,14 @@ class SubscriptionsScreen extends StatelessWidget {
                                             Text(
                                               bloc.planType == 'Basic'
                                                   ? 'Select exactly one branch'
+                                                      .tr()
                                                   : bloc.planType == 'Premium'
                                                       ? 'Select at most 5 branches'
+                                                          .tr()
                                                       : bloc.planType ==
                                                               'Enterprise'
                                                           ? 'Select unlimited branches'
+                                                              .tr()
                                                           : '',
                                               style: Theme.of(context)
                                                   .textTheme
@@ -225,7 +228,8 @@ class SubscriptionsScreen extends StatelessWidget {
                                                 }
                                               },
                                               fieldDecoration: FieldDecoration(
-                                                  hintText: 'Select a branch',
+                                                  hintText:
+                                                      'Select a branch'.tr(),
                                                   border: OutlineInputBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -259,7 +263,8 @@ class SubscriptionsScreen extends StatelessWidget {
                                               validator: (value) {
                                                 if (bloc
                                                     .selectedBranch.isEmpty) {
-                                                  return 'Please select a branch';
+                                                  return 'Please select a branch'
+                                                      .tr();
                                                 }
                                                 return null;
                                               },
@@ -364,17 +369,18 @@ class SubscriptionsScreen extends StatelessWidget {
                                                                     .textTheme
                                                                     .headlineSmall,
                                                               ),
-                                                              // ------------ change number -----------
                                                               Text(
                                                                 bloc.planType ==
                                                                         'Basic'
                                                                     ? 'Select exactly one branch'
+                                                                        .tr()
                                                                     : bloc.planType ==
                                                                             'Premium'
                                                                         ? 'select at most 5 branches'
+                                                                            .tr()
                                                                         : bloc.planType ==
                                                                                 'Enterprise'
-                                                                            ? 'select unlimited branches'
+                                                                            ? 'select unlimited branches'.tr()
                                                                             : '',
                                                                 style: Theme.of(
                                                                         context)
@@ -427,7 +433,8 @@ class SubscriptionsScreen extends StatelessWidget {
                                                                 },
                                                                 fieldDecoration: FieldDecoration(
                                                                     hintText:
-                                                                        'Select a branch',
+                                                                        'Select a branch'
+                                                                            .tr(),
                                                                     border: OutlineInputBorder(
                                                                         borderRadius:
                                                                             BorderRadius.circular(
@@ -470,7 +477,8 @@ class SubscriptionsScreen extends StatelessWidget {
                                                                   if (bloc
                                                                       .selectedBranch
                                                                       .isEmpty) {
-                                                                    return 'Please select a branch';
+                                                                    return 'Please select a branch'
+                                                                        .tr();
                                                                   }
                                                                   return null;
                                                                 },
@@ -493,12 +501,12 @@ class SubscriptionsScreen extends StatelessWidget {
                                                                             (context) {
                                                                           return CustemAlertDialog(
                                                                             title:
-                                                                                'Activated Your Free Trial?',
+                                                                                'Activated Your Free Trial?'.tr(),
                                                                             msg:
                                                                                 'By confirming, your free ${bloc.planType} subscription will begin on ${currentDate.day}/${currentDate.month}/${currentDate.year} and last until ${datePlus30Days.day}/${datePlus30Days.month}/${datePlus30Days.year}.',
                                                                             onPressed:
                                                                                 () {
-                                                                              bloc.add(ConfirmSubscription(isFreeTrial: true, start: currentDate, end: datePlus30Days, price: 0, planType: 'Basic', selectedBranch: bloc.selectedBranch));
+                                                                              bloc.add(ConfirmSubscription(isFreeTrial: true, start: currentDate, end: datePlus30Days, price: 0, planType: 'Basic'.tr(), selectedBranch: bloc.selectedBranch));
                                                                             },
                                                                             buttonLable:
                                                                                 'Confirm button'.tr(),

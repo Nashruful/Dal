@@ -14,12 +14,12 @@
     "Verify": "تحقق",
     "Resend OTP": "اعادة ارسال الـ PIN",
     "Hello": "مرحبا",
-    "Cafes": "مقاهي",
-    "Bakery": "مخابز",
-    "Breakfast": "افطار",
-    "Ice creams": "ايسكريم",
-    "Dinning": "غذاء",
-    "Drinks": "مشروبات",
+    "Gym": "نوادي",
+    "Hotels": "فنادق",
+    "Fashion": "موضة",
+    "Grocery": "ماركت",
+    "Dining": "طعام",
+    "Latest Offers": "أحدث العروض",
     "Top": "الافضل",
     "Around you": "القريبة منك",
     "Home": "الصفحة الرئيسية",
@@ -45,7 +45,14 @@
     "title card": "لاتفوت الفرصة",
     "sub title card": "اعرف أحدث العروض والخصومات اللي تصير حولك!",
     "View Location": "اعرض على الخريطة",
-    "off": "خصم"
-    
-    
+    "off": "خصم",
+    "TooltipInfo": "عرض العروض المتاحة في نطاق 1 كم",
+    "place holder": "لا شيء حولك في الوقت الحالي...\nجرّب مكانًا آخر",
+    "No maps are installed on this device.": "لا توجد اي خرائط على هذا الجهاز ",
+    "There are no reminders yet!": "لا توجد اي إعلانات للتذكير",
+    "Search": "البحث",
+    "Search hint text": "ما هي العروض المهتم بها؟",
+    "Remove reminder": "إزالة التذكير",
+    "No data available for this category..": "لا توجد اي إعلانات لهذا التصنيف",
+    "Go back": "الرجوع للخلف"
 }

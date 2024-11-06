@@ -39,7 +39,7 @@ class DataLayer {
   List<Map<String, dynamic>> adData = [];
   String? userId;
   Map<String, dynamic> categories = {
-    'Supermarkets': true,
+    'Grocery': true,
     'Dining': true,
     'Gym': true,
     'Fashion': true,
@@ -161,8 +161,7 @@ class DataLayer {
 
               lastNotificationTimes[branchId] =
                   now; // Update the last notification time
-            } on DioException catch (e) {
-              print(e.response!.data);
+            } on DioException catch (_) {
             } catch (e) {}
           }
         }

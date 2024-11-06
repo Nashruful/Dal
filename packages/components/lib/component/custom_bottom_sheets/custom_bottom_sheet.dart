@@ -12,23 +12,21 @@ class CustomBottomSheet extends StatelessWidget {
       required this.remainingDay,
       required this.offerType,
       this.onPressed,
-      required this.viewLocation,
-      this.locationOnPressed,
       required this.button,
       this.views,
-      this.clicks, required String buttonLable});
+      this.clicks,
+      this.textButton});
   final String image;
   final String companyName;
   final String offerType;
   final String? iconImage;
   final String description;
   final String remainingDay;
-  final String viewLocation;
   final void Function()? onPressed;
-  final void Function()? locationOnPressed;
   final ElevatedButton button;
   final int? views;
   final int? clicks;
+  final TextButton? textButton;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +55,7 @@ class CustomBottomSheet extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -72,25 +70,7 @@ class CustomBottomSheet extends StatelessWidget {
                     const SizedBox(
                       height: 8,
                     ),
-                    TextButton(
-                        onPressed: locationOnPressed,
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/svg/discover.svg',
-                              colorFilter: ColorFilter.mode(
-                                  Theme.of(context).primaryColor,
-                                  BlendMode.srcIn),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              viewLocation,
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          ],
-                        ))
+                    textButton ?? const SizedBox.shrink(),
                   ],
                 ),
                 Text(
