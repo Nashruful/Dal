@@ -11,7 +11,7 @@ import 'package:user_app/screens/reminder_screen/reminder_screen.dart';
 import 'bloc/nav_bar_bloc.dart';
 
 class BottomNavBarScreen extends StatelessWidget {
-  const BottomNavBarScreen({Key? key}) : super(key: key);
+  const BottomNavBarScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

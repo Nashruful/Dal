@@ -10,7 +10,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:impression/impression.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:map_launcher/map_launcher.dart';
-import 'package:meta/meta.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:user_app/data_layer/data_layer.dart';
 import 'package:user_app/setup/setup.dart';
@@ -87,7 +86,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
                     now; // Update the last notification time
               } on DioException catch (e) {
                 emit(ErrorState(msg: e.response!.data));
-              } catch (e) {}
+              } catch (_) {}
             }
           }
         }
@@ -102,7 +101,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
             .get<DataLayer>()
             .box
             .write('lastNotificationTimes', serializedTimes);
-      } catch (e) {}
+      } catch (_) {}
     });
     on<LoadScreenEvent>((event, emit) async {
       emit(LoadingState());
@@ -156,6 +155,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
                                         } else {
                                           // Handle the case where no maps are installed
 
+                                          // ignore: use_build_context_synchronously
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                              SnackBar(
@@ -249,6 +249,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
                                         } else {
                                           // Handle the case where no maps are installed
 
+                                          // ignore: use_build_context_synchronously
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                              SnackBar(

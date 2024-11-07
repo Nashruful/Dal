@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_storage/get_storage.dart';
@@ -160,7 +159,7 @@ class DataLayer {
               lastNotificationTimes[branchId] =
                   now; // Update the last notification time
             } on DioException catch (_) {
-            } catch (e) {}
+            } catch (_) {}
           }
         }
       }

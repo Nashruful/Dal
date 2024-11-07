@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

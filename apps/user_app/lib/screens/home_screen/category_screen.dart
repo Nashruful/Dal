@@ -1,4 +1,3 @@
-import 'package:components/component/bottom_sheet_for_map/bottom_sheet_for_map.dart';
 import 'package:components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +82,7 @@ class CategoryScreen extends StatelessWidget {
                                                           // Handle the case where no maps are installed
 
                                                           ScaffoldMessenger.of(
+                                                                  // ignore: use_build_context_synchronously
                                                                   context)
                                                               .showSnackBar(
                                                              SnackBar(

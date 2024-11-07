@@ -1,6 +1,5 @@
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CustomSubscriptionsCard extends StatelessWidget {
   final bool selected;
@@ -54,7 +53,7 @@ class CustomSubscriptionsCard extends StatelessWidget {
                         color: AppColors().black1.withOpacity(0.2),
                         spreadRadius: 1,
                         blurRadius: 2,
-                        offset: Offset(0, 1), // changes position of shadow
+                        offset: const Offset(0, 1), // changes position of shadow
                       ),
                     ],
                   ),
@@ -68,7 +67,7 @@ class CustomSubscriptionsCard extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Text(

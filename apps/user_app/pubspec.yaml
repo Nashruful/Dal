@@ -30,6 +30,7 @@ dependencies:
   lifecycle: ^0.9.0
   impression: ^1.0.1
   map_launcher: ^3.5.0
+  multi_dropdown: ^3.0.1
   bloc: ^8.1.4
   meta: ^1.15.0
   lottie: ^3.1.3

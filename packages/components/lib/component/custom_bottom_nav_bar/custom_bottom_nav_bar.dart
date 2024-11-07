@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
-  CustomBottomNavBar(
+  const CustomBottomNavBar(
       {super.key,
       this.onTap,
       required this.icons1,

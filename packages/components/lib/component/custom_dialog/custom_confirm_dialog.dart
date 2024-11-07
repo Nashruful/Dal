@@ -41,7 +41,7 @@ class CustomAlertDialog extends StatelessWidget {
                   backgroundColor: Theme.of(context).primaryColor,
                   child: Text(
                     buttonLabel ?? 'Remind Me',
-                    style: TextStyle(color: Color(0xffF7F7F7), fontSize: 14),
+                    style: const TextStyle(color:  Color(0xffF7F7F7), fontSize: 14),
                   ),
                 ),
                 TextButton(

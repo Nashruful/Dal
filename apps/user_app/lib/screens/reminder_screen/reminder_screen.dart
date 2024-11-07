@@ -101,6 +101,7 @@ class ReminderScreen extends StatelessWidget {
                                                         } else {
                                                           // Handle the case where no maps are installed
                                                           ScaffoldMessenger.of(
+                                                                  // ignore: use_build_context_synchronously
                                                                   context)
                                                               .showSnackBar(
                                                              SnackBar(

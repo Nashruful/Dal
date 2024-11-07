@@ -1,5 +1,4 @@
 import 'package:components/component/custom_app_bar/custom_app_bar.dart';
-import 'package:components/component/custom_cards/searchAds_card.dart';
 import 'package:components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -90,6 +89,7 @@ class SearchScreen extends StatelessWidget {
                                       } else {
                                         // Handle the case where no maps are installed
 
+                                        // ignore: use_build_context_synchronously
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
@@ -102,12 +102,12 @@ class SearchScreen extends StatelessWidget {
                                     description: ad.description!,
                                   ),
                                 );
-                              }).toList(),
+                              }),
                             ]),
                           ),
                         );
                       }
-                      return SizedBox();
+                      return const SizedBox();
                     },
                   ),
                 ),

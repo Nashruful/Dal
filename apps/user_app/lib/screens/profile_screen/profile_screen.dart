@@ -78,6 +78,7 @@ class ProfileScreen extends StatelessWidget {
                       BlocBuilder<ThemeCubit, ThemeState>(
                         builder: (context, state) {
                           return AppearanceSection(
+                            // ignore: avoid_types_as_parameter_names
                             onChanged: (bool) {
                               context.read<ThemeCubit>().toggleTheme();
                             },
@@ -114,7 +115,7 @@ class ProfileScreen extends StatelessWidget {
                         onPressed: () {
                           getIt.get<DataLayer>().logOut();
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => LoginScreen()));
+                              builder: (context) => const LoginScreen()));
                         },
                         text: 'Log out'.tr(),
                       ),

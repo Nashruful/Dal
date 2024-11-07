@@ -11,7 +11,7 @@ class CustomErrorDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Theme.of(context).canvasColor,
-      content: Container(
+      content: SizedBox(
         height: 400,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

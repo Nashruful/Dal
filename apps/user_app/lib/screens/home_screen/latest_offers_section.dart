@@ -91,6 +91,7 @@ class LatestOffersSection extends StatelessWidget {
                                               );
                                             } else {
                                               // Handle the case where no maps are installed
+                                              // ignore: use_build_context_synchronously
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(

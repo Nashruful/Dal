@@ -59,6 +59,7 @@ class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
       //     .delete()
       //     .eq("id", event.reminder.id)
       //   ;
+      // ignore: collection_methods_unrelated_type
       final response = dataLayer.myReminders.remove(event.reminder);
 
       if (response) {
