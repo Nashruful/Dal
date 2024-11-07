@@ -6,6 +6,7 @@ import 'package:components/component/theme/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'bloc/nav_bar_bloc.dart';
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 
@@ -53,22 +54,25 @@ class BottomNavBarScreen extends StatelessWidget {
                     itemLabel: 'Home'.tr(),
                   ),
                   BottomBarItem(
-                    inActiveItem: Icon(Icons.location_on_rounded,
-                        color: AppColors().grey2),
-                    activeItem: Icon(Icons.location_on_rounded,
+                    inActiveItem:
+                        SvgPicture.asset('assets/svg/add_ads_icon.svg'),
+                    activeItem: SvgPicture.asset('assets/svg/add_ads_icon.svg',
                         color: AppColors().white1),
                     itemLabel: 'My Ads'.tr(),
                   ),
                   BottomBarItem(
                     inActiveItem:
-                        Icon(Icons.notifications, color: AppColors().grey2),
-                    activeItem:
-                        Icon(Icons.notifications, color: AppColors().white1),
+                        SvgPicture.asset("assets/svg/view_stats_icon.svg"),
+                    activeItem: SvgPicture.asset(
+                        "assets/svg/view_stats_icon.svg",
+                        color: AppColors().white1),
                     itemLabel: 'Statistics'.tr(),
                   ),
                   BottomBarItem(
-                    inActiveItem: Icon(Icons.person, color: AppColors().grey2),
-                    activeItem: Icon(Icons.person, color: AppColors().white1),
+                    inActiveItem:
+                        SvgPicture.asset('assets/svg/setting_icon.svg'),
+                    activeItem: SvgPicture.asset('assets/svg/setting_icon.svg',
+                        color: AppColors().white1),
                     itemLabel: 'Settings'.tr(),
                   ),
                 ],

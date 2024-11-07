@@ -14,10 +14,11 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   EditProfileCubit() : super(EditProfileInitial());
 
   final supabase = getIt.get<DataLayer>().supabase;
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController(
+      text: getIt.get<DataLayer>().currentUserInfo!['first_name'] ?? 'First');
+  TextEditingController lastNameController = TextEditingController(
+      text: getIt.get<DataLayer>().currentUserInfo!['last_name'] ?? 'Last');
   ImagePicker pick = ImagePicker();
-  //late File image;
 
   Future<void> pickAdsImage() async {
     final XFile? imageFile = await pick.pickImage(source: ImageSource.gallery);
