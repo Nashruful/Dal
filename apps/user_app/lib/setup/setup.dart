@@ -12,6 +12,7 @@ Future<void> setup() async {
   await determinePosition();
   await getIt.get<DataLayer>().getAllAds();
   await getIt.get<DataLayer>().locationBgStream();
+  await getIt.get<DataLayer>().getNearbyOffers();
 
 
   

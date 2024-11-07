@@ -2,6 +2,7 @@ import 'package:components/component/custom_app_bar/custom_app_bar.dart';
 import 'package:components/component/custom_cards/searchAds_card.dart';
 import 'package:components/components.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:impression/impression.dart';
@@ -21,6 +22,8 @@ class SearchScreen extends StatelessWidget {
       child: Builder(builder: (context) {
         final bloc = context.read<SearchBloc>();
         return Scaffold(
+          appBar: CustomAppBar(
+              title: "Search".tr(), automaticallyImplyLeading: true),
           appBar: CustomAppBar(
               title: "Search".tr(), automaticallyImplyLeading: true),
           body: SafeArea(
@@ -77,6 +80,7 @@ class SearchScreen extends StatelessWidget {
                                     companyLogo: ad.bannerimg ??
                                         'https://img.freepik.com/free-vector/anime-chibi-boy-wearing-cap-character_18591-82515.jpg',
                                     viewLocation: 'View Location'.tr(),
+                                    viewLocation: 'View Location'.tr(),
                                     locationOnPressed: () async {
                                       final availableMaps =
                                           await MapLauncher.installedMaps;
@@ -94,6 +98,8 @@ class SearchScreen extends StatelessWidget {
                                             .showSnackBar(
                                           SnackBar(
                                               content: Text(
+                                                  'No maps are installed on this device.'
+                                                      .tr())),
                                                   'No maps are installed on this device.'
                                                       .tr())),
                                         );
