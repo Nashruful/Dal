@@ -13,9 +13,12 @@ class DataLayer {
   final supabase = Supabase.instance.client;
 
   StreamSubscription<Position>? positionStream;
+  Position? currentPosition;
   final dio = Dio();
 
   Map? currentUserInfo;
+
+  bool firstTime = true;
 
   List<Ads> allAds = [];
   List<Ads> nearbyBranches = [];
@@ -61,10 +64,8 @@ class DataLayer {
     }
 
     liveAds = allAds.where((ad) {
-      DateTime startDate = DateTime.parse(ad.enddate!);
       DateTime endDate = DateTime.parse(ad.enddate!);
-      DateTime now = DateTime.now();
-      return now.isAfter(startDate) && now.isBefore(endDate);
+      return endDate.isAfter(DateTime.now());
     }).toList();
   }
 
@@ -103,14 +104,15 @@ class DataLayer {
       );
     }
 
-// supply location settings to getCurrentPosition
-    Position position =
+    currentPosition =
         await Geolocator.getCurrentPosition(locationSettings: locationSettings);
 
-// supply location settings to getPositionStream
     positionStream =
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position? position) async {
+      if (position != null) {
+        currentPosition = position;
+      }
       print(position == null
           ? 'Unknown'
           : '${position.latitude.toString()}, ${position.longitude.toString()}');
@@ -172,6 +174,45 @@ class DataLayer {
 
       box.write('lastNotificationTimes', serializedTimes);
     });
+  }
+
+  getNearbyOffers()async {
+    print(currentPosition?.latitude);
+    for (var element in liveAds) {
+      // get nearby branches to the user
+      double distance = Geolocator.distanceBetween(
+          currentPosition!.latitude,
+          currentPosition!.longitude,
+          element.branch!.latitude!,
+          element.branch!.longitude!);
+      if (distance < 1000) {
+        nearbyBranches.add(element);
+      }
+    }
+
+    for (var element in liveAds) {
+      switch (element.category) {
+        case "Dining":
+          diningCategory.add(element);
+
+          break;
+        case "Supermarkets":
+          superMarketsCategory.add(element);
+          break;
+        case "Fashion":
+          fashionCategory.add(element);
+          break;
+        case "Hotels":
+          hotelsCategory.add(element);
+          break;
+        case "Gym":
+          gymCategory.add(element);
+          break;
+
+        default:
+          break;
+      }
+    }
   }
 
   String getRemainingTime(String dateString) {

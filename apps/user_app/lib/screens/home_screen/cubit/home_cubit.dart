@@ -13,12 +13,6 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   final supabase = getIt.get<DataLayer>().supabase;
 
-  final LocationSettings locationSettings = const LocationSettings(
-    accuracy: LocationAccuracy.high,
-    distanceFilter: 100,
-  );
-  Position? position;
-
   HomeCubit() : super(HomeInitial());
 
   ElevatedButton returnButton(Ads e) {
@@ -78,15 +72,12 @@ class HomeCubit extends Cubit<HomeState> {
     getIt.get<DataLayer>().hotelsCategory.clear();
     getIt.get<DataLayer>().gymCategory.clear();
     try {
-      position = await Geolocator.getCurrentPosition(
-          locationSettings: locationSettings);
-
       await getIt.get<DataLayer>().getAllAds();
-      for (var element in getIt.get<DataLayer>().allAds) {
+      for (var element in getIt.get<DataLayer>().liveAds) {
         // get nearby branches to the user
         double distance = Geolocator.distanceBetween(
-            position!.latitude,
-            position!.longitude,
+            getIt.get<DataLayer>().currentPosition!.latitude,
+            getIt.get<DataLayer>().currentPosition!.longitude,
             element.branch!.latitude!,
             element.branch!.longitude!);
         if (distance < 1000) {
@@ -130,15 +121,11 @@ class HomeCubit extends Cubit<HomeState> {
     if (getIt.get<DataLayer>().liveAds.isEmpty) {
       emit(LoadingState());
       try {
-        position = await Geolocator.getCurrentPosition(
-            locationSettings: locationSettings);
-
-        await getIt.get<DataLayer>().getAllAds();
         for (var element in getIt.get<DataLayer>().liveAds) {
           // get nearby branches to the user
           double distance = Geolocator.distanceBetween(
-              position!.latitude,
-              position!.longitude,
+              getIt.get<DataLayer>().currentPosition!.latitude,
+              getIt.get<DataLayer>().currentPosition!.longitude,
               element.branch!.latitude!,
               element.branch!.longitude!);
           if (distance < 1000) {

@@ -10,6 +10,7 @@ Future<void> setup() async {
   getIt.registerSingleton<DataLayer>(DataLayer());
   await getIt.get<DataLayer>().getAllAds();
   await getIt.get<DataLayer>().locationBgStream();
+  await getIt.get<DataLayer>().getNearbyOffers();
 
 
   
