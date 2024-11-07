@@ -61,7 +61,7 @@
     "English": "انجليزية",
     "Arabic": "العربية",
     "Log out": "تسجيل الخروج",
-    "Home": "الصفحة الرئيسية",
+    "Home": "الرئيسية",
     "My Ads": "إعلاناتي",
     "Statistics": "الاحصائيات",
     "Settings": "الاعدادات",
@@ -91,11 +91,8 @@
     "Payment Confirmation": "بوابة الدفع الإلكترونية ",
     "Successfully Activated Plan": "تم تفعيل الخطة بنجاح ",
     "payment confirmation message": "بإتمام الدفع، سيبدأ اشتراك {planType} في {currentDay}/{currentMonth}/{currentYear} وسيستمر حتى {endDay}/{endMonth}/{endYear}.",
-    "Successfully Added your ad!":"تم اضافه الإعلان بنجاح",
-    "Please select a date":"فضلا اختر التاريخ",
-    "Please select an ad image":"Pفضلا اختر الصورة",
-    "Deleted Ad Successfully":"تم حذف الإعلان بنجاح"
-
-
-
+    "Successfully Added your ad!": "تم اضافه الإعلان بنجاح",
+    "Please select a date": "فضلا اختر التاريخ",
+    "Please select an ad image": "Pفضلا اختر الصورة",
+    "Deleted Ad Successfully": "تم حذف الإعلان بنجاح"
 }

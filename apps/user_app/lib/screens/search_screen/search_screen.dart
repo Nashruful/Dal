@@ -37,7 +37,7 @@ class SearchScreen extends StatelessWidget {
                     },
                     decoration: InputDecoration(
                       hintText: "Search hint text".tr(),
-                      hintStyle: TextStyle(color: AppColors().grey2),
+                      hintStyle: Theme.of(context).textTheme.bodyMedium,
                       labelStyle: TextStyle(
                         color: Colors.grey[600],
                         fontWeight: FontWeight.bold,

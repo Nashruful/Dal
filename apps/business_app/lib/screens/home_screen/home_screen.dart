@@ -74,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: SizedBox(
-                                  width: 250,
+                                  width: 230,
                                   child: Text('Banner title'.tr(),
                                       style: TextStyle(
                                           fontSize: 24,
@@ -88,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: SizedBox(
-                                  width: 200,
+                                  width: 180,
                                   child: Text(
                                     'Banner subtitle'.tr(),
                                     style:

@@ -137,14 +137,14 @@ class DiscoverScreen extends StatelessWidget {
                                 ),
                                 Icon(
                                   Icons.search,
-                                  color: AppColors().black1,
+                                  color: AppColors().white1,
                                 ),
                                 const SizedBox(
                                   width: 12,
                                 ),
                                 CustomText(
                                     text: "Where to?".tr(),
-                                    color: AppColors().black1,
+                                    color: AppColors().white1,
                                     fontSize: 16)
                               ],
                             ),
