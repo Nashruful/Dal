@@ -171,17 +171,13 @@ Dal uses the following dependencies to enhance functionality:
 Additionally, **`melos`** is used for automating tasks and managing dependencies in a large-scale Flutter project.
 ## Screen shot
 ---
-#  Business App
-
-https://github.com/user-attachments/assets/e36779f6-5414-4cb5-a3fe-6146643fa5ca
-
----
 #  User App
 
 
+
+https://github.com/user-attachments/assets/1304ff12-51bd-434f-8911-b1986665e5b7
+
 https://github.com/user-attachments/assets/13a60042-f02d-4a37-9cc2-6560b91caf62
-
-
 
 https://github.com/user-attachments/assets/24ca0131-e44b-4b10-82ae-a8e4f49a5104
 
