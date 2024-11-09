@@ -1,5 +1,7 @@
 
-![DalLogo](https://github.com/user-attachments/assets/a7e5ea8c-99df-43c5-9716-3038e97222be)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a7e5ea8c-99df-43c5-9716-3038e97222be" alt="DalLogo">
+</p>
 
 
 # Dal - Local Business Advertising App
