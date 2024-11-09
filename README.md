@@ -248,12 +248,16 @@ Dal empowers local businesses to effectively advertise to consumers nearby. With
 
 ### Team Members
 
-- [Abdulaziz Alruwaily](https://github.com/Nashruful)
-- [Amjad Elahi](https://github.com/Amjad-elahi)
-- [Linda Almakramy](https://github.com/lindamakk)
-- [Nouf Alqahtani](https://github.com/noufAlqahtani1)
+- [Abdulaziz Alruwaily](https://github.com/Nashruful), [CV](https://drive.google.com/file/d/1UaIq9cQj1R-RlTdWht6RAP80j7we6o-i/edit))
+- [Amjad Elahi](https://github.com/Amjad-elahi), [CV]()
+- [Linda Almakramy](https://github.com/lindamakk), [CV](https://drive.google.com/file/d/1puPpMiOlWbR8zlM9xNLXy67PdFZp_4PJ/view?usp=drive_link)
+- [Nouf Alqahtani](https://github.com/noufAlqahtani1), [CV]()
 
 
 ### Presentation
 
 - [Dal Presentation](https://drive.google.com/file/d/1jWO89T3S-ucVFb7PijL0AunFCsNdhKtv/view?usp=sharing)
+
+### Demo Video
+
+- [Dal Presentation]()
