@@ -251,7 +251,7 @@ Dal empowers local businesses to effectively advertise to consumers nearby. With
 - [Abdulaziz Alruwaily](https://github.com/Nashruful), [CV](https://drive.google.com/file/d/1UaIq9cQj1R-RlTdWht6RAP80j7we6o-i/edit)
 - [Amjad Elahi](https://github.com/Amjad-elahi), [CV](https://flowcv.com/resume/pn6fdod6l1)
 - [Linda Almakramy](https://github.com/lindamakk), [CV](https://drive.google.com/file/d/1puPpMiOlWbR8zlM9xNLXy67PdFZp_4PJ/view?usp=drive_link)
-- [Nouf Alqahtani](https://github.com/noufAlqahtani1), [CV]()
+- [Nouf Alqahtani](https://github.com/noufAlqahtani1), [CV](https://www.linkedin.com/in/nouf-alqahtani-8a262b273?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)
 
 
 ### Presentation
