@@ -1,5 +1,7 @@
 
-![DalLogo](https://github.com/user-attachments/assets/a7e5ea8c-99df-43c5-9716-3038e97222be)
+<p align="center">
+  <img src="[http://some_place.com/image.png](https://github.com/user-attachments/assets/a7e5ea8c-99df-43c5-9716-3038e97222be)" />
+</p>
 ---
 
 # Dal - Local Business Advertising App
@@ -79,7 +81,6 @@ This folder contains screen-related files, divided by feature, including authent
 
 
 # ER model
----
 
 ### 1. User
 - **ID** (int4): Unique identifier for each user.
@@ -170,24 +171,18 @@ Dal uses the following dependencies to enhance functionality:
 Additionally, **`melos`** is used for automating tasks and managing dependencies in a large-scale Flutter project.
 ## Screen shot
 
-#  User App
+###  User App
 
 ![Auth](https://github.com/user-attachments/assets/bc874e91-a22a-45aa-975f-22ea55556adb)
 ![Map](https://github.com/user-attachments/assets/7c3d81a1-ec3c-444c-b746-cb16c26db2ee)
 ![Profile](https://github.com/user-attachments/assets/4572c3a5-094b-4661-a3dc-a8c46c972431)
 
 
-#  Business App
-
-![Auth](https://github.com/user-attachments/assets/be97ccf0-4598-44d2-bfd7-18ee19153172)
-
-![Subscription](https://github.com/user-attachments/assets/0a0617a2-992b-45aa-9c31-9f701edef9dd)
-
-![Add_Ads](https://github.com/user-attachments/assets/7e8ce20f-6445-4dd7-8048-94c2ab7a7255)
-
-![Setting](https://github.com/user-attachments/assets/56fbff14-df11-4d6c-9958-354c8fe09426)
-
-
+###  Business App
+![[Auth](https://github.com/user-attachments/assets/fdbd95a1-8fe6-4caf-9151-6e2851e8caed)
+![[Subscription](https://github.com/user-attachments/assets/153fe465-0f72-4db3-8aa2-3c8244950c82)
+![Add_Ads](https://github.com/user-attachments/assets/2a40b551-af30-4b87-893b-b611fe0bca78)
+![Setting](https://github.com/user-attachments/assets/21388af1-a5dc-4898-93d8-0ce411abc644)
 
 
 ## Prerequisites
