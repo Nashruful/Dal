@@ -1,4 +1,5 @@
 import 'package:business_app/screens/add_ads_screen/cubit/add_ads_cubit.dart';
+import 'package:components/component/custom_app_bar/custom_app_bar.dart';
 import 'package:components/component/custom_text_field/custom_text_form_field.dart';
 import 'package:components/components.dart';
 import 'package:date_picker_plus/date_picker_plus.dart';
@@ -19,13 +20,8 @@ class AddAdsScreen extends StatelessWidget {
         final formKey = GlobalKey<FormState>();
         final cubit = context.read<AddAdsCubit>();
         return Scaffold(
-            appBar: AppBar(
-              iconTheme: IconThemeData(color: AppColors().white1),
-              backgroundColor: AppColors().pink,
-              title: Text('Add Ads app bar',
-                      style: TextStyle(color: AppColors().white1))
-                  .tr(),
-            ),
+            appBar: CustomAppBar(
+                title: 'Add Ads app bar'.tr(), automaticallyImplyLeading: true),
             body: BlocListener<AddAdsCubit, AddAdsState>(
               listener: (context, state) {
                 if (state is LoadingState) {
@@ -41,14 +37,14 @@ class AddAdsScreen extends StatelessWidget {
                 if (state is SuccessState) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       backgroundColor: Theme.of(context).primaryColor,
-                      content:  Text('Successfully Added your ad!'.tr())));
+                      content: Text('Successfully Added your ad!'.tr())));
                 }
                 if (state is ErrorState) {
                   Navigator.pop(context);
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return const CustemErrorDialog(msg: 'error');
+                        return CustomErrorDialog(msg: state.msg);
                       });
                 }
               },
@@ -95,7 +91,7 @@ class AddAdsScreen extends StatelessWidget {
                         ),
                         BlocBuilder<AddAdsCubit, AddAdsState>(
                           builder: (context, state) {
-                            return CustomDrobDownButton(
+                            return CustomDropDownButton(
                               value: cubit.categoryValue,
                               items: [
                                 DropdownMenuEntry(
@@ -378,7 +374,7 @@ class AddAdsScreen extends StatelessWidget {
                                   SnackBar(
                                       backgroundColor: AppColors().pink,
                                       content:
-                                           Text('Please select a date'.tr())),
+                                          Text('Please select a date'.tr())),
                                 );
                               }
                               if (cubit.image == null) {

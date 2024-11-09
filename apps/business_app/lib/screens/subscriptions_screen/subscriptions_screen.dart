@@ -44,7 +44,7 @@ class SubscriptionsScreen extends StatelessWidget {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       backgroundColor: Theme.of(context).primaryColor,
-                      content:  Text('Successfully Activated Plan'.tr())));
+                      content: Text('Successfully Activated Plan'.tr())));
                 }
                 if (state is ConfirmedState) {
                   Navigator.pop(context);
@@ -55,7 +55,7 @@ class SubscriptionsScreen extends StatelessWidget {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return CustemErrorDialog(msg: state.msg);
+                        return CustomErrorDialog(msg: state.msg);
                       });
                 }
               },
@@ -178,7 +178,6 @@ class SubscriptionsScreen extends StatelessWidget {
                                                   .textTheme
                                                   .headlineSmall,
                                             ),
-                                            // ------------ change number -----------
                                             Text(
                                               bloc.planType == 'Basic'
                                                   ? 'Select exactly one branch'
@@ -195,16 +194,12 @@ class SubscriptionsScreen extends StatelessWidget {
                                                   .textTheme
                                                   .bodyMedium,
                                             ),
-                                            MultiDropdown(
+                                            // -------------------------------- custom
+                                            CustomMultipleDropDownMenu(
                                               controller:
                                                   bloc.basicPlanController,
-                                              singleSelect: false,
-                                              enabled: true,
                                               maxSelections:
                                                   bloc.getBranchType(),
-                                              searchEnabled: true,
-                                              autovalidateMode: AutovalidateMode
-                                                  .onUserInteraction,
                                               items:
                                                   bloc.branches.map((branch) {
                                                 return DropdownItem(
@@ -227,39 +222,7 @@ class SubscriptionsScreen extends StatelessWidget {
                                                   }
                                                 }
                                               },
-                                              fieldDecoration: FieldDecoration(
-                                                  hintText:
-                                                      'Select a branch'.tr(),
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      borderSide:
-                                                          BorderSide.none),
-                                                  backgroundColor:
-                                                      Theme.of(context)
-                                                          .canvasColor),
-                                              dropdownDecoration:
-                                                  DropdownDecoration(
-                                                      backgroundColor:
-                                                          Theme.of(context)
-                                                              .canvasColor),
-                                              dropdownItemDecoration:
-                                                  DropdownItemDecoration(
-                                                textColor: AppColors().grey2,
-                                                backgroundColor:
-                                                    Theme.of(context)
-                                                        .canvasColor,
-                                                selectedBackgroundColor:
-                                                    AppColors().white1,
-                                                selectedIcon: Icon(
-                                                    Icons.check_box_outlined,
-                                                    color: AppColors().pink),
-                                              ),
-                                              chipDecoration: ChipDecoration(
-                                                  wrap: false,
-                                                  backgroundColor:
-                                                      AppColors().green),
+                                              hintText: 'Select a branch'.tr(),
                                               validator: (value) {
                                                 if (bloc
                                                     .selectedBranch.isEmpty) {
@@ -387,19 +350,11 @@ class SubscriptionsScreen extends StatelessWidget {
                                                                     .textTheme
                                                                     .bodyMedium,
                                                               ),
-                                                              MultiDropdown(
+                                                              CustomMultipleDropDownMenu(
                                                                 controller: bloc
                                                                     .basicPlanController,
-                                                                singleSelect:
-                                                                    false,
-                                                                enabled: true,
                                                                 maxSelections: bloc
                                                                     .getBranchType(),
-                                                                searchEnabled:
-                                                                    true,
-                                                                autovalidateMode:
-                                                                    AutovalidateMode
-                                                                        .onUserInteraction,
                                                                 items: bloc
                                                                     .branches
                                                                     .map(
@@ -431,47 +386,9 @@ class SubscriptionsScreen extends StatelessWidget {
                                                                     }
                                                                   }
                                                                 },
-                                                                fieldDecoration: FieldDecoration(
-                                                                    hintText:
-                                                                        'Select a branch'
-                                                                            .tr(),
-                                                                    border: OutlineInputBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                10),
-                                                                        borderSide:
-                                                                            BorderSide
-                                                                                .none),
-                                                                    backgroundColor:
-                                                                        Theme.of(context)
-                                                                            .canvasColor),
-                                                                dropdownDecoration:
-                                                                    DropdownDecoration(
-                                                                        backgroundColor:
-                                                                            Theme.of(context).canvasColor),
-                                                                dropdownItemDecoration:
-                                                                    DropdownItemDecoration(
-                                                                  textColor:
-                                                                      AppColors()
-                                                                          .grey2,
-                                                                  backgroundColor:
-                                                                      Theme.of(
-                                                                              context)
-                                                                          .canvasColor,
-                                                                  selectedBackgroundColor:
-                                                                      AppColors()
-                                                                          .white1,
-                                                                  selectedIcon: Icon(
-                                                                      Icons
-                                                                          .check_box_outlined,
-                                                                      color: AppColors()
-                                                                          .pink),
-                                                                ),
-                                                                chipDecoration: ChipDecoration(
-                                                                    wrap: false,
-                                                                    backgroundColor:
-                                                                        AppColors()
-                                                                            .green),
+                                                                hintText:
+                                                                    'Select a branch'
+                                                                        .tr(),
                                                                 validator:
                                                                     (value) {
                                                                   if (bloc
@@ -499,7 +416,7 @@ class SubscriptionsScreen extends StatelessWidget {
                                                                             context,
                                                                         builder:
                                                                             (context) {
-                                                                          return CustemAlertDialog(
+                                                                          return CustomAlertDialog(
                                                                             title:
                                                                                 'Activated Your Free Trial?'.tr(),
                                                                             msg:
@@ -508,7 +425,7 @@ class SubscriptionsScreen extends StatelessWidget {
                                                                                 () {
                                                                               bloc.add(ConfirmSubscription(isFreeTrial: true, start: currentDate, end: datePlus30Days, price: 0, planType: 'Basic'.tr(), selectedBranch: bloc.selectedBranch));
                                                                             },
-                                                                            buttonLable:
+                                                                            buttonLabel:
                                                                                 'Confirm button'.tr(),
                                                                             cancelLable:
                                                                                 'Cancel Button'.tr(),

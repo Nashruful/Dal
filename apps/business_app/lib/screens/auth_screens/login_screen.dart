@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
                   builder: (context) => AlertDialog(
                       backgroundColor: Colors.transparent,
                       content: Lottie.asset(
-                          height: 30, 'assets/json/loading.json')));
+                          height: 30, 'assets/json/loading.json', width: 30)));
             }
             if (state is SuccessState) {
               Navigator.push(
@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return CustemErrorDialog(msg: (state.msg));
+                    return CustomErrorDialog(msg: (state.msg));
                   });
             }
           },

@@ -22,3 +22,5 @@ export 'package:components/component/custom_dialog/custom_confirm_dialog.dart';
 export 'package:components/component/custom_dialog/custom_erroe_msg.dart';
 export 'package:components/component/custom_cards/searchAds_card.dart';
 export 'package:components/component/custom_background/custom_background.dart';
+export 'package:components/component/drop_down_menu/custom_drop_down_menu.dart';
+export 'package:components/component/custom_snackbar/custom_snackbar.dart';

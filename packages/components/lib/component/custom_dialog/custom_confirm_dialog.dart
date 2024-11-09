@@ -2,17 +2,17 @@ import 'package:components/component/custom_buttons/custom_elevated_button.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CustemAlertDialog extends StatelessWidget {
-  const CustemAlertDialog(
+class CustomAlertDialog extends StatelessWidget {
+  const CustomAlertDialog(
       {super.key,
       required this.title,
       required this.msg,
       required this.onPressed,
-      this.buttonLable, required this.cancelLable});
+      this.buttonLabel, required this.cancelLable});
   final String title;
   final String msg;
   final Function() onPressed;
-  final String? buttonLable;
+  final String? buttonLabel;
   final String cancelLable;
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class CustemAlertDialog extends StatelessWidget {
                   onPressed: onPressed,
                   backgroundColor: Theme.of(context).primaryColor,
                   child: Text(
-                    buttonLable ?? 'Remind Me',
+                    buttonLabel ?? 'Remind Me',
                     style: TextStyle(color: Color(0xffF7F7F7), fontSize: 14),
                   ),
                 ),

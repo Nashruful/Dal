@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class StatCards extends StatelessWidget {
-  const StatCards({super.key, required this.lable, required this.numbers});
-  final String lable;
+  const StatCards({super.key, required this.label, required this.numbers});
+  final String label;
   final int numbers;
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class StatCards extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            lable,
+            label,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           Padding(

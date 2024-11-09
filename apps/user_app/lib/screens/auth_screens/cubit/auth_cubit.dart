@@ -8,7 +8,7 @@ import 'package:user_app/setup/setup.dart';
 
 part 'auth_state.dart';
 
-class AuthCubit extends Cubit<AuthStatee> {
+class AuthCubit extends Cubit<AuthState> {
   final supabase = getIt.get<DataLayer>().supabase;
   List<Map<String, dynamic>> response = [];
 

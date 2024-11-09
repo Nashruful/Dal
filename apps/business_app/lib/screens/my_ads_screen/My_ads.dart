@@ -59,7 +59,7 @@ class MyAdsScreen extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return const CustemErrorDialog(msg: '');
+                          return const CustomErrorDialog(msg: '');
                         },
                       );
                     }

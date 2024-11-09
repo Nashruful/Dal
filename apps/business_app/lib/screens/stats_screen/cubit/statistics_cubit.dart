@@ -7,13 +7,13 @@ import 'package:meta/meta.dart';
 part 'statistics_state.dart';
 
 class StatisticsCubit extends Cubit<StatisticsState> {
-  List allads = getIt.get<DataLayer>().allbusinessAds;
+  List allAds = getIt.get<DataLayer>().allbusinessAds;
 
   StatisticsCubit() : super(StatisticsInitial());
 
   Future<void> refreshScreen() async {
     await getIt.get<DataLayer>().getBusinessInfo();
-    allads = getIt.get<DataLayer>().allbusinessAds;
+    allAds = getIt.get<DataLayer>().allbusinessAds;
 
     emit(Loaded());
   }

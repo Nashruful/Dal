@@ -42,15 +42,15 @@ class StatsScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   StatCards(
-                                      lable: 'Total Ads'.tr(),
+                                      label: 'Total Ads'.tr(),
                                       numbers: cubit.getTotalAds()),
                                   StatCards(
-                                    lable: "Total Views".tr(),
-                                    numbers: cubit.getTotalViews(cubit.allads),
+                                    label: "Total Views".tr(),
+                                    numbers: cubit.getTotalViews(cubit.allAds),
                                   ),
                                   StatCards(
-                                    lable: "Total Clicks".tr(),
-                                    numbers: cubit.getTotalClicks(cubit.allads),
+                                    label: "Total Clicks".tr(),
+                                    numbers: cubit.getTotalClicks(cubit.allAds),
                                   ),
                                 ],
                               ),
@@ -73,7 +73,7 @@ class StatsScreen extends StatelessWidget {
                           child: PiesChart(
                             topBranches: cubit.getTopBranches(),
                             totalClicks:
-                                cubit.getTotalClicks(cubit.allads).toDouble(),
+                                cubit.getTotalClicks(cubit.allAds).toDouble(),
                           ),
                         ),
                         const Divider(),
@@ -85,7 +85,7 @@ class StatsScreen extends StatelessWidget {
                           ),
                         ),
                         LineChartSample(
-                          viewsByMonth: cubit.getViewsByMonth(cubit.allads),
+                          viewsByMonth: cubit.getViewsByMonth(cubit.allAds),
                         )
                       ],
                     ),

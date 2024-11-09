@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -113,9 +114,6 @@ class DataLayer {
       if (position != null) {
         currentPosition = position;
       }
-      print(position == null
-          ? 'Unknown'
-          : '${position.latitude.toString()}, ${position.longitude.toString()}');
       final Map storedTimes = box.read('lastNotificationTimes') ?? {};
       lastNotificationTimes =
           storedTimes.map((key, value) => MapEntry(key, DateTime.parse(value)));
@@ -140,7 +138,7 @@ class DataLayer {
               await dio.post(
                 "https://api.onesignal.com/api/v1/notifications",
                 data: {
-                  "app_id": "ebdec5c2-30a4-447d-9577-a1c13b6d553e",
+                  "app_id": dotenv.env["ONE_SIGNAL_APP_ID"].toString(),
                   "contents": {
                     "en":
                         "Check out ${location.branch!.business!.name!} offer nearby! 📣",
@@ -154,7 +152,7 @@ class DataLayer {
                 },
                 options: Options(headers: {
                   "Authorization":
-                      "Bearer ZGU5ZmExOTEtNmFiZC00ZTUxLTgyMGYtNjc4MDJlYjUyNmM4",
+                       dotenv.env["AUTH_NOTIFICATION"].toString(),
                   'Content-Type': 'application/json',
                 }),
               );
@@ -175,8 +173,7 @@ class DataLayer {
     });
   }
 
-  getNearbyOffers()async {
-    print(currentPosition?.latitude);
+  getNearbyOffers() async {
     for (var element in liveAds) {
       // get nearby branches to the user
       double distance = Geolocator.distanceBetween(
