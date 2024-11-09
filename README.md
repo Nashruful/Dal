@@ -1,8 +1,6 @@
 
-<p align="center">
-  <img src="[http://some_place.com/image.png](https://github.com/user-attachments/assets/a7e5ea8c-99df-43c5-9716-3038e97222be)" />
-</p>
----
+![DalLogo](https://github.com/user-attachments/assets/a7e5ea8c-99df-43c5-9716-3038e97222be)
+
 
 # Dal - Local Business Advertising App
 
@@ -179,8 +177,8 @@ Additionally, **`melos`** is used for automating tasks and managing dependencies
 
 
 ###  Business App
-![[Auth](https://github.com/user-attachments/assets/fdbd95a1-8fe6-4caf-9151-6e2851e8caed)
-![[Subscription](https://github.com/user-attachments/assets/153fe465-0f72-4db3-8aa2-3c8244950c82)
+![Auth](https://github.com/user-attachments/assets/fdbd95a1-8fe6-4caf-9151-6e2851e8caed)
+![Subscription](https://github.com/user-attachments/assets/153fe465-0f72-4db3-8aa2-3c8244950c82)
 ![Add_Ads](https://github.com/user-attachments/assets/2a40b551-af30-4b87-893b-b611fe0bca78)
 ![Setting](https://github.com/user-attachments/assets/21388af1-a5dc-4898-93d8-0ce411abc644)
 
