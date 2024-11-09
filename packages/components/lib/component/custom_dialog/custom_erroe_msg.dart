@@ -3,8 +3,8 @@ import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CustemErrorDialog extends StatelessWidget {
-  const CustemErrorDialog({super.key, required this.msg, this.buttonLable});
+class CustomErrorDialog extends StatelessWidget {
+  const CustomErrorDialog({super.key, required this.msg, this.buttonLable});
   final String msg;
   final String? buttonLable;
   @override

@@ -18,7 +18,7 @@ class CreateAccountScreen extends StatelessWidget {
       create: (context) => AuthCubit(),
       child: Builder(builder: (context) {
         final cubit = context.read<AuthCubit>();
-        return BlocListener<AuthCubit, AuthStatee>(
+        return BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is LoadingState) {
               showDialog(
@@ -43,7 +43,7 @@ class CreateAccountScreen extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return CustemErrorDialog(msg: (state.msg));
+                    return CustomErrorDialog(msg: (state.msg));
                   });
             }
           },

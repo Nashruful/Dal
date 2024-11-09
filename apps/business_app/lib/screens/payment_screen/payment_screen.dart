@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:moyasar/moyasar.dart';
 
 class PaymentScreen extends StatelessWidget {
@@ -18,7 +19,7 @@ class PaymentScreen extends StatelessWidget {
   paymentConfig() {
     return PaymentConfig(
       publishableApiKey:
-          'pk_test_PB1baNgjCqvDmTbqdZQMCKXTWQejHLM7NUxwwRLV', //for now
+          dotenv.env["PAYMENT_API_KEY"].toString(), //for now // *****.env******
       amount: (totalPrice * 100).toInt(),
       description: 'Subscription payment ',
       metadata: {},

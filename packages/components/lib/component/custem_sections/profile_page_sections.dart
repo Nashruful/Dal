@@ -140,7 +140,6 @@ class AppearanceSection extends StatelessWidget {
           children: [
             Text(
               isOn ? lightText : darkText,
-              isOn ? lightText : darkText,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const Spacer(),
@@ -184,7 +183,7 @@ class LanguageSection extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
-          child: CustomDrobDownButton(
+          child: CustomDropDownButton(
             value: value,
             items: [
               DropdownMenuEntry(
@@ -215,7 +214,7 @@ class PlanSection extends StatelessWidget {
       required this.remainDays,
       required this.onPressed,
       required this.text,
-      required this.daytext,
+      required this.dayText,
       required this.remainingDay,
       required this.subscription});
   final String plan;
@@ -224,7 +223,7 @@ class PlanSection extends StatelessWidget {
   final int remainDays;
   final void Function()? onPressed;
   final String text;
-  final String daytext;
+  final String dayText;
   final String remainingDay;
   final String subscription;
 
@@ -278,7 +277,7 @@ class PlanSection extends StatelessWidget {
                       Column(
                         children: [
                           Text(
-                            '${remainDays.toString()} $daytext',
+                            '${remainDays.toString()} $dayText',
                             style: TextStyle(
                                 color: Theme.of(context).dividerColor,
                                 fontSize: 14),

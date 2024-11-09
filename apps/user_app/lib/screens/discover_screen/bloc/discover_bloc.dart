@@ -4,6 +4,7 @@ import 'package:components/components.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:impression/impression.dart';
@@ -60,7 +61,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
                 await dio.post(
                   "https://api.onesignal.com/api/v1/notifications",
                   data: {
-                    "app_id": "ebdec5c2-30a4-447d-9577-a1c13b6d553e",
+                    "app_id": dotenv.env["ONE_SIGNAL_APP_ID"].toString(),
                     "contents": {
                       "en":
                           "Check out ${location.branch!.business!.name!} offer nearby! 📣",
@@ -77,7 +78,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
                   },
                   options: Options(headers: {
                     "Authorization":
-                        "Bearer ZGU5ZmExOTEtNmFiZC00ZTUxLTgyMGYtNjc4MDJlYjUyNmM4",
+                        dotenv.env["AUTH_NOTIFICATION"].toString(),
                     'Content-Type': 'application/json',
                   }),
                 );

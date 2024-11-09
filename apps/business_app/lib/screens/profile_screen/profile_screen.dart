@@ -19,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
       create: (context) => ProfileBlocBloc(),
       child: Builder(builder: (context) {
         final bloc = context.read<ProfileBlocBloc>();
-        List businessInfo = getIt.get<DataLayer>().currentBusinessInfo;
+        List businessInfo = getIt.get<DataLayer>().currentBusinessInfo; /// move to bloc
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: CustomAppBar(
@@ -77,7 +77,7 @@ class ProfileScreen extends StatelessWidget {
                                   }
                                 : null,
                             text: 'planTitle'.tr(),
-                            daytext: 'Day'.tr(),
+                            dayText: 'Day'.tr(),
                             remainingDay: 'Remain'.tr(),
                             subscription: 'New Subscription button'.tr(),
                           );

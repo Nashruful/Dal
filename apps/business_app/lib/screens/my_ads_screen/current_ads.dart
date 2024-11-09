@@ -62,14 +62,14 @@ class CurrentAdsTap extends StatelessWidget {
                                       showDialog(
                                           context: context,
                                           builder: (context) {
-                                            return CustemAlertDialog(
+                                            return CustomAlertDialog(
                                               title: 'Delete Ads title'.tr(),
                                               msg: 'Delete Ads subtitle'.tr(),
                                               onPressed: () {
                                                 cubit.deleteAd(ad['id']);
                                                 Navigator.pop(context, true);
                                               },
-                                              buttonLable:
+                                              buttonLabel:
                                                   'Confirm button'.tr(),
                                               cancelLable: 'Cancel Button'.tr(),
                                             );

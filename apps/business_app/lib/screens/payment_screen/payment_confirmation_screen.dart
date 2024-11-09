@@ -56,7 +56,7 @@ class PaymentConfirmationScreen extends StatelessWidget {
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return CustemErrorDialog(msg: state.msg);
+                      return CustomErrorDialog(msg: state.msg);
                     });
               }
             },

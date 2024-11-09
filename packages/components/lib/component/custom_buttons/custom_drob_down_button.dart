@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomDrobDownButton extends StatelessWidget {
-  const CustomDrobDownButton(
+class CustomDropDownButton extends StatelessWidget {
+  const CustomDropDownButton(
       {super.key, this.value, required this.items, this.onChanged});
   final int? value;
   final List<DropdownMenuItem<int>> items;

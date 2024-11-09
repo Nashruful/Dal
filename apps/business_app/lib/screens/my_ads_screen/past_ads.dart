@@ -64,7 +64,7 @@ class PastAdsTab extends StatelessWidget {
                                   onPressed: () {showDialog(
                                       context: context,
                                       builder: (context) {
-                                        return CustemAlertDialog(
+                                        return CustomAlertDialog(
                                           title:
                                               'Delete Ads title'.tr(),
                                           msg:
@@ -72,7 +72,7 @@ class PastAdsTab extends StatelessWidget {
                                           onPressed: () {
                                             cubit.deleteAd(ad['id']);
                                           },
-                                          buttonLable: 'Confirm button'.tr(),
+                                          buttonLabel: 'Confirm button'.tr(),
                                           cancelLable: 'Cancel Button'.tr(),
                                         );
                                       });
