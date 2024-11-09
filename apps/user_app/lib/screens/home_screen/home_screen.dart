@@ -72,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
                   child: Container(
                     width: double.infinity,
-                    height: 180,
+                    height: 183,
                     decoration: BoxDecoration(
                       color: AppColors().yellow,
                       borderRadius: BorderRadius.circular(4),
@@ -368,7 +368,7 @@ class HomeScreen extends StatelessWidget {
 
                                                                         ScaffoldMessenger.of(context)
                                                                             .showSnackBar(
-                                                                           SnackBar(
+                                                                          SnackBar(
                                                                               content: Text('No maps are installed on this device.'.tr())),
                                                                         );
                                                                       }
@@ -524,9 +524,10 @@ class HomeScreen extends StatelessWidget {
                                                           ScaffoldMessenger.of(
                                                                   context)
                                                               .showSnackBar(
-                                                             SnackBar(
+                                                            SnackBar(
                                                                 content: Text(
-                                                                    'No maps are installed on this device.'.tr())),
+                                                                    'No maps are installed on this device.'
+                                                                        .tr())),
                                                           );
                                                         }
                                                         //
