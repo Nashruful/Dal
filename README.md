@@ -173,10 +173,9 @@ Additionally, **`melos`** is used for automating tasks and managing dependencies
 ---
 #  User App
 
-![Auth](https://github.com/user-attachments/assets/ad1d7620-100b-475c-934f-40c08dc6da79)
+![Auth](https://github.com/user-attachments/assets/bc874e91-a22a-45aa-975f-22ea55556adb)
 ![Map](https://github.com/user-attachments/assets/7c3d81a1-ec3c-444c-b746-cb16c26db2ee)
-![Profile](https://github.com/user-attachments/assets/910783e2-9fe0-4dde-add4-2ef67e4563a9)
-
+![Profile](https://github.com/user-attachments/assets/4572c3a5-094b-4661-a3dc-a8c46c972431)
 
 ---
 #  Business App
