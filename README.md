@@ -253,3 +253,7 @@ Dal empowers local businesses to effectively advertise to consumers nearby. With
 - [Linda Almakramy](https://github.com/lindamakk)
 - [Nouf Alqahtani](https://github.com/noufAlqahtani1)
 
+
+### Presentation
+
+- [Dal Presentation]([https://github.com/Nashruful](https://drive.google.com/file/d/1jWO89T3S-ucVFb7PijL0AunFCsNdhKtv/view?usp=sharing))
