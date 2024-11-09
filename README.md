@@ -1,4 +1,3 @@
-[Untitled_file.json](https://github.com/user-attachments/files/17689515/Untitled_file.json)
 
 ![DalLogo](https://github.com/user-attachments/assets/a7e5ea8c-99df-43c5-9716-3038e97222be)
 ---
@@ -170,14 +169,14 @@ Dal uses the following dependencies to enhance functionality:
 
 Additionally, **`melos`** is used for automating tasks and managing dependencies in a large-scale Flutter project.
 ## Screen shot
----
+
 #  User App
 
 ![Auth](https://github.com/user-attachments/assets/bc874e91-a22a-45aa-975f-22ea55556adb)
 ![Map](https://github.com/user-attachments/assets/7c3d81a1-ec3c-444c-b746-cb16c26db2ee)
 ![Profile](https://github.com/user-attachments/assets/4572c3a5-094b-4661-a3dc-a8c46c972431)
 
----
+
 #  Business App
 
 ![Auth](https://github.com/user-attachments/assets/be97ccf0-4598-44d2-bfd7-18ee19153172)
