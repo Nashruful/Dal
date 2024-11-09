@@ -186,8 +186,13 @@ https://github.com/user-attachments/assets/24ca0131-e44b-4b10-82ae-a8e4f49a5104
 ---
 #  Business App
 
-![Auth](https://github.com/user-attachments/assets/be97ccf0-4598-44d2-bfd7-18ee19153172)      ![Subscription](https://github.com/user-attachments/assets/0a0617a2-992b-45aa-9c31-9f701edef9dd)
-![Add_Ads](https://github.com/user-attachments/assets/7e8ce20f-6445-4dd7-8048-94c2ab7a7255)    ![Setting](https://github.com/user-attachments/assets/56fbff14-df11-4d6c-9958-354c8fe09426)
+![Auth](https://github.com/user-attachments/assets/be97ccf0-4598-44d2-bfd7-18ee19153172)
+
+![Subscription](https://github.com/user-attachments/assets/0a0617a2-992b-45aa-9c31-9f701edef9dd)
+
+![Add_Ads](https://github.com/user-attachments/assets/7e8ce20f-6445-4dd7-8048-94c2ab7a7255)
+
+![Setting](https://github.com/user-attachments/assets/56fbff14-df11-4d6c-9958-354c8fe09426)
 
 
 
