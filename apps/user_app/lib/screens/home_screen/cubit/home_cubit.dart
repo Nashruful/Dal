@@ -63,9 +63,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   refreshPage() async {
     emit(LoadingState());
-    getIt.get<DataLayer>().liveAds.clear();
-    getIt.get<DataLayer>().allAds.clear();
-    getIt.get<DataLayer>().nearbyBranches.clear();
+
     getIt.get<DataLayer>().diningCategory.clear();
     getIt.get<DataLayer>().fashionCategory.clear();
     getIt.get<DataLayer>().superMarketsCategory.clear();

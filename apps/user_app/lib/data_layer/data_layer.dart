@@ -1,10 +1,19 @@
 import 'dart:async';
 
+import 'package:avatar_glow/avatar_glow.dart';
+import 'package:components/component/bottom_sheet_for_map/bottom_sheet_for_map.dart';
+import 'package:components/component/theme/colors.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:impression/impression.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:user_app/models/all_ads_model.dart';
@@ -13,6 +22,7 @@ class DataLayer {
   final supabase = Supabase.instance.client;
 
   StreamSubscription<Position>? positionStream;
+  late LocationSettings locationSettings;
   Position? currentPosition;
   final dio = Dio();
 
@@ -23,6 +33,7 @@ class DataLayer {
   List<Ads> allAds = [];
   List<Ads> nearbyBranches = [];
   List<Ads> liveAds = [];
+  List<Marker> allMarkers = [];
   //categories lists
   List<Ads> diningCategory = [];
   List<Ads> superMarketsCategory = [];
@@ -59,6 +70,9 @@ class DataLayer {
   getAllAds() async {
     adS = await supabase.from("ad").select(
         '*,branch(*,business(*))'); // select all ads , their branches and business
+    allAds.clear();
+    liveAds.clear();
+    nearbyBranches.clear();
     for (var element in adS!) {
       allAds.add(Ads.fromJson(element));
     }
@@ -69,16 +83,13 @@ class DataLayer {
     }).toList();
   }
 
-  locationBgStream() async {
+  locationBgStream({BuildContext? context}) async {
     positionStream?.cancel();
-    late LocationSettings locationSettings;
-
     if (defaultTargetPlatform == TargetPlatform.android) {
       locationSettings = AndroidSettings(
           accuracy: LocationAccuracy.high,
-          distanceFilter: 100,
+          distanceFilter: 0,
           forceLocationManager: true,
-          intervalDuration: const Duration(seconds: 10),
           //(Optional) Set foreground notification config to keep the app alive
           //when going to the background
           foregroundNotificationConfig: const ForegroundNotificationConfig(
@@ -109,10 +120,205 @@ class DataLayer {
 
     positionStream =
         Geolocator.getPositionStream(locationSettings: locationSettings)
-            .listen((Position? position) async {
+            .listen((Position? position ) async {
+      print(position?.latitude);
       if (position != null) {
         currentPosition = position;
       }
+      allMarkers = liveAds
+          .map((location) {
+            double distance = Geolocator.distanceBetween(
+              position!.latitude,
+              position.longitude,
+              location.branch!.latitude!,
+              location.branch!.longitude!,
+            );
+
+            if (distance <= 1000) {
+              return Marker(
+                width: 50,
+                height: 50,
+                point: LatLng(
+                    location.branch!.latitude!, location.branch!.longitude!),
+                child: ImpressionDetector(
+                  impressedCallback: () {
+                    recordImpressions(location
+                        .id!); //add impressions to ad id each time it is viewed
+                  },
+                  child: InkWell(
+                    onTap: () {
+                      recordClicks(location
+                          .id!); //add impressions to ad id each time it is clicked
+                      String categoryIcon = location.category!.toString();
+                      showDialog(
+                          context: context!,
+                          builder: (context) => AlertDialog(
+                                contentPadding: EdgeInsets.zero,
+                                content: BottomSheetForMap(
+                                    locationOnPressed: () async {
+                                      final availableMaps =
+                                          await MapLauncher.installedMaps;
+
+                                      if (availableMaps.isNotEmpty) {
+                                        await availableMaps.first.showMarker(
+                                          coords: Coords(
+                                              location.branch!.latitude!,
+                                              location.branch!.longitude!),
+                                          title:
+                                              location.branch!.business!.name!,
+                                        );
+                                      } else {
+                                        // Handle the case where no maps are installed
+
+                                        // ignore: use_build_context_synchronously
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                              content: Text(
+                                                  'No maps are installed on this device.'
+                                                      .tr())),
+                                        );
+                                      }
+                                    },
+                                    image: location.bannerimg!,
+                                    companyName:
+                                        location.branch!.business!.name!,
+                                    iconImage: "assets/svg/$categoryIcon.svg",
+                                    description: location.description!,
+                                    remainingDay:
+                                        getRemainingTime(location.enddate!),
+                                    offerType: location.offerType!,
+                                    viewLocation: "View Location".tr()),
+                              ));
+                    },
+                    child: Badge(
+                      label: Text(
+                        "${location.offerType}",
+                        style:
+                            const TextStyle(fontSize: 10, color: Colors.white),
+                      ),
+                      child: SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: AvatarGlow(
+                          glowColor: Colors.redAccent,
+                          repeat: true,
+                          glowShape: BoxShape.circle,
+                          glowRadiusFactor: 0.7,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColors().white1,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    width: 3, color: AppColors().white1)),
+                            height: 50,
+                            width: 50,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(
+                                fit: BoxFit.fill,
+                                location.branch!.business!.logoImg!,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+            if (distance > 1000) {
+              return Marker(
+                width: 50,
+                height: 50,
+                point: LatLng(
+                    location.branch!.latitude!, location.branch!.longitude!),
+                child: ImpressionDetector(
+                  impressedCallback: () {
+                    recordImpressions(location
+                        .id!); //add impressions to ad id each time it is viewed
+                  },
+                  child: InkWell(
+                    onTap: () {
+                      recordClicks(location
+                          .id!); //add impressions to ad id each time it is clicked
+                      String categoryIcon = location.category!.toString();
+                      showDialog(
+                          context: context!,
+                          builder: (context) => AlertDialog(
+                                contentPadding: EdgeInsets.zero,
+                                content: BottomSheetForMap(
+                                    locationOnPressed: () async {
+                                      final availableMaps =
+                                          await MapLauncher.installedMaps;
+
+                                      if (availableMaps.isNotEmpty) {
+                                        await availableMaps.first.showMarker(
+                                          coords: Coords(
+                                              location.branch!.latitude!,
+                                              location.branch!.longitude!),
+                                          title:
+                                              location.branch!.business!.name!,
+                                        );
+                                      } else {
+                                        // Handle the case where no maps are installed
+
+                                        // ignore: use_build_context_synchronously
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                              content: Text(
+                                                  'No maps are installed on this device.'
+                                                      .tr())),
+                                        );
+                                      }
+                                    },
+                                    image: location.bannerimg!,
+                                    companyName:
+                                        location.branch!.business!.name!,
+                                    iconImage: "assets/svg/$categoryIcon.svg",
+                                    description: location.description!,
+                                    remainingDay:
+                                        getRemainingTime(location.enddate!),
+                                    offerType: location.offerType!,
+                                    viewLocation: "View Location".tr()),
+                              ));
+                    },
+                    child: Badge(
+                      label: Text(
+                        "${location.offerType}",
+                        style:
+                            const TextStyle(fontSize: 10, color: Colors.white),
+                      ),
+                      child: SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColors().white1,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                  width: 3, color: AppColors().white1)),
+                          height: 50,
+                          width: 50,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              fit: BoxFit.fill,
+                              location.branch!.business!.logoImg!,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+          })
+          .whereType<Marker>()
+          .toList();
       final Map storedTimes = box.read('lastNotificationTimes') ?? {};
       lastNotificationTimes =
           storedTimes.map((key, value) => MapEntry(key, DateTime.parse(value)));
@@ -150,8 +356,7 @@ class DataLayer {
                   },
                 },
                 options: Options(headers: {
-                  "Authorization":
-                       dotenv.env["AUTH_NOTIFICATION"].toString(),
+                  "Authorization": dotenv.env["AUTH_NOTIFICATION"].toString(),
                   'Content-Type': 'application/json',
                 }),
               );
