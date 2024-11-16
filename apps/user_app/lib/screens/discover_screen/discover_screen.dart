@@ -22,20 +22,21 @@ class DiscoverScreen extends StatelessWidget {
       create: (context) => DiscoverBloc(),
       child: Builder(builder: (context) {
         final bloc = context.read<DiscoverBloc>();
-        getIt.get<DataLayer>().positionStream!.cancel();
-        try {
-          LocationSettings locationSettings = const LocationSettings(
-              distanceFilter: 100, accuracy: LocationAccuracy.high);
-          getIt.get<DataLayer>().positionStream =
-              Geolocator.getPositionStream(locationSettings: locationSettings)
-                  .listen((Position position) {
-            bloc.add(LoadScreenEvent(position: position, context: context));
-            bloc.add(
-                SendNotificationEvent(position: position, context: context));
-          });
-        } catch (e) {
-          bloc.add(ErrorScreenEvent(msg: e.toString()));
-        }
+
+        getIt.get<DataLayer>().positionStream!.onData(
+          (Position data) async {
+            bloc.add(LoadScreenEvent(position: data, context: context));
+            // bloc.add(SendNotificationEvent(position: data, context: context));
+          },
+        );
+
+        // getIt.get<DataLayer>().positionStream = Geolocator.getPositionStream(
+        //         locationSettings: getIt.get<DataLayer>().locationSettings)
+        //     .listen((Position position) {
+        //   bloc.add(LoadScreenEvent(position: position, context: context));
+        //   bloc.add(
+        //       SendNotificationEvent(position: position, context: context));
+        // });
 
         return Scaffold(
 
@@ -73,19 +74,23 @@ class DiscoverScreen extends StatelessWidget {
                       onTap: (tapPosition, point) {},
                       initialZoom: 14,
                       initialCenter: LatLng(
-                          bloc.positionn?.latitude ?? 24.82741851222009,
-                          bloc.positionn?.longitude ?? 46.754407525179346)),
+                          getIt.get<DataLayer>().currentPosition!.latitude,
+                          getIt.get<DataLayer>().currentPosition!.longitude)),
                   children: [
                     TileLayer(
                       urlTemplate:
                           'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                       userAgentPackageName: 'com.example.app',
                     ),
-                    MarkerLayer(markers: bloc.filteredMarkers),
+                    MarkerLayer(markers: getIt.get<DataLayer>().allMarkers),
                     MarkerLayer(markers: [
                       Marker(
-                          point: LatLng(bloc.positionn!.latitude,
-                              bloc.positionn!.longitude),
+                          point: LatLng(
+                              getIt.get<DataLayer>().currentPosition!.latitude,
+                              getIt
+                                  .get<DataLayer>()
+                                  .currentPosition!
+                                  .longitude),
                           child: Container(
                             height: 26,
                             width: 26,
@@ -157,9 +162,92 @@ class DiscoverScreen extends StatelessWidget {
             if (state is ErrorState) {
               return Center(child: Text(state.msg.toString()));
             }
-            return Center(
-              child: lottie.Lottie.asset('assets/json/loading.json', width: 30),
-            );
+            return Stack(children: [
+              FlutterMap(
+                options: MapOptions(
+                    onTap: (tapPosition, point) {},
+                    initialZoom: 14,
+                    initialCenter: LatLng(
+                        getIt.get<DataLayer>().currentPosition!.latitude,
+                        getIt.get<DataLayer>().currentPosition!.longitude)),
+                children: [
+                  TileLayer(
+                    urlTemplate:
+                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    userAgentPackageName: 'com.example.app',
+                  ),
+                  MarkerLayer(markers: getIt.get<DataLayer>().allMarkers),
+                  MarkerLayer(markers: [
+                    Marker(
+                        point: LatLng(
+                            getIt.get<DataLayer>().currentPosition!.latitude,
+                            getIt.get<DataLayer>().currentPosition!.longitude),
+                        child: Container(
+                          height: 26,
+                          width: 26,
+                          decoration: BoxDecoration(
+                              color: AppColors().white1,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                  color: const Color(0xffA51361), width: 3)),
+                          child: Center(
+                            child: Container(
+                              width: 14,
+                              height: 14,
+                              decoration: const BoxDecoration(
+                                  color: Color(0xff8E1254),
+                                  shape: BoxShape.circle),
+                            ),
+                          ),
+                        ))
+                  ]),
+                ],
+              ),
+              Column(children: [
+                const SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Material(
+                      borderRadius: BorderRadius.circular(15),
+                      elevation: 2.5,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SearchScreen()));
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 48,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).canvasColor,
+                              borderRadius: BorderRadius.circular(16)),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Icon(
+                                Icons.search,
+                                color: AppColors().black1,
+                              ),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              CustomText(
+                                  text: "Where to?".tr(),
+                                  color: AppColors().black1,
+                                  fontSize: 16)
+                            ],
+                          ),
+                        ),
+                      )),
+                ),
+              ])
+            ]);
           },
         ));
       }),
