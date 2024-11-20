@@ -42,20 +42,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 const SizedBox(
                   height: 40,
                 ),
-                Column(
-                  children: [
-                    Text("Onboarding title",
-                            style: Theme.of(context).textTheme.headlineLarge)
-                        .tr(),
-                    const SizedBox(
-                      height: 9,
-                    ),
-                    Text("Onbording subtitle".tr(),
-                        style: Theme.of(context).textTheme.bodyMedium),
-                  ],
-                ),
-                const SizedBox(
-                  height: 40,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Onboarding title",
+                        style: Theme.of(context).textTheme.headlineLarge,
+                        textAlign: TextAlign.center,
+                      ).tr(),
+                      const SizedBox(
+                        height: 9,
+                      ),
+                      Text(
+                        "Onbording subtitle".tr(),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
                 Column(
                   children: [
