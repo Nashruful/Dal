@@ -16,12 +16,12 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
 
   ElevatedButton returnButton(Ads e) {
-    if (!getIt.get<DataLayer>().myReminders.contains(e)) {
+    if (!getIt.get<DataLayer>().myReminders.contains(e) ) {
       return ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: AppColors().green),
           onPressed: () {
             getIt.get<DataLayer>().myReminders.add(e);
-            emit(SuccessState());
+            emit(ChangeButtonState());
           },
           child: Row(
             children: [
@@ -39,7 +39,7 @@ class HomeCubit extends Cubit<HomeState> {
       return ElevatedButton(
           onPressed: () {
             getIt.get<DataLayer>().myReminders.remove(e);
-            emit(SuccessState());
+            emit(ChangeButtonState());
           },
           style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xffA51361)),

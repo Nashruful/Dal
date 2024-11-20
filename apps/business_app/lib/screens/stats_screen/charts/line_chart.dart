@@ -77,7 +77,7 @@ class LineChartSample extends StatelessWidget {
     if (value.toInt() == 0) {
       text = '0';
     } else if (value.toInt() == maxValue / 2) {
-      text = (maxValue / 2).toInt().toString();
+      text = (maxValue ~/ 2).toString();
     } else if (value.toInt() == maxValue) {
       text = maxValue.toString();
     } else {

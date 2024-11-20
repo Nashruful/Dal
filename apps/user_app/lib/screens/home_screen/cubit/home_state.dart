@@ -8,6 +8,7 @@ final class HomeInitial extends HomeState {}
 final class LoadingState extends HomeState {}
 
 final class SuccessState extends HomeState {}
+final class ChangeButtonState extends HomeState {}
 
 final class ErrorState extends HomeState {
   final String msg;
