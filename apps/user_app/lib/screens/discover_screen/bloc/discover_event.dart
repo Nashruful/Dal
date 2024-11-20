@@ -10,6 +10,8 @@ final class LoadScreenEvent extends DiscoverEvent {
   LoadScreenEvent({required this.position, required this.context});
 }
 
+final class UpdateScreenTrackEvent extends DiscoverEvent{}
+
 final class SendNotificationEvent extends DiscoverEvent {
   final Position? position;
   final BuildContext context;

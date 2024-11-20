@@ -76,90 +76,110 @@ class AroundYouOffersScreen extends StatelessWidget {
                                 getIt.get<DataLayer>().recordImpressions(e
                                     .id!); //add impressions to ad id each time it is viewed
                               },
-                              child: CustomAdsContainer(
-                                companyLogo: e.branch!.business!.logoImg ??
-                                    "https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/user%20profile%20images/images/defualt_profile_img.png?t=2024-11-03T13%3A11%3A13.024Z",
-                                remainingDay:
-                                    "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
-                                companyName: e.branch!.business!.name ?? "----",
-                                offers: '${e.offerType!} ${'off'.tr()}',
-                                onTap: () {
-                                  getIt.get<DataLayer>().recordClicks(e.id!);
-                                  String currentLogo = e.category!.toString();
-                                  showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      context: context,
-                                      builder: (context) {
-                                        return BlocProvider(
-                                          create: (context) => HomeCubit(),
-                                          child: CustomBottomSheet(
-                                            image: e.bannerimg!,
-                                            companyName:
-                                                e.branch!.business!.name ??
-                                                    "---",
-                                            iconImage:
-                                                'assets/svg/$currentLogo.svg',
-                                            description: e.description ?? "---",
-                                            remainingDay:
-                                                "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
-                                            offerType: e.offerType!,
-                                            textButton: TextButton(
-                                                onPressed: () async {
-                                                  final availableMaps =
-                                                      await MapLauncher
-                                                          .installedMaps;
+                              child: BlocProvider(
+                                create: (context) => HomeCubit(),
+                                child: Builder(builder: (context) {
+                                  return BlocBuilder<HomeCubit, HomeState>(
+                                    builder: (context, state) {
+                                      return CustomAdsContainer(
+                                        companyLogo: e
+                                                .branch!.business!.logoImg ??
+                                            "https://axzkcivwmekelxlqpxvx.supabase.co/storage/v1/object/public/user%20profile%20images/images/defualt_profile_img.png?t=2024-11-03T13%3A11%3A13.024Z",
+                                        remainingDay:
+                                            "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
+                                        companyName:
+                                            e.branch!.business!.name ?? "----",
+                                        offers: '${e.offerType!} ${'off'.tr()}',
+                                        onTap: () {
+                                          getIt
+                                              .get<DataLayer>()
+                                              .recordClicks(e.id!);
+                                          String currentLogo =
+                                              e.category!.toString();
+                                          showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              context: context,
+                                              builder: (context) {
+                                                return CustomBottomSheet(
+                                                  image: e.bannerimg!,
+                                                  companyName: e.branch!
+                                                          .business!.name ??
+                                                      "---",
+                                                  iconImage:
+                                                      'assets/svg/$currentLogo.svg',
+                                                  description:
+                                                      e.description ?? "---",
+                                                  remainingDay:
+                                                      "${getIt.get<DataLayer>().getRemainingTime(e.enddate!)}d",
+                                                  offerType: e.offerType!,
+                                                  textButton: TextButton(
+                                                      onPressed: () async {
+                                                        final availableMaps =
+                                                            await MapLauncher
+                                                                .installedMaps;
 
-                                                  if (availableMaps
-                                                      .isNotEmpty) {
-                                                    await availableMaps.first
-                                                        .showMarker(
-                                                      coords: Coords(
-                                                          e.branch!.latitude!,
-                                                          e.branch!.longitude!),
-                                                      title: e.branch!.business!
-                                                          .name!,
-                                                    );
-                                                  } else {
-                                                    // Handle the case where no maps are installed
+                                                        if (availableMaps
+                                                            .isNotEmpty) {
+                                                          await availableMaps
+                                                              .first
+                                                              .showMarker(
+                                                            coords: Coords(
+                                                                e.branch!
+                                                                    .latitude!,
+                                                                e.branch!
+                                                                    .longitude!),
+                                                            title: e
+                                                                .branch!
+                                                                .business!
+                                                                .name!,
+                                                          );
+                                                        } else {
+                                                          // Handle the case where no maps are installed
 
-                                                    ScaffoldMessenger.of(
-                                                            // ignore: use_build_context_synchronously
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                          content: Text(
-                                                              'No maps are installed on this device.'
-                                                                  .tr())),
-                                                    );
-                                                  }
-                                                  //
-                                                },
-                                                child: Row(
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                      'assets/svg/discover.svg',
-                                                      colorFilter:
-                                                          ColorFilter.mode(
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                              BlendMode.srcIn),
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 8,
-                                                    ),
-                                                    Text(
-                                                      'View Location'.tr(),
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodySmall,
-                                                    ),
-                                                  ],
-                                                )),
-                                            button: cubit.returnButton(e),
-                                          ),
-                                        );
-                                      });
-                                },
+                                                          ScaffoldMessenger.of(
+                                                              // ignore: use_build_context_synchronously
+                                                              context).showSnackBar(
+                                                            SnackBar(
+                                                                content: Text(
+                                                                    'No maps are installed on this device.'
+                                                                        .tr())),
+                                                          );
+                                                        }
+                                                        //
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          SvgPicture.asset(
+                                                            'assets/svg/discover.svg',
+                                                            colorFilter:
+                                                                ColorFilter.mode(
+                                                                    Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                    BlendMode
+                                                                        .srcIn),
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 8,
+                                                          ),
+                                                          Text(
+                                                            'View Location'
+                                                                .tr(),
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodySmall,
+                                                          ),
+                                                        ],
+                                                      )),
+                                                  button: cubit.returnButton(e),
+                                                );
+                                              });
+                                        },
+                                      );
+                                    },
+                                  );
+                                }),
                               ),
                             ),
                           )

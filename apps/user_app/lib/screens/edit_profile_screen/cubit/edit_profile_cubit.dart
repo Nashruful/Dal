@@ -27,7 +27,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
           .from('user profile images')
           .upload('images/${imageFile.name}', image);
 
-      final getUrl = await supabase.storage
+      final getUrl = supabase.storage
           .from('user profile images')
           .getPublicUrl('images/${imageFile.name}');
       // add image to users table

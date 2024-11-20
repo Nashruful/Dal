@@ -88,9 +88,7 @@ class _MainAppState extends State<MainApp> with LifecycleAware, LifecycleMixin {
                         await getIt
                             .get<DataLayer>()
                             .getAllAds(); //update live ads list
-                         getIt
-                            .get<DataLayer>()
-                            .locationBgStream(); //update live ads list
+                         
                         final impressionKeys =
                             List.from(getIt.get<DataLayer>().impressions.keys);
 
@@ -120,9 +118,7 @@ class _MainAppState extends State<MainApp> with LifecycleAware, LifecycleMixin {
                         await getIt
                             .get<DataLayer>()
                             .getAllAds(); //update live ads list
-                         getIt
-                            .get<DataLayer>()
-                            .locationBgStream(); //update live ads list
+                         
                         final impressionKeys =
                             List.from(getIt.get<DataLayer>().impressions.keys);
 
